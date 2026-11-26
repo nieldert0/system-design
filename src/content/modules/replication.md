@@ -65,6 +65,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import PromoteReplicaFlow from '#lib/diagrams/PromoteReplicaFlow.svelte';
+	import AsyncReplicaFlow from '#lib/diagrams/AsyncReplicaFlow.svelte';
 </script>
 
 Replication keeps copies of the same database on several machines, so you can spread reads and survive losing one.
@@ -80,9 +82,13 @@ Replication keeps copies of the same database on several machines, so you can sp
 
 **Primary-replica.** The primary serves reads and writes, replicating writes to one or more replicas, which serve only reads. Replicas can also replicate to further replicas in a tree. If the primary goes offline, the system can keep running in read-only mode until a replica is promoted to primary or a new primary is provisioned. Promoting a replica needs extra logic. <Src id="primer" />
 
+<PromoteReplicaFlow />
+
 **Primary-primary.** Both primaries serve reads and writes and coordinate with each other on writes. If either goes down, the system can keep going with both reads and writes. You need a <Term id="load-balancer">load balancer</Term> or application logic to decide where to write. Most such systems are either loosely consistent (breaking <Term id="acid">ACID</Term>) or have higher write <Term id="latency">latency</Term> because of synchronisation, and conflict resolution matters more as you add write nodes and latency grows. <Src id="primer" />
 
 **Synchronous vs asynchronous.** With synchronous replication, the primary waits for replicas before confirming a write: no data loss, slower writes. With asynchronous replication, it confirms first: fast, but replicas lag and recent writes can be lost.
+
+<AsyncReplicaFlow />
 
 ## Trade-offs
 

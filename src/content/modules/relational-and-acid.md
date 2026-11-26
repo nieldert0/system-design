@@ -69,6 +69,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import RollbackFlow from '#lib/diagrams/RollbackFlow.svelte';
+	import LostUpdateFlow from '#lib/diagrams/LostUpdateFlow.svelte';
 </script>
 
 A relational database stores data in tables and lets you change many rows together safely. ACID is the set of promises that makes those changes safe.
@@ -88,6 +90,8 @@ A relational database like SQL is a collection of data items organized in tables
 
 A **<Term id="transaction">transaction</Term>** groups statements: `BEGIN`, several reads and writes, then `COMMIT` (keep all) or `ROLLBACK` (keep none). The database writes changes to a log before applying them, so after a crash it can redo committed work and undo the rest.
 
+<RollbackFlow />
+
 Full isolation (serializable) is costly, so databases offer weaker levels that allow some anomalies in exchange for speed: <Src id="wiki-iso" />
 
 | Level | Prevents | Still allows |
@@ -96,6 +100,10 @@ Full isolation (serializable) is costly, so databases offer weaker levels that a
 | Read committed | Dirty reads | Non-repeatable reads |
 | Repeatable read | Non-repeatable reads | Phantoms (in some databases) |
 | Serializable | All of the above | Nothing, but more waits and retries |
+
+A classic anomaly at weak levels is the **lost update**: two transactions read the same value, both change it, and the second write silently overwrites the first. <Src id="wiki-iso" />
+
+<LostUpdateFlow />
 
 There are many techniques to scale a relational database: <Term id="replication">replication</Term>, federation, <Term id="sharding">sharding</Term>, <Term id="denormalization">denormalization</Term>, and SQL tuning. <Src id="primer" />
 

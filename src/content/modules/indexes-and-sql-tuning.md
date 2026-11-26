@@ -69,6 +69,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import BTreeFlow from '#lib/diagrams/BTreeFlow.svelte';
 </script>
 
 Most slow databases are slow because of a few bad queries. Indexes and small schema fixes usually help far more than new hardware.
@@ -91,6 +92,8 @@ An **<Term id="index">index</Term>** is an extra data structure that lets the da
 - Placing an index can keep the data in memory, requiring more space.
 - Writes could also be slower since the index also needs to be updated.
 - When loading large amounts of data, it might be faster to disable indices, load the data, then rebuild the indices.
+
+<BTreeFlow />
 
 A **composite index** on several columns, such as `(country, city)`, is sorted by the first column, then the second. It helps queries that filter on the leading columns, but not one that filters only on `city`. Use `EXPLAIN` to see whether a query uses an index or scans the table. <Src id="wiki-index" />
 

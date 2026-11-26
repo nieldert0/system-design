@@ -56,6 +56,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import HashRingFlow from '#lib/diagrams/HashRingFlow.svelte';
 </script>
 
 Consistent hashing decides which server owns which key, in a way where adding or removing a server moves only a small share of the keys.
@@ -74,6 +75,8 @@ With a ring: <Src id="wiki-ch" />
 2. Hash each key to a point on the ring.
 3. Walk clockwise from the key to the first server; that server owns the key.
 4. Adding a server takes over only the keys between it and its predecessor. Removing one hands its keys to the next server.
+
+<HashRingFlow />
 
 With few servers, the arcs can be very uneven. **Virtual nodes** fix this: each physical server is placed at many points on the ring, so load evens out, and a failed server's keys spread across many others instead of landing on one neighbour. Stronger servers can get more virtual nodes. <Src id="wiki-ch" />
 

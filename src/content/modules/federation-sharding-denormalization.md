@@ -64,6 +64,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import FederationSplit from '#lib/diagrams/FederationSplit.svelte';
+	import ShardRoutingFlow from '#lib/diagrams/ShardRoutingFlow.svelte';
 </script>
 
 When one database cannot keep up, you split it: by function (federation), by rows (sharding), or you duplicate data so reads need fewer joins (denormalization).
@@ -80,7 +82,11 @@ When one database cannot keep up, you split it: by function (federation), by row
 
 **Federation** results in less read and write traffic to each database and therefore less <Term id="replication">replication</Term> lag. Smaller databases result in more data that can fit in memory, which in turn results in more <Term id="cache">cache</Term> hits due to improved cache locality. With no single central master serializing writes you can write in parallel, increasing <Term id="throughput">throughput</Term>. <Src id="primer" />
 
+<FederationSplit />
+
 **Sharding** similarly results in less read and write traffic, less replication, and more cache hits. Index size is also reduced, which generally improves performance with faster queries. If one shard goes down, the other shards are still operational, although you'll want to add some form of replication to avoid data loss. Common ways to shard a table of users is either through the user's last name initial or the user's geographic location. <Src id="primer" />
+
+<ShardRoutingFlow />
 
 **Denormalization.** Some RDBMS such as PostgreSQL and Oracle support materialized views which handle the work of storing redundant information and keeping redundant copies consistent. Once data becomes distributed with techniques such as federation and sharding, managing joins across data centers further increases complexity. Denormalization might circumvent the need for such complex joins. In most systems, reads can heavily outnumber writes 100:1 or even 1000:1. A read resulting in a complex database join can be very expensive, spending a significant amount of time on disk operations. <Src id="primer" />
 

@@ -70,6 +70,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import PresignedUploadFlow from '#lib/diagrams/PresignedUploadFlow.svelte';
 </script>
 
 Object storage is where large files live: images, videos, backups, logs. It is cheap, very durable and scales almost without limit, but you cannot edit files in place.
@@ -91,6 +92,8 @@ A typical upload flow:
 3. The client uploads the file directly to object storage.
 4. The API saves the key and metadata in the database.
 5. Reads go through a <Term id="cdn">CDN</Term> with object storage as the origin.
+
+<PresignedUploadFlow />
 
 ## Trade-offs
 

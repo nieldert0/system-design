@@ -65,6 +65,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import NoSqlShapes from '#lib/diagrams/NoSqlShapes.svelte';
 </script>
 
 "NoSQL" covers four quite different kinds of database. Each gives up some of SQL's flexibility to be very good at one access pattern.
@@ -88,6 +89,8 @@ quiz:
 **Wide column store** (abstraction: nested map). A wide column store's basic unit of data is a column (name/value pair). A column can be grouped in column families (analogous to a SQL table). You can access each column independently with a row key, and columns with the same row key form a row. Each value contains a timestamp for versioning and for conflict resolution. Stores such as BigTable, HBase, and Cassandra maintain keys in lexicographic order, allowing efficient retrieval of selective key ranges. Wide column stores offer high availability and high <Term id="scalability">scalability</Term>. They are often used for very large data sets. <Src id="primer" />
 
 **Graph database** (abstraction: graph). In a graph database, each node is a record and each arc is a relationship between two nodes. Graph databases are optimized to represent complex relationships with many foreign keys or many-to-many relationships. Graphs databases offer high performance for data models with complex relationships, such as a social network. <Src id="primer" />
+
+<NoSqlShapes />
 
 ## Trade-offs
 
