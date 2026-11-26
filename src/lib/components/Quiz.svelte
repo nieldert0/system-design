@@ -8,11 +8,9 @@
 
 	let { slug, questions }: { slug: string; questions: Question[] } = $props();
 
-	let answers = $state<(number | null)[]>([]);
+	// Reset whenever the module (and so the question list) changes; also correct during prerender.
+	let answers = $derived<(number | null)[]>(questions.map(() => null));
 	let root: HTMLElement;
-	$effect.pre(() => {
-		answers = questions.map(() => null); // reset when the module changes
-	});
 
 	const answered = $derived(answers.filter((a) => a !== null).length);
 	const correct = $derived(answers.filter((a, i) => a === questions[i]?.correct).length);
@@ -21,7 +19,7 @@
 
 	function choose(qi: number, oi: number) {
 		if (answers[qi] !== null) return;
-		answers[qi] = oi;
+		answers = answers.with(qi, oi);
 		if (answers.every((a) => a !== null)) progress.recordScore(slug, correct, questions.length);
 	}
 

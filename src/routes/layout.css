@@ -19,7 +19,7 @@
 		0 3px 4px -2px rgb(var(--shadow-ink) / 0.08);
 	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 	/* Hue only for meaning: green right, red wrong (Radix green/red 3 and 11). */
-	--green-3: #e6f6eb; --green-11: #218358;
+	--green-3: #e6f6eb; --green-11: #1b7a4f;
 	--red-3: #feebec; --red-11: #ce2c31;
 
 	--background: var(--ground);
