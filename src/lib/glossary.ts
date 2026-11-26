@@ -306,5 +306,37 @@ export const glossary: GlossaryEntry[] = [
 			'Placing keys and servers on a hash ring so that adding or removing a server moves only about 1/n of the keys.',
 		module: 'consistent-hashing',
 		source: { title: 'Wikipedia, Consistent hashing', url: 'https://en.wikipedia.org/wiki/Consistent_hashing', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'index',
+		term: 'Index',
+		definition:
+			'An extra data structure, usually a B-tree, that lets a database find rows without scanning the whole table.',
+		module: 'indexes-and-sql-tuning',
+		source: { title: 'Wikipedia, Database index', url: 'https://en.wikipedia.org/wiki/Database_index', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'nosql',
+		term: 'NoSQL',
+		definition:
+			'A collection of data items represented in a key-value store, document store, wide column store, or a graph database.',
+		module: 'nosql-types',
+		source: primer('nosql')
+	},
+	{
+		id: 'base',
+		term: 'BASE',
+		definition:
+			'Basically available, soft state, eventual consistency: properties often used to describe NoSQL databases, choosing availability over consistency.',
+		module: 'nosql-types',
+		source: primer('nosql')
+	},
+	{
+		id: 'object-storage',
+		term: 'Object storage',
+		definition:
+			'Storage for whole files (objects) addressed by a key, with metadata, in a flat namespace, such as Amazon S3.',
+		module: 'object-storage',
+		source: { title: 'Wikipedia, Object storage', url: 'https://en.wikipedia.org/wiki/Object_storage', license: 'CC BY-SA 4.0' }
 	}
 ];
