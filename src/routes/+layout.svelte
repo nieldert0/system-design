@@ -2,6 +2,7 @@
 	import './layout.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import Menu from '@lucide/svelte/icons/menu';
+	import Layers from '@lucide/svelte/icons/layers';
 	import { resolve } from '$app/paths';
 	import * as Sheet from '#lib/components/ui/sheet/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
@@ -31,7 +32,9 @@
 			<Sidebar onnavigate={() => (menuOpen = false)} />
 		</Sheet.Content>
 	</Sheet.Root>
-	<a href={resolve('/')} class="text-sm text-ink-12">{SITE_NAME}</a>
+	<a href={resolve('/')} class="flex items-center gap-2 text-sm text-ink-12"
+		><span class="grid size-6 place-items-center rounded-md bg-primary text-primary-foreground"><Layers class="size-3.5" aria-hidden="true" /></span>{SITE_NAME}</a
+	>
 	<div class="ml-auto"><ThemeToggle /></div>
 </header>
 

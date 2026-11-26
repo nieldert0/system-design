@@ -3,14 +3,16 @@
 	import { resolve } from '$app/paths';
 	import { outline } from '#lib/outline.js';
 	import { written } from '#lib/content.js';
+	import { sectionIcon } from '#lib/icons.js';
 
 	let { onnavigate }: { onnavigate?: () => void } = $props();
 </script>
 
 <nav aria-label="Modules" class="flex flex-col gap-6 text-sm">
 	{#each outline as section (section.slug)}
+		{@const Icon = sectionIcon(section.slug)}
 		<div>
-			<h2 class="mb-1 px-2 text-xs text-ink-11">{section.title}</h2>
+			<h2 class="mb-1 flex items-center gap-1.5 px-2 text-xs text-ink-11"><Icon class="size-3.5" aria-hidden="true" />{section.title}</h2>
 			<ul class="flex flex-col gap-px">
 				{#each section.modules as mod (mod.slug)}
 					<li>
