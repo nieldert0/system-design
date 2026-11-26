@@ -8,15 +8,17 @@
 		desc,
 		viewBox,
 		caption,
+		fit = false,
 		children
-	}: { title: string; desc: string; viewBox: string; caption?: string; children: Snippet } = $props();
+	}: { title: string; desc: string; viewBox: string; caption?: string; children: Snippet; fit?: boolean } = $props();
 	const uid = $props.id();
 </script>
 
 <figure class="not-prose my-8">
-	<div class="overflow-x-auto rounded-lg bg-raised p-4 shadow-card">
-		<!-- Never shrink below 80% of drawn size, so 12px labels stay ≥9.6px; narrower screens scroll the figure. -->
-		<svg {viewBox} role="img" aria-labelledby="{uid}-t {uid}-d" class="diagram block h-auto w-full" style:min-width="{Number(viewBox.split(' ')[2]) * 0.8}px">
+	<div class="diagram-card overflow-x-auto rounded-lg bg-raised p-4 shadow-card">
+		<!-- Static figures never shrink below 80% of drawn size (labels stay ≥9.6px) and scroll instead;
+		     animated ones `fit`, so moving dots never leave view, and enlarge their labels on phones. -->
+		<svg {viewBox} role="img" aria-labelledby="{uid}-t {uid}-d" class="diagram block h-auto w-full" style:min-width={fit ? undefined : `${Number(viewBox.split(' ')[2]) * 0.8}px`}>
 			<title id="{uid}-t">{title}</title>
 			<desc id="{uid}-d">{desc}</desc>
 			{@render children()}

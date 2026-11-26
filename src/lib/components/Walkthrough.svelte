@@ -9,8 +9,16 @@
 		desc,
 		viewBox,
 		steps,
+		dwell = () => 2600,
 		children
-	}: { title: string; desc: string; viewBox: string; steps: string[]; children: Snippet<[number]> } = $props();
+	}: {
+		title: string;
+		desc: string;
+		viewBox: string;
+		steps: string[];
+		dwell?: (step: number) => number; // ms each step stays up while playing; long enough to read the caption
+		children: Snippet<[number]>;
+	} = $props();
 
 	let step = $state(0);
 	let playing = $state(false);
@@ -27,11 +35,11 @@
 
 	$effect(() => {
 		if (!playing || reduced) return;
-		const t = setInterval(() => {
+		const t = setTimeout(() => {
 			if (step < steps.length - 1) step++;
 			else playing = false;
-		}, 1800);
-		return () => clearInterval(t);
+		}, dwell(step));
+		return () => clearTimeout(t);
 	});
 
 	const btn =
@@ -39,7 +47,7 @@
 </script>
 
 <div class="walkthrough not-prose my-8" class:reduced>
-	<Diagram {title} desc="{desc} Step {step + 1} of {steps.length}: {steps[step]}" {viewBox}>
+	<Diagram {title} desc="{desc} Step {step + 1} of {steps.length}: {steps[step]}" {viewBox} fit>
 		{@render children(step)}
 	</Diagram>
 	<div class="mt-3 flex flex-wrap items-center gap-2">
@@ -73,5 +81,5 @@
 		>
 		<span class="text-xs text-ink-11">Step {step + 1} of {steps.length}</span>
 	</div>
-	<p aria-live="polite" class="mt-2 text-sm text-ink-12">{steps[step]}</p>
+	<p aria-live="polite" class="mt-2 min-h-[3lh] text-sm text-ink-12">{steps[step]}</p>
 </div>

@@ -187,25 +187,55 @@
 .diagram .d-on-strong { fill: var(--ink-1); font-size: 13px; }
 .diagram .d-token { fill: var(--ink-12); }
 .diagram .d-wait { fill: var(--red-11); }
+/* Walkthrough motion: one in-out curve so objects accelerate and settle like physical things,
+   rather than the snappy UI ease-out that makes a travelling dot look like it teleports. */
+.walkthrough { --ease-move: cubic-bezier(0.65, 0, 0.35, 1); }
 .walkthrough .diagram * {
-	transition: transform 300ms var(--ease-out), opacity 200ms var(--ease-out);
+	transition: transform 550ms var(--ease-move), opacity 250ms ease 150ms, fill 300ms ease;
 }
-.walkthrough.reduced .diagram * {
-	transition: none;
+/* FlowWalkthrough: arrows fade in, then the dot rides the arrow; the inline transform is the end state. */
+.walkthrough .diagram .flow-arrow {
+	animation: flow-fade 250ms ease both;
 }
-/* FlowWalkthrough dots slide from their source box; the inline transform is the end state. */
 .walkthrough .diagram .flow-dot {
-	animation: flow-move 600ms var(--ease-out) both;
+	animation: flow-move 900ms var(--ease-move) 100ms both;
 }
+.walkthrough .diagram .flow-dot-here {
+	animation: flow-pulse 500ms var(--ease-move) both;
+	transform-box: fill-box;
+}
+@keyframes flow-fade { from { opacity: 0; } }
+/* Standing links from earlier steps: present but quieter than this step's moves. */
+.walkthrough .diagram .d-link { opacity: 0.45; }
+/* A box that just appeared gets a brief outline so the eye finds what changed. */
+.walkthrough .diagram .d-new { animation: box-new 1600ms ease both; }
+@keyframes box-new {
+	from, 40% { stroke: var(--ink-12); stroke-width: 2; }
+}
+/* The dot appears at the source, rides the arrow, and is absorbed by the box it reaches, leaving the arrow. */
 @keyframes flow-move {
-	from { transform: translate(var(--fx), var(--fy)); }
+	from { transform: translate(var(--fx), var(--fy)); opacity: 0; }
+	12% { opacity: 1; }
+	80% { opacity: 1; }
+	to { opacity: 0; }
 }
-.walkthrough.reduced .diagram .flow-dot {
+@keyframes flow-pulse { from { opacity: 0; } 50% { opacity: 1; } }
+.walkthrough.reduced .diagram *,
+.walkthrough.reduced .diagram .flow-dot,
+.walkthrough.reduced .diagram .flow-arrow,
+.walkthrough.reduced .diagram .d-new {
+	transition: none;
 	animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
-	.walkthrough .diagram * { transition: none; }
-	.walkthrough .diagram .flow-dot { animation: none; }
+	.walkthrough .diagram * { transition: none; animation: none !important; }
+}
+/* Phones: walkthroughs go edge to edge and fit the width (so the motion stays in view),
+   with labels drawn larger in SVG units so they still read after scaling down. */
+@media (max-width: 639px) {
+	.walkthrough .diagram-card { margin-inline: -1rem; border-radius: 0; padding: 0.75rem 0.5rem; }
+	.walkthrough .diagram .d-text { font-size: 14.5px; }
+	.walkthrough .diagram .d-meta { font-size: 14px; }
 }
 
 /* Wide tables scroll inside the column instead of pushing the page sideways on phones. */

@@ -1,22 +1,24 @@
 <script lang="ts">
 	import FlowWalkthrough, { type FlowBox, type FlowStep } from '#lib/components/FlowWalkthrough.svelte';
 
+	// One row for the request path. The app server becomes "App servers ×N" in the same spot,
+	// and the load balancer slots in before it, so step 4 reads as growth, not a new picture.
 	const boxes: FlowBox[] = [
 		{ id: 'req', label: 'Requirements: users, QPS, reads:writes', x: 20, y: 20, w: 300 },
 		{ id: 'client', label: 'Clients', x: 20, y: 120, w: 100 },
-		{ id: 'app', label: 'App server', x: 190, y: 120, w: 130 },
-		{ id: 'lb', label: 'Load balancer', x: 160, y: 120, w: 130 },
-		{ id: 'apps', label: 'App servers ×N', x: 330, y: 120, w: 140 },
-		{ id: 'db', label: 'Database', x: 520, y: 120, w: 120 },
-		{ id: 'zoom', label: 'Zoom: API + data model', x: 380, y: 20, w: 200 },
-		{ id: 'cache', label: 'Cache', x: 330, y: 220, w: 140 },
-		{ id: 'rep', label: 'Read replicas', x: 520, y: 220, w: 120 }
+		{ id: 'lb', label: 'Load balancer', x: 150, y: 120, w: 130 },
+		{ id: 'app', label: 'App server', x: 310, y: 120, w: 150 },
+		{ id: 'apps', label: 'App servers ×N', x: 310, y: 120, w: 150 },
+		{ id: 'db', label: 'Database', x: 510, y: 120, w: 130 },
+		{ id: 'zoom', label: 'Zoom: API + data model', x: 400, y: 20, w: 220 },
+		{ id: 'cache', label: 'Cache', x: 310, y: 220, w: 150 },
+		{ id: 'rep', label: 'Read replicas', x: 510, y: 220, w: 130 }
 	];
 	const steps: FlowStep[] = [
 		{ caption: 'Step 1: outline use cases, constraints and assumptions. Write the numbers down where the interviewer can see them.', moves: [], visible: ['req'] },
-		{ caption: 'Step 2: a high-level design. Often just clients, an app server and a database, working end to end.', moves: [{ from: 'client', to: 'app' }, { from: 'app', to: 'db' }], visible: ['req', 'client', 'app', 'db'] },
-		{ caption: 'Step 3: dive into the core components, such as the API and how data is stored.', moves: [{ from: 'app', to: 'zoom' }], visible: ['req', 'client', 'app', 'db', 'zoom'] },
-		{ caption: 'Step 4: scale the design. Add a load balancer and more app servers, a cache and replicas, each for a named bottleneck.', moves: [{ from: 'client', to: 'lb' }, { from: 'lb', to: 'apps' }, { from: 'apps', to: 'cache' }, { from: 'apps', to: 'rep' }], visible: ['req', 'client', 'lb', 'apps', 'db', 'cache', 'rep'] }
+		{ caption: 'Step 2: a high-level design. Often just clients, an app server and a database, working end to end.', moves: [{ from: 'client', to: 'app' }, { from: 'app', to: 'db' }], visible: ['req', 'client', 'app', 'db'], sequence: true },
+		{ caption: 'Step 3: dive into the core components, such as the API and how data is stored.', moves: [{ from: 'app', to: 'zoom' }], links: [{ from: 'client', to: 'app' }, { from: 'app', to: 'db' }], visible: ['req', 'client', 'app', 'db', 'zoom'] },
+		{ caption: 'Step 4: scale the design. Add a load balancer and more app servers, a cache and replicas, each for a named bottleneck.', moves: [{ from: 'client', to: 'lb' }, { from: 'lb', to: 'apps' }, { from: 'apps', to: 'cache' }, { from: 'db', to: 'rep' }], links: [{ from: 'apps', to: 'db' }], visible: ['req', 'client', 'lb', 'apps', 'db', 'cache', 'rep'], sequence: true }
 	];
 </script>
 
