@@ -1,7 +1,7 @@
 // Build-time content check: fails the build when a module is malformed.
 import { readdirSync, readFileSync } from 'node:fs';
 import { parse } from 'yaml';
-import { outline as siteOutline, type OutlineSection } from '../src/lib/outline.ts';
+import { outline as siteOutline, type OutlineSection, type Visual } from '../src/lib/outline.ts';
 import { glossary as siteGlossary, type GlossaryEntry } from '../src/lib/glossary.ts';
 import { studyPlan as siteStudyPlan } from '../src/lib/study-plan.ts';
 
@@ -13,7 +13,8 @@ type Mod = { file: string; slug: string; metadata: Record<string, any>; body: st
 export function checkModule(
 	{ file, slug, metadata: md, body }: Mod,
 	outline: OutlineSection[],
-	glossaryIds?: Set<string>
+	glossaryIds?: Set<string>,
+	visualKinds?: Record<string, Visual>
 ): string[] {
 	const errors: string[] = [];
 	const err = (msg: string) => errors.push(`${file}: ${msg}`);
@@ -26,6 +27,10 @@ export function checkModule(
 		if (md.slug !== slug) err(`frontmatter slug "${md.slug}" does not match file name "${slug}"`);
 		if (md.title !== entry.title) err(`title "${md.title}" does not match outline "${entry.title}"`);
 		if (md.section !== section.slug) err(`section "${md.section}" does not match outline "${section.slug}"`);
+	}
+	if (entry && visualKinds && entry.visual !== 'none') {
+		const used = [...body.matchAll(/<([A-Z]\w*)/g)].map(([, name]) => visualKinds[name]);
+		if (!used.includes(entry.visual)) err(`marked visual "${entry.visual}" in the outline but uses no ${entry.visual} component`);
 	}
 	for (const h of REQUIRED_SECTIONS)
 		if (!new RegExp(`^## ${h}\\s*$`, 'm').test(body)) err(`missing section "## ${h}"`);
@@ -82,6 +87,17 @@ export function checkStudyPlan(tiers: { id: string; slugs: string[] }[], outline
 	]);
 }
 
+// Classifies each diagram component by what it wraps: a walkthrough player or a static Diagram.
+export function readVisualKinds(dir = 'src/lib/diagrams'): Record<string, Visual> {
+	const kinds: Record<string, Visual> = {};
+	for (const file of readdirSync(dir).filter((f) => f.endsWith('.svelte'))) {
+		const src = readFileSync(`${dir}/${file}`, 'utf8');
+		if (/Walkthrough\.svelte/.test(src)) kinds[file.slice(0, -7)] = 'walkthrough';
+		else if (/Diagram\.svelte/.test(src)) kinds[file.slice(0, -7)] = 'diagram';
+	}
+	return kinds;
+}
+
 export function readModules(dir = 'src/content/modules'): Mod[] {
 	return readdirSync(dir).filter((f) => f.endsWith('.md')).map((file) => {
 		const raw = readFileSync(`${dir}/${file}`, 'utf8');
@@ -92,10 +108,11 @@ export function readModules(dir = 'src/content/modules'): Mod[] {
 
 if (import.meta.main) {
 	const ids = new Set(siteGlossary.map((e) => e.id));
+	const visualKinds = readVisualKinds();
 	const errors = [
 		...checkGlossary(siteGlossary, siteOutline),
 		...checkStudyPlan(siteStudyPlan, siteOutline),
-		...readModules().flatMap((mod) => checkModule(mod, siteOutline, ids))
+		...readModules().flatMap((mod) => checkModule(mod, siteOutline, ids, visualKinds))
 	];
 	if (errors.length) {
 		console.error(`Content check failed:\n  ${errors.join('\n  ')}`);

@@ -91,3 +91,21 @@ test('study plan with an unknown slug fails', () =>
 	assert.match(checkStudyPlan([{ id: 'short', label: '1 week', slugs: ['a', 'ghost'] }], outline).join(), /short.*ghost/));
 test('study plan with an empty tier fails', () =>
 	assert.match(checkStudyPlan([{ id: 'long', label: '3+ months', slugs: [] }], outline).join(), /long.*empty/));
+
+const kinds = { Flow: 'walkthrough', Pic: 'diagram' } as const;
+const visualOutline = (visual: 'walkthrough' | 'diagram' | 'none') =>
+	[{ slug: 's', title: 'S', modules: [{ slug: 'a', title: 'A', visual }, { slug: 'b', title: 'B', visual: 'none' as const }] }];
+const visualErrs = (visual: 'walkthrough' | 'diagram' | 'none', extra = '') => {
+	const mod = good(); mod.body += extra;
+	return checkModule(mod, visualOutline(visual), undefined, kinds).join();
+};
+test('a module marked walkthrough fails without a walkthrough component', () => {
+	assert.match(visualErrs('walkthrough'), /walkthrough/);
+	assert.match(visualErrs('walkthrough', '<Pic />'), /walkthrough/);
+	assert.equal(visualErrs('walkthrough', '<Flow />'), '');
+});
+test('a module marked diagram fails without a diagram component', () => {
+	assert.match(visualErrs('diagram', '<Flow />'), /diagram/);
+	assert.equal(visualErrs('diagram', '<Pic />'), '');
+});
+test('a module marked none needs no visual', () => assert.equal(visualErrs('none'), ''));
