@@ -146,5 +146,53 @@ export const glossary: GlossaryEntry[] = [
 			'A long-lived, two-way connection between client and server, started by upgrading an HTTP request.',
 		module: 'real-time',
 		source: { title: 'MDN Web Docs, The WebSocket API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API', license: 'CC BY-SA 2.5' }
+	},
+	{
+		id: 'process',
+		term: 'Process',
+		definition:
+			'A running program: its code, its own isolated memory and the resources the OS gave it.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Process (computing)', url: 'https://en.wikipedia.org/wiki/Process_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'thread',
+		term: 'Thread',
+		definition:
+			'A sequence of instructions the OS schedules. Threads of one process share its memory.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Thread (computing)', url: 'https://en.wikipedia.org/wiki/Thread_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'file-descriptor',
+		term: 'File descriptor',
+		definition:
+			'A small integer a process uses to refer to an open file, socket or pipe.',
+		module: 'files-permissions-shell',
+		source: { title: 'Wikipedia, File descriptor', url: 'https://en.wikipedia.org/wiki/File_descriptor', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'load-balancer',
+		term: 'Load balancer',
+		definition:
+			'Distributes incoming client requests to computing resources such as application servers and databases.',
+		module: 'load-balancers',
+		source: primer('load-balancer')
+	},
+	{
+		id: 'reverse-proxy',
+		term: 'Reverse proxy',
+		definition:
+			'A web server that centralizes internal services and provides unified interfaces to the public.',
+		module: 'reverse-proxies-api-gateways',
+		source: primer('reverse-proxy-web-server')
+	},
+	{
+		id: 'cdn',
+		term: 'CDN',
+		definition:
+			'A content delivery network: a globally distributed network of proxy servers, serving content from locations closer to the user.',
+		module: 'cdn',
+		source: primer('content-delivery-network')
 	}
 ];
