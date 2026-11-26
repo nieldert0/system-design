@@ -4,14 +4,13 @@
 	"private": true,
 	"type": "module",
 	"imports": {
-		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*"
 	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "node scripts/check-content.ts && vite build",
 		"check:content": "node scripts/check-content.ts",
-		"test": "node --test scripts/",
+		"test": "node --test 'scripts/*.test.ts'",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
@@ -39,6 +38,6 @@
 		"yaml": "^2.9.1"
 	},
 	"engines": {
-		"node": ">=24"
+		"node": ">=24.2"
 	}
 }

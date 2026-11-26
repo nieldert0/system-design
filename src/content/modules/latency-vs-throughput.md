@@ -15,6 +15,16 @@ sources:
     url: https://github.com/donnemartin/system-design-primer#latency-numbers-every-programmer-should-know
     license: CC BY 4.0
     use: copied
+  - id: wiki-little
+    title: Wikipedia, Little's law
+    url: https://en.wikipedia.org/wiki/Little%27s_law
+    license: CC BY-SA 4.0
+    use: copied
+  - id: wiki-throughput
+    title: Wikipedia, Network throughput
+    url: https://en.wikipedia.org/wiki/Network_throughput
+    license: CC BY-SA 4.0
+    use: copied
 ---
 
 <script>
@@ -40,7 +50,13 @@ The two are measured in different units:
 - **Latency** is a time: milliseconds per request, or seconds per job.
 - **Throughput** is a rate: requests per second, messages per second, or megabytes per second.
 
-They are linked by how much work is in flight at once. If every request takes 100 ms and the server works on 10 requests at a time, it finishes about 10 / 0.1 = 100 requests per second. This relationship is known as Little's law: *work in flight = throughput × latency*. You can raise throughput by doing more at once (more threads, more servers, bigger batches) even when each request is no faster.
+Don't confuse throughput with bandwidth. Bandwidth is the maximum achievable speed or capacity. Throughput is the actual speed or capacity achieved and is always less than bandwidth. <Src id="wiki-throughput" />
+
+They are linked by how much work is in flight at once. If every request takes 100 ms and the server works on 10 requests at a time, it finishes about 10 / 0.1 = 100 requests per second. This is Little's law from queueing theory:
+
+> the long-term average number of customers (L) in a stationary system is equal to the long-term average effective arrival rate (λ) multiplied by the average time that a customer spends in the system (W). <Src id="wiki-little" />
+
+In system design terms: *work in flight = throughput × latency*. You can raise throughput by doing more at once (more threads, more servers, bigger batches) even when each request is no faster.
 
 ### Latency grows as a system fills up
 
