@@ -81,6 +81,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import ServiceDiscoveryFlow from '#lib/diagrams/ServiceDiscoveryFlow.svelte';
 </script>
 
 In a system of many services, instances start, stop and move all the time. Service discovery lets callers find the ones that are alive right now.
@@ -95,20 +96,22 @@ At its core is a **<Term id="service-registry">service registry</Term>**: a data
 
 1. **Register.** When an instance starts it registers its name, address and port (or a platform such as Kubernetes does it for it).
 2. **Stay healthy.** The instance sends heartbeats, or the registry calls a health endpoint like `/health`. Instances that miss checks are removed. <Src id="primer-sd" />
-3. **Look up.** A caller asks the registry for healthy instances of a service.
+3. **Look up.** A caller asks the registry for healthy instances of a service, gets back their addresses, and calls one of them.
+
+<ServiceDiscoveryFlow />
 
 Two styles of lookup: <Src id="wiki-sd" />
 
 - **Client-side discovery.** The caller queries the registry and picks an instance itself, for example round-robin. Fewer hops, but each client needs discovery logic.
-- **Server-side discovery.** The caller sends requests to a load balancer or router, which queries the registry and forwards them. Clients stay simple; the router is one more hop to run.
+- **Server-side discovery.** The caller sends requests to a <Term id="load-balancer">load balancer</Term> or router, which queries the registry and forwards them. Clients stay simple; the router is one more hop to run.
 
-**DNS-based discovery.** The registry serves DNS, so `orders.service.internal` resolves to live instances. SRV records can also carry the port. It works with any client, but caching means stale answers until the TTL runs out. <Src id="wiki-srv" />
+**DNS-based discovery.** The registry serves <Term id="dns">DNS</Term>, so `orders.service.internal` resolves to live instances. SRV records can also carry the port. It works with any client, but caching means stale answers until the <Term id="ttl">TTL</Term> runs out. <Src id="wiki-srv" />
 
-In Kubernetes, a Service gets a stable name and virtual IP, and the platform keeps the list of healthy pods behind it up to date. A service mesh adds a sidecar proxy next to each service that handles discovery, retries and TLS. <Src id="wiki-mesh" />
+In Kubernetes, a Service gets a stable name and virtual IP, and the platform keeps the list of healthy pods behind it up to date. A service mesh adds a sidecar proxy next to each service that handles discovery, retries and <Term id="tls">TLS</Term>. <Src id="wiki-mesh" />
 
 ## Trade-offs
 
-- **Registry availability matters.** If it is down, nobody can find anybody. Run it as a replicated cluster, and let clients cache the last known list.
+- **Registry availability matters.** If it is down, nobody can find anybody. Run it as a replicated cluster, and let clients <Term id="cache">cache</Term> the last known list.
 - **Consistency vs availability.** ZooKeeper and etcd favour consistency (CP); some registries favour availability (AP) and accept briefly stale lists.
 - **Client-side** saves a hop but ties every service to a library; **server-side** and **DNS** are language-neutral.
 - **Health checks** must be cheap but meaningful, or the registry keeps sending traffic to broken instances.

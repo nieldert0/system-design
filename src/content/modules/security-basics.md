@@ -100,6 +100,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import TransitVsRest from '#lib/diagrams/TransitVsRest.svelte';
 </script>
 
 Security is rarely the focus of a design interview, but a few basics should show up in every design.
@@ -112,9 +113,11 @@ The **OWASP Top 10** is a widely used list of the most critical web application 
 
 ## How it works
 
-**Encrypt in transit.** Use HTTPS (TLS) for clients, and TLS or mutual TLS between internal services. Terminate TLS at the load balancer only if the internal network is trusted. <Src id="primer-sec" />
+**Encrypt in transit.** Use HTTPS (<Term id="tls">TLS</Term>) for clients, and TLS or mutual TLS between internal services. Terminate TLS at the <Term id="load-balancer">load balancer</Term> only if the internal network is trusted. <Src id="primer-sec" />
 
-**Encrypt at rest.** Encrypt databases, disks, backups and object storage, with keys held in a key management service rather than next to the data. <Src id="primer-sec" />
+**Encrypt at rest.** Encrypt databases, disks, backups and <Term id="object-storage">object storage</Term>, with keys held in a key management service rather than next to the data. <Src id="primer-sec" />
+
+<TransitVsRest />
 
 **Never trust input.** <Src id="owasp-sqli" />
 
@@ -127,11 +130,11 @@ The **OWASP Top 10** is a widely used list of the most critical web application 
 
 **Manage secrets.** Keep keys and passwords out of code. Load them from a secrets manager at run time and rotate them. <Src id="owasp-secrets" />
 
-**Defence in depth.** Layer controls: firewalls and private subnets, rate limiting and a web application firewall at the edge, authentication and authorization at every service, and audit logs. <Src id="wiki-did" />
+**Defence in depth.** Layer controls: firewalls and private subnets, <Term id="rate-limiting">rate limiting</Term> and a web application firewall at the edge, <Term id="authentication">authentication</Term> and <Term id="authorization">authorization</Term> at every service, and audit logs. <Src id="wiki-did" />
 
 ## Trade-offs
 
-- **More layers mean more latency and cost**, such as mutual TLS on every internal hop; decide based on how sensitive the data is.
+- **More layers mean more <Term id="latency">latency</Term> and cost**, such as mutual TLS on every internal hop; decide based on how sensitive the data is.
 - **Strict least privilege** slows teams down at first but sharply limits the blast radius of a breach.
 - **Slow password hashes** cost CPU at login; that is the point, but size the auth service for it.
 - **Logging helps investigations** but must not capture passwords, tokens or personal data.

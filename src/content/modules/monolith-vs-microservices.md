@@ -81,6 +81,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import MonolithVsMicroservices from '#lib/diagrams/MonolithVsMicroservices.svelte';
 </script>
 
 How you split an application into deployable pieces shapes how teams work, how it scales and how it fails.
@@ -89,17 +90,19 @@ How you split an application into deployable pieces shapes how teams work, how i
 
 A **<Term id="monolith">monolith</Term>** is one application built and deployed as a single unit. The UI, business logic and data access live in one codebase and usually run in one process. <Src id="wiki-mono" />
 
-**<Term id="microservices">Microservices</Term>** split the application into a suite of small services, each deployed on its own and focused on one business capability. Services talk over the network, usually HTTP or RPC, and each owns its own data. <Src id="primer-ms" /> <Src id="wiki-ms" />
+**<Term id="microservices">Microservices</Term>** split the application into a suite of small services, each deployed on its own and focused on one business capability. Services talk over the network, usually <Term id="http">HTTP</Term> or <Term id="rpc">RPC</Term>, and each owns its own data. <Src id="primer-ms" /> <Src id="wiki-ms" />
 
 **<Term id="serverless">Serverless</Term>** goes further: you write functions, and the cloud provider runs them on demand, scales them (down to zero) and bills per use. You manage no servers. <Src id="wiki-sls" />
 
 ## How it works
 
-**Monolith.** One build, one deploy. Calls between parts are in-process function calls, so they are fast and cannot fail on the network. One database makes transactions simple. You scale by running more copies behind a load balancer. <Src id="wiki-mono" />
+**Monolith.** One build, one deploy. Calls between parts are in-process function calls, so they are fast and cannot fail on the network. One database makes transactions simple. You scale by running more copies behind a <Term id="load-balancer">load balancer</Term>. <Src id="wiki-mono" />
 
-**Microservices.** For example, a shop might have separate user, catalog, cart, order and payment services. Clients usually reach them through an API gateway. Each service has its own database, team and release schedule, and finds the others through service discovery. <Src id="primer-ms" /> <Src id="wiki-ms" />
+**Microservices.** For example, a shop might have separate user, catalog, cart, order and payment services. Clients usually reach them through an API gateway. Each service has its own database, team and release schedule, and finds the others through <Term id="service-discovery">service discovery</Term>. <Src id="primer-ms" /> <Src id="wiki-ms" />
 
-**Serverless.** An event (an HTTP request, a new file in object storage, a queue message) triggers a function. The provider starts a container, runs the function and may reuse it for later events. Long-lived state lives in managed databases and storage, not in the function. <Src id="wiki-sls" />
+<MonolithVsMicroservices />
+
+**Serverless.** An event (an HTTP request, a new file in <Term id="object-storage">object storage</Term>, a queue message) triggers a function. The provider starts a container, runs the function and may reuse it for later events. Long-lived state lives in managed databases and storage, not in the function. <Src id="wiki-sls" />
 
 ## Trade-offs
 
@@ -113,7 +116,7 @@ A **<Term id="monolith">monolith</Term>** is one application built and deployed 
 | Watch out for | A big ball of mud, slow builds | A "distributed monolith" | Cold starts, run-time limits |
 
 - **Microservices trade code complexity for operational complexity.** Each call can time out or fail, so you need retries, timeouts, circuit breakers and distributed tracing. <Src id="wiki-ms" />
-- **Data consistency gets harder.** No cross-service transactions; use events and eventual consistency or sagas. <Src id="wiki-ms" />
+- **Data consistency gets harder.** No cross-service transactions; use events and <Term id="eventual-consistency">eventual consistency</Term> or sagas. <Src id="wiki-ms" />
 - **A modular monolith** (clear internal boundaries, one deploy) keeps most of the benefits with little of the cost, and makes a later split easier.
 - **Serverless** is cheap for spiky or low traffic but can cost more than servers at steady high load. <Src id="wiki-sls" />
 

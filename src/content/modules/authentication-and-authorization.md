@@ -46,6 +46,16 @@ sources:
     url: https://en.wikipedia.org/wiki/OpenID
     license: CC BY-SA 4.0
     use: reworded
+  - id: mdn-401
+    title: MDN Web Docs, 401 Unauthorized
+    url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401
+    license: CC BY-SA 2.5
+    use: reworded
+  - id: mdn-403
+    title: MDN Web Docs, 403 Forbidden
+    url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403
+    license: CC BY-SA 2.5
+    use: reworded
   - id: wiki-rbac
     title: Wikipedia, Role-based access control
     url: https://en.wikipedia.org/wiki/Role-based_access_control
@@ -113,6 +123,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import OAuthCodeFlow from '#lib/diagrams/OAuthCodeFlow.svelte';
+	import TokenAuthFlow from '#lib/diagrams/TokenAuthFlow.svelte';
 </script>
 
 Almost every system needs to know who is calling and what they are allowed to do. Those are two separate questions.
@@ -125,9 +137,13 @@ Almost every system needs to know who is calling and what they are allowed to do
 
 **Sessions.** After login, the server creates a session, stores it (in memory, a database or Redis) and sends the browser a long random session ID in a cookie. Each request sends the cookie, and the server looks the session up. Mark the cookie `Secure`, `HttpOnly` and `SameSite`, and issue a fresh ID on login. Logout is easy: delete the session. <Src id="owasp-session" />
 
-**Tokens (JWT).** A **<Term id="jwt">JSON Web Token</Term>** is a compact, signed JSON object with three parts, `header.payload.signature`. The payload holds claims such as the user ID (`sub`) and expiry (`exp`). Any service with the key can verify the signature and trust the claims without a lookup, which suits APIs and microservices. The payload is only encoded, not encrypted, so keep secrets out of it. <Src id="wiki-jwt" />
+**Tokens (JWT).** A **<Term id="jwt">JSON Web Token</Term>** is a compact, signed JSON object with three parts, `header.payload.signature`. The payload holds claims such as the user ID (`sub`) and expiry (`exp`). Any service with the key can verify the signature and trust the claims without a lookup, which suits APIs and <Term id="microservices">microservices</Term>. The payload is only encoded, not encrypted, so keep secrets out of it. <Src id="wiki-jwt" />
 
 Because a JWT is valid until it expires, revoking one is hard. Common practice is a short-lived access token (minutes) plus a longer-lived refresh token that the auth server can revoke. <Src id="owasp-jwt" />
+
+In a typical token flow, the client logs in at the auth server and gets back a signed, short-lived access token. It sends that token with every API call, usually as `Authorization: Bearer <token>`. <Src id="wiki-jwt" /> The API checks the signature and expiry, then whether this user may do this action. A missing or expired token gets **401 Unauthorized**; a valid token without permission gets **403 Forbidden**. <Src id="mdn-401" /> <Src id="mdn-403" />
+
+<TokenAuthFlow />
 
 **<Term id="oauth">OAuth 2.0</Term>** lets a user grant an app limited access to their data on another service, without giving it their password. In the common authorization code flow: <Src id="wiki-oauth" />
 
@@ -136,6 +152,8 @@ Because a JWT is valid until it expires, revoking one is hard. Common practice i
 3. The server redirects back with a short-lived code.
 4. The app's back end swaps the code for an access token (and often a refresh token).
 5. The app calls the API with the access token.
+
+<OAuthCodeFlow />
 
 Public clients such as mobile and single-page apps add PKCE so a stolen code is useless. <Src id="wiki-oauth" />
 

@@ -168,6 +168,17 @@
 .walkthrough.reduced .diagram * {
 	transition: none;
 }
+/* FlowWalkthrough dots slide from their source box; the inline transform is the end state. */
+.walkthrough .diagram .flow-dot {
+	animation: flow-move 600ms var(--ease-out) both;
+}
+@keyframes flow-move {
+	from { transform: translate(var(--fx), var(--fy)); }
+}
+.walkthrough.reduced .diagram .flow-dot {
+	animation: none;
+}
 @media (prefers-reduced-motion: reduce) {
 	.walkthrough .diagram * { transition: none; }
+	.walkthrough .diagram .flow-dot { animation: none; }
 }
