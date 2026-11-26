@@ -394,5 +394,109 @@ export const glossary: GlossaryEntry[] = [
 			'Capping how many requests a client may make in a period, to protect a service from overload and abuse.',
 		module: 'rate-limiting',
 		source: { title: 'Wikipedia, Rate limiting', url: 'https://en.wikipedia.org/wiki/Rate_limiting', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'monolith',
+		term: 'Monolith',
+		definition:
+			'An application built and deployed as a single unit, with all its features in one codebase and usually one process.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Monolithic application', url: 'https://en.wikipedia.org/wiki/Monolithic_application', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'microservices',
+		term: 'Microservices',
+		definition:
+			'An architecture that splits an application into small, independently deployable services, each owning one business capability and its own data.',
+		module: 'monolith-vs-microservices',
+		source: primer('microservices')
+	},
+	{
+		id: 'serverless',
+		term: 'Serverless',
+		definition:
+			'A model where the cloud provider runs your functions on demand, scales them (down to zero) and bills per use; you manage no servers.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Serverless computing', url: 'https://en.wikipedia.org/wiki/Serverless_computing', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'service-discovery',
+		term: 'Service discovery',
+		definition:
+			'Automatically finding the network addresses of healthy instances of a service, usually through a service registry.',
+		module: 'service-discovery',
+		source: primer('service-discovery')
+	},
+	{
+		id: 'service-registry',
+		term: 'Service registry',
+		definition:
+			'A database of services and their live instances, kept current by registration and health checks; e.g. Consul, etcd, ZooKeeper.',
+		module: 'service-discovery',
+		source: primer('service-discovery')
+	},
+	{
+		id: 'least-privilege',
+		term: 'Least privilege',
+		definition:
+			'Giving every user, service and process only the access it needs to do its job.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Principle of least privilege', url: 'https://en.wikipedia.org/wiki/Principle_of_least_privilege', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'sql-injection',
+		term: 'SQL injection',
+		definition:
+			'An attack where user input is interpreted as SQL; prevented with parameterised queries.',
+		module: 'security-basics',
+		source: { title: 'OWASP Cheat Sheet Series, SQL Injection Prevention', url: 'https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'xss',
+		term: 'XSS',
+		definition:
+			'Cross-site scripting: an attacker gets their script to run in the browsers of other users of your site; prevented by escaping output and a Content Security Policy.',
+		module: 'security-basics',
+		source: { title: 'OWASP Cheat Sheet Series, Cross Site Scripting Prevention', url: 'https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'authentication',
+		term: 'Authentication',
+		definition:
+			'Proving who a user or service is, such as with a password, one-time code or certificate.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Authentication', url: 'https://en.wikipedia.org/wiki/Authentication', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'authorization',
+		term: 'Authorization',
+		definition:
+			'Deciding what an authenticated identity is allowed to do.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Authorization', url: 'https://en.wikipedia.org/wiki/Authorization', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'jwt',
+		term: 'JWT',
+		definition:
+			'JSON Web Token: a compact, signed JSON object carrying claims such as user ID and expiry, verifiable without a lookup.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, JSON Web Token', url: 'https://en.wikipedia.org/wiki/JSON_Web_Token', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'oauth',
+		term: 'OAuth 2.0',
+		definition:
+			'A protocol that lets a user grant an app limited access to their data on another service without sharing their password.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, OAuth', url: 'https://en.wikipedia.org/wiki/OAuth', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'rbac',
+		term: 'RBAC',
+		definition:
+			'Role-based access control: permissions are given to roles, and users are given roles.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Role-based access control', url: 'https://en.wikipedia.org/wiki/Role-based_access_control', license: 'CC BY-SA 4.0' }
 	}
 ];
