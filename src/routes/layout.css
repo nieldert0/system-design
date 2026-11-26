@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn-svelte/tailwind.css';
+@import '@fontsource-variable/inter';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tactile-design tokens on a Radix sand neutral. shadcn names map onto the roles. */
+:root {
+	--ink-1: #fdfdfc; --ink-2: #f9f9f8; --ink-3: #f1f0ef; --ink-4: #e9e8e6;
+	--ink-5: #e2e1de; --ink-6: #dad9d6; --ink-7: #cfceca; --ink-8: #bcbbb5;
+	--ink-9: #8d8d86; --ink-10: #82827c; --ink-11: #63635e; --ink-12: #21201c;
+	--ground: var(--ink-2);
+	--raised: #ffffff;
+	--shadow-ink: 33 32 28;
+	--shadow-button: 0 1px 2px 0 rgb(var(--shadow-ink) / 0.12), 0 0 0 1px rgb(var(--shadow-ink) / 0.08);
+	--shadow-card: 0 0 0 1px rgb(var(--shadow-ink) / 0.07), 0 1px 2px 0 rgb(var(--shadow-ink) / 0.12),
+		0 3px 4px -2px rgb(var(--shadow-ink) / 0.08);
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+	--background: var(--ground);
+	--foreground: var(--ink-12);
+	--card: var(--raised);
+	--card-foreground: var(--ink-12);
+	--popover: var(--raised);
+	--popover-foreground: var(--ink-12);
+	--primary: var(--ink-12);
+	--primary-foreground: var(--ink-1);
+	--secondary: var(--raised);
+	--secondary-foreground: var(--ink-12);
+	--muted: var(--ink-3);
+	--muted-foreground: var(--ink-11);
+	--accent: var(--ink-3);
+	--accent-foreground: var(--ink-12);
+	--destructive: #ce2c31;
+	--border: var(--ink-6);
+	--input: var(--ink-3);
+	--ring: var(--ink-10);
+	--radius: 0.5rem;
+}
+
+/* Dark: warm charcoal ground, raised one step lighter with a 0.5px outline. Colours only. */
+.dark {
+	--ink-1: #111110; --ink-2: #191918; --ink-3: #222221; --ink-4: #2a2a28;
+	--ink-5: #31312e; --ink-6: #3b3a37; --ink-7: #494844; --ink-8: #62605b;
+	--ink-9: #6f6d66; --ink-10: #7c7b74; --ink-11: #b5b3ad; --ink-12: #eeeeec;
+	--ground: #1c1b1a;
+	--raised: #252423;
+	--shadow-button: 0 0 0 0.5px var(--ink-7), 0 1px 2px 0 rgb(0 0 0 / 0.5);
+	--shadow-card: 0 0 0 0.5px var(--ink-6), 0 1px 2px 0 rgb(0 0 0 / 0.5), 0 3px 4px -2px rgb(0 0 0 / 0.4);
+	--muted: var(--ink-4);
+	--accent: var(--ink-4);
+	--input: var(--ink-4);
+	--destructive: #ff9592;
+	color-scheme: dark;
+}
+
+@theme inline {
+	--font-sans: 'Inter Variable', system-ui, sans-serif;
+	--color-ink-9: var(--ink-9);
+	--color-ink-10: var(--ink-10);
+	--color-ink-11: var(--ink-11);
+	--color-ink-12: var(--ink-12);
+	--color-raised: var(--raised);
+	--shadow-button: var(--shadow-button);
+	--shadow-card: var(--shadow-card);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--color-foreground: var(--foreground);
+	--color-background: var(--background);
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.75);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--ease-out: var(--ease-out);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring;
+	}
+	html {
+		@apply font-sans;
+		font-weight: 450;
+	}
+	body {
+		@apply bg-background text-foreground antialiased;
+	}
+	:focus-visible {
+		outline-width: 2px;
+		outline-offset: 2px;
+	}
+}
+
+/* Reading column: prose takes its colours from the ink roles in both themes. */
+.prose {
+	--tw-prose-body: var(--ink-12);
+	--tw-prose-headings: var(--ink-12);
+	--tw-prose-links: var(--ink-12);
+	--tw-prose-bold: var(--ink-12);
+	--tw-prose-bullets: var(--ink-9);
+	--tw-prose-counters: var(--ink-11);
+	--tw-prose-hr: var(--ink-6);
+	--tw-prose-quotes: var(--ink-11);
+	--tw-prose-quote-borders: var(--ink-6);
+	--tw-prose-code: var(--ink-12);
+	--tw-prose-th-borders: var(--ink-6);
+	--tw-prose-td-borders: var(--ink-5);
+	--tw-prose-captions: var(--ink-11);
+}
+.prose :where(h2, h3) {
+	font-weight: 550;
+	letter-spacing: -0.01em;
+}
