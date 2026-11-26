@@ -338,5 +338,61 @@ export const glossary: GlossaryEntry[] = [
 			'Storage for whole files (objects) addressed by a key, with metadata, in a flat namespace, such as Amazon S3.',
 		module: 'object-storage',
 		source: { title: 'Wikipedia, Object storage', url: 'https://en.wikipedia.org/wiki/Object_storage', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'rest',
+		term: 'REST',
+		definition:
+			'An architectural style where clients act on resources, identified by URIs, using a uniform set of verbs; communication is stateless and cacheable.',
+		module: 'api-design',
+		source: primer('representational-state-transfer-rest')
+	},
+	{
+		id: 'rpc',
+		term: 'RPC',
+		definition:
+			'Remote procedure call: a client causes a procedure to execute on a remote server, coded as if it were a local call.',
+		module: 'api-design',
+		source: primer('remote-procedure-call-rpc')
+	},
+	{
+		id: 'idempotency-key',
+		term: 'Idempotency key',
+		definition:
+			'A unique id the client sends with a request so the server can recognise retries and return the original result instead of repeating the action.',
+		module: 'api-design',
+		source: { title: 'Wikipedia, Idempotence', url: 'https://en.wikipedia.org/wiki/Idempotence', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'message-queue',
+		term: 'Message queue',
+		definition:
+			'A service that receives, holds, and delivers messages, so work can be processed in the background.',
+		module: 'queues-and-back-pressure',
+		source: primer('message-queues')
+	},
+	{
+		id: 'back-pressure',
+		term: 'Back pressure',
+		definition:
+			'Limiting a queue size so jobs already queued keep good throughput, and telling clients to retry later when it is full.',
+		module: 'queues-and-back-pressure',
+		source: primer('back-pressure')
+	},
+	{
+		id: 'pub-sub',
+		term: 'Pub/sub',
+		definition:
+			'Publish-subscribe: publishers send messages to topics and every subscriber of a topic receives a copy, without either side knowing the other.',
+		module: 'pub-sub-and-event-streaming',
+		source: { title: 'Wikipedia, Publish-subscribe pattern', url: 'https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'rate-limiting',
+		term: 'Rate limiting',
+		definition:
+			'Capping how many requests a client may make in a period, to protect a service from overload and abuse.',
+		module: 'rate-limiting',
+		source: { title: 'Wikipedia, Rate limiting', url: 'https://en.wikipedia.org/wiki/Rate_limiting', license: 'CC BY-SA 4.0' }
 	}
 ];
