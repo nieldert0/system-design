@@ -8,7 +8,8 @@ const good = () => ({
 	slug: 'a',
 	metadata: {
 		slug: 'a', title: 'A', section: 's', readFirst: ['b'],
-		sources: [{ id: 'p', title: 'Primer', url: 'https://x', license: 'CC BY 4.0', use: 'copied' }]
+		sources: [{ id: 'p', title: 'Primer', url: 'https://x', license: 'CC BY 4.0', use: 'copied' }],
+		quiz: Array(5).fill({ prompt: 'Q?', options: ['a', 'b'], correct: 0, explanation: 'E.' })
 	} as Record<string, any>,
 	body: '## What it is\nx <Src id="p" />\n## How it works\n## Trade-offs\n## Interview tips\n'
 });
@@ -42,4 +43,22 @@ test('module not in the outline fails', () => {
 test('frontmatter disagreeing with outline fails', () => {
 	const mod = good(); mod.metadata.title = 'Wrong';
 	assert.match(errs(mod).join(), /title/);
+});
+
+const q = (correct = 0) => ({ prompt: 'Q?', options: ['a', 'b', 'c'], correct, explanation: 'Because.' });
+const withQuiz = (quiz: unknown) => { const mod = good(); mod.metadata.quiz = quiz; return errs(mod).join(); };
+
+test('quiz must have 5 to 8 questions', () => {
+	assert.match(withQuiz([q(), q(), q(), q()]), /5.8 questions/);
+	assert.match(withQuiz(Array(9).fill(q())), /5.8 questions/);
+	assert.match(withQuiz(undefined), /5.8 questions/);
+	assert.equal(withQuiz(Array(5).fill(q())), '');
+});
+test('each question needs exactly one valid correct option', () => {
+	assert.match(withQuiz([...Array(4).fill(q()), q(3)]), /question 5.*correct/);
+	assert.match(withQuiz([...Array(4).fill(q()), { ...q(), correct: [0, 1] }]), /question 5.*correct/);
+});
+test('each question needs an explanation and a prompt', () => {
+	assert.match(withQuiz([...Array(4).fill(q()), { ...q(), explanation: '' }]), /question 5.*explanation/);
+	assert.match(withQuiz([...Array(4).fill(q()), { ...q(), prompt: '' }]), /question 5.*prompt/);
 });

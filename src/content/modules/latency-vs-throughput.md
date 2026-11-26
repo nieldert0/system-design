@@ -25,6 +25,55 @@ sources:
     url: https://en.wikipedia.org/wiki/Network_throughput
     license: CC BY-SA 4.0
     use: copied
+quiz:
+  - prompt: A service handles 2,000 requests per second, and each request takes 50 ms. What is 2,000 requests per second?
+    options:
+      - Its latency
+      - Its throughput
+      - Its bandwidth
+      - Its p99
+    correct: 1
+    explanation: Throughput is a rate, actions per unit of time. Latency is how long each one takes (50 ms).
+  - prompt: Each request takes 100 ms and the server works on 20 requests at once. Roughly what throughput does it reach?
+    options:
+      - 20 requests per second
+      - 100 requests per second
+      - 200 requests per second
+      - 2,000 requests per second
+    correct: 2
+    explanation: Little's law gives throughput = work in flight / latency = 20 / 0.1 s = 200 per second.
+  - prompt: A server goes from 50% to 95% busy. What usually happens to latency?
+    options:
+      - It stays flat until the server hits 100%
+      - It climbs steeply, because requests wait in a queue
+      - It drops, because the server is warmed up
+      - It changes only if throughput falls
+    correct: 1
+    explanation: Near full load, new requests queue behind the ones being served, so waiting time grows fast.
+  - prompt: Why do teams report p99 latency and not only the average?
+    options:
+      - The average is harder to compute
+      - p99 is always lower than the average
+      - The average hides the slow requests users actually feel
+      - p99 measures throughput as well
+    correct: 2
+    explanation: A few very slow requests barely move the average but hurt users, especially when one page calls many services.
+  - prompt: You batch 100 writes into one disk write. What is the usual effect?
+    options:
+      - Higher throughput, higher latency for each write
+      - Lower throughput, lower latency for each write
+      - Higher throughput, lower latency for each write
+      - No change to either
+    correct: 0
+    explanation: One disk write carries many items, so throughput rises, but each item waits for the batch to fill.
+  - prompt: How does throughput relate to bandwidth?
+    options:
+      - They are the same thing
+      - Throughput is the capacity; bandwidth is what you achieve
+      - Bandwidth is the maximum capacity; throughput is what you actually achieve, always less
+      - Throughput is measured in milliseconds
+    correct: 2
+    explanation: Bandwidth is the ceiling of a channel. Throughput is the real rate delivered, which is always below it.
 ---
 
 <script>

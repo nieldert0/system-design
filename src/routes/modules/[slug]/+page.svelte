@@ -8,6 +8,7 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
 	import BookOpen from '@lucide/svelte/icons/book-open';
+	import Quiz from '#lib/components/Quiz.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -42,6 +43,8 @@
 	<div class="prose mt-8 max-w-none prose-h2:mt-10">
 		<data.component />
 	</div>
+
+	<Quiz slug={data.slug} questions={data.meta.quiz} />
 
 	<section class="mt-12">
 		<h2 class="text-xl text-ink-12">Sources</h2>

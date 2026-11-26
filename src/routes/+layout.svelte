@@ -9,10 +9,13 @@
 	import Sidebar from '#lib/components/Sidebar.svelte';
 	import ThemeToggle from '#lib/components/ThemeToggle.svelte';
 	import { SITE_NAME } from '#lib/site.js';
+	import { hydrateProgress } from '#lib/progress-state.svelte.js';
+	import { onMount } from 'svelte';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
 	let menuOpen = $state(false);
+	onMount(hydrateProgress);
 </script>
 
 <svelte:head>

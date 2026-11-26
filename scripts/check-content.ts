@@ -33,6 +33,17 @@ export function checkModule({ file, slug, metadata: md, body }: Mod, outline: Ou
 	for (const s of sources) if (s && !USES.includes(s.use)) err(`source "${s.id}" use must be one of ${USES.join('/')}`);
 	const ids = new Set(sources.map((s) => s?.id));
 	for (const [, id] of body.matchAll(/<Src\s+id="([^"]*)"/g)) if (!ids.has(id)) err(`chip cites undeclared source "${id}"`);
+	const quiz = md.quiz;
+	if (!Array.isArray(quiz) || quiz.length < 5 || quiz.length > 8) err('quiz must have 5-8 questions');
+	else
+		quiz.forEach((q: any, i: number) => {
+			const n = `quiz question ${i + 1}`;
+			if (!q?.prompt) err(`${n} is missing its prompt`);
+			if (!Array.isArray(q?.options) || q.options.length < 2) err(`${n} needs at least 2 options`);
+			else if (!Number.isInteger(q.correct) || q.correct < 0 || q.correct >= q.options.length)
+				err(`${n} needs exactly one correct option (an index into options)`);
+			if (!q?.explanation) err(`${n} is missing its explanation`);
+		});
 	return errors;
 }
 

@@ -18,6 +18,9 @@
 	--shadow-card: 0 0 0 1px rgb(var(--shadow-ink) / 0.07), 0 1px 2px 0 rgb(var(--shadow-ink) / 0.12),
 		0 3px 4px -2px rgb(var(--shadow-ink) / 0.08);
 	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	/* Hue only for meaning: green right, red wrong (Radix green/red 3 and 11). */
+	--green-3: #e6f6eb; --green-11: #218358;
+	--red-3: #feebec; --red-11: #ce2c31;
 
 	--background: var(--ground);
 	--foreground: var(--ink-12);
@@ -53,6 +56,8 @@
 	--accent: var(--ink-4);
 	--input: var(--ink-4);
 	--destructive: #ff9592;
+	--green-3: #132d21; --green-11: #3dd68c;
+	--red-3: #3b1219; --red-11: #ff9592;
 	color-scheme: dark;
 }
 
@@ -63,6 +68,8 @@
 	--color-ink-11: var(--ink-11);
 	--color-ink-12: var(--ink-12);
 	--color-raised: var(--raised);
+	--color-green-11: var(--green-11);
+	--color-red-11: var(--red-11);
 	--shadow-button: var(--shadow-button);
 	--shadow-card: var(--shadow-card);
 	--color-ring: var(--ring);
@@ -126,4 +133,17 @@
 .prose :where(h2, h3) {
 	font-weight: 550;
 	letter-spacing: -0.01em;
+}
+
+/* Status badges: hue-3 fill, hue-11 text, edge from its own colour. */
+@layer components {
+	.badge-green, .badge-red {
+		box-shadow: 0 1px 2px 0 color-mix(in srgb, currentColor 16%, transparent),
+			0 0 0 1px color-mix(in srgb, currentColor 14%, transparent);
+	}
+	.badge-green { background: var(--green-3); color: var(--green-11); }
+	.badge-red { background: var(--red-3); color: var(--red-11); }
+	.dark :is(.badge-green, .badge-red) {
+		box-shadow: 0 0 0 0.5px color-mix(in srgb, currentColor 34%, #000), 0 1px 2px 0 rgb(0 0 0 / 0.5);
+	}
 }

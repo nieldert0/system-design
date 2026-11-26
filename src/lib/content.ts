@@ -2,7 +2,15 @@ import type { Component } from 'svelte';
 import { allModules } from './outline.js';
 
 export type Source = { id: string; title: string; url: string; license: string; use: 'copied' | 'reworded' | 'quoted' };
-export type ModuleMeta = { slug: string; title: string; section: string; readFirst?: string[]; sources: Source[] };
+export type Question = { prompt: string; options: string[]; correct: number; explanation: string };
+export type ModuleMeta = {
+	slug: string;
+	title: string;
+	section: string;
+	readFirst?: string[];
+	sources: Source[];
+	quiz: Question[];
+};
 
 const docs = import.meta.glob<{ default: Component; metadata: ModuleMeta }>('/src/content/modules/*.md');
 const path = (slug: string) => `/src/content/modules/${slug}.md`;
