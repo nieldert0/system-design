@@ -570,5 +570,29 @@ export const glossary: GlossaryEntry[] = [
 			'Following one request across services as a trace: a tree of spans, linked by a trace ID passed in request headers.',
 		module: 'observability',
 		source: { title: 'OpenTelemetry Documentation, Traces', url: 'https://opentelemetry.io/docs/concepts/signals/traces/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'base62',
+		term: 'Base62',
+		definition:
+			'Writing a number with the 62 characters 0-9, a-z and A-Z, so a large ID becomes a short, URL-safe key.',
+		module: 'url-shortener',
+		source: { title: 'System Design Primer, Design Pastebin.com (or Bit.ly)', url: 'https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/pastebin/README.md', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'fan-out-on-write',
+		term: 'Fan-out on write',
+		definition:
+			"Copying a new post into every follower's precomputed feed when it is written, so reading a feed is one lookup.",
+		module: 'twitter-timeline',
+		source: { title: 'System Design Primer, Design the Twitter timeline and search', url: 'https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'url-frontier',
+		term: 'URL frontier',
+		definition:
+			'The queue of URLs a web crawler has found but not yet fetched, usually split per host to stay polite.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, Web crawler', url: 'https://en.wikipedia.org/wiki/Web_crawler', license: 'CC BY-SA 4.0' }
 	}
 ];
