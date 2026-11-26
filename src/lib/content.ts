@@ -25,8 +25,9 @@ export const loadModule = async (slug: string) => {
 
 export const findModule = (slug: string) => allModules.find((m) => m.slug === slug);
 
-/** Previous and next module in outline order, across sections. */
+/** Nearest written module before and after this one in outline order, skipping unwritten ones. */
 export const neighbours = (slug: string) => {
-	const i = allModules.findIndex((m) => m.slug === slug);
-	return { prev: allModules[i - 1], next: allModules[i + 1] };
+	const ready = allModules.filter((m) => written.has(m.slug) || m.slug === slug);
+	const i = ready.findIndex((m) => m.slug === slug);
+	return { prev: ready[i - 1], next: ready[i + 1] };
 };

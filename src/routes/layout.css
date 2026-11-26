@@ -147,3 +147,26 @@
 		box-shadow: 0 0 0 0.5px color-mix(in srgb, currentColor 34%, #000), 0 1px 2px 0 rgb(0 0 0 / 0.5);
 	}
 }
+
+/* Diagram vocabulary: ink roles, so diagrams read in both themes. */
+.diagram {
+	font-family: inherit;
+}
+.diagram .d-box { fill: var(--ink-3); stroke: var(--ink-8); stroke-width: 1; }
+.diagram .d-box-strong { fill: var(--ink-12); }
+.diagram .d-line { stroke: var(--ink-9); stroke-width: 1.5; fill: none; }
+.diagram .d-arrow { fill: var(--ink-9); }
+.diagram .d-text { fill: var(--ink-12); font-size: 13px; }
+.diagram .d-meta { fill: var(--ink-11); font-size: 12px; }
+.diagram .d-on-strong { fill: var(--ink-1); font-size: 13px; }
+.diagram .d-token { fill: var(--ink-12); }
+.diagram .d-wait { fill: var(--red-11); }
+.walkthrough .diagram * {
+	transition: transform 300ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+.walkthrough.reduced .diagram * {
+	transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	.walkthrough .diagram * { transition: none; }
+}

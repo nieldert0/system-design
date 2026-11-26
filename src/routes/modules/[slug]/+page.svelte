@@ -2,6 +2,7 @@
 	import { setContext } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { findModule, neighbours, written } from '#lib/content.js';
+	import { allModules } from '#lib/outline.js';
 	import { SITE_NAME } from '#lib/site.js';
 	import { sectionIcon } from '#lib/icons.js';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
@@ -72,4 +73,14 @@
 		<div>{#if nav.prev}<span class="flex items-center gap-1 text-xs text-ink-11"><ArrowLeft class="size-3.5" aria-hidden="true" />Previous</span>{@render modLink(nav.prev, 'soon')}{/if}</div>
 		<div class="text-right">{#if nav.next}<span class="flex items-center justify-end gap-1 text-xs text-ink-11">Next<ArrowRight class="size-3.5" aria-hidden="true" /></span>{@render modLink(nav.next, 'soon')}{/if}</div>
 	</nav>
+
+	{#if !nav.next}
+		<div class="mt-8 rounded-lg bg-raised p-5 text-sm shadow-card">
+			<p class="text-ink-12">That's everything written so far.</p>
+			<p class="mt-1 text-ink-11">
+				{allModules.length - written.size} more modules are planned.
+				<a class="underline underline-offset-2" href={resolve('/')}>See the roadmap</a>
+			</p>
+		</div>
+	{/if}
 </article>

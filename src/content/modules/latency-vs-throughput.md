@@ -79,6 +79,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import LatencyThroughput from '#lib/diagrams/LatencyThroughput.svelte';
+	import QueueWalkthrough from '#lib/diagrams/QueueWalkthrough.svelte';
 </script>
 
 **<Term id="latency">Latency</Term>** is how long one thing takes. **<Term id="throughput">Throughput</Term>** is how many things get done in a given time. Good systems push throughput up while keeping latency acceptable.
@@ -94,6 +96,8 @@ Generally, you should aim for **maximal throughput** with **acceptable latency**
 ## How it works
 
 Think of a motorway. Latency is how long one car takes to drive from one end to the other. Throughput is how many cars pass the exit each minute. Adding lanes raises throughput without making any single car faster. Raising the speed limit lowers latency, and only raises throughput as a side effect.
+
+<LatencyThroughput />
 
 The two are measured in different units:
 
@@ -111,6 +115,8 @@ In system design terms: *work in flight = throughput × latency*. You can raise 
 ### Latency grows as a system fills up
 
 A server at 30% load answers almost at once. At 90% load, new requests wait in a queue behind the ones already being served, so latency climbs steeply even though throughput barely rises. Pushing a system near 100% busy is the usual way to get high throughput *and* bad latency.
+
+<QueueWalkthrough />
 
 ### Look at the slow requests, not the average
 
