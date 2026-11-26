@@ -258,5 +258,53 @@ export const glossary: GlossaryEntry[] = [
 			'Least recently used: an eviction policy that drops the cache entry that has gone longest without being used.',
 		module: 'cache-strategies-and-eviction',
 		source: { title: 'Wikipedia, Cache replacement policies', url: 'https://en.wikipedia.org/wiki/Cache_replacement_policies', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'acid',
+		term: 'ACID',
+		definition:
+			'Atomicity, Consistency, Isolation, Durability: a set of properties of relational database transactions.',
+		module: 'relational-and-acid',
+		source: primer('relational-database-management-system-rdbms')
+	},
+	{
+		id: 'transaction',
+		term: 'Transaction',
+		definition:
+			'A group of database operations that is applied all together or not at all.',
+		module: 'relational-and-acid',
+		source: { title: 'Wikipedia, Database transaction', url: 'https://en.wikipedia.org/wiki/Database_transaction', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'replication',
+		term: 'Replication',
+		definition:
+			'Copying data from one database node to others, so reads can be spread and a copy survives failures. Layouts are primary/replica or multi-primary.',
+		module: 'replication',
+		source: primer('master-slave-replication')
+	},
+	{
+		id: 'sharding',
+		term: 'Sharding',
+		definition:
+			'Distributing data across different databases such that each database can only manage a subset of the data.',
+		module: 'federation-sharding-denormalization',
+		source: primer('sharding')
+	},
+	{
+		id: 'denormalization',
+		term: 'Denormalization',
+		definition:
+			'Writing redundant copies of data in multiple tables to avoid expensive joins, improving reads at some cost to writes.',
+		module: 'federation-sharding-denormalization',
+		source: primer('denormalization')
+	},
+	{
+		id: 'consistent-hashing',
+		term: 'Consistent hashing',
+		definition:
+			'Placing keys and servers on a hash ring so that adding or removing a server moves only about 1/n of the keys.',
+		module: 'consistent-hashing',
+		source: { title: 'Wikipedia, Consistent hashing', url: 'https://en.wikipedia.org/wiki/Consistent_hashing', license: 'CC BY-SA 4.0' }
 	}
 ];
