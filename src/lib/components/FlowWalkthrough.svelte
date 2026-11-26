@@ -1,7 +1,8 @@
 <script lang="ts" module>
 	export type FlowBox = { id: string; label: string; x: number; y: number; w?: number; h?: number };
-	// A dot travels from one box to another. `fail` draws it in the warning colour (e.g. denied).
-	export type FlowMove = { from: string; to: string; fail?: boolean };
+	// A dot travels from one box to another. `fail` draws it in the warning colour (e.g. denied);
+	// `label` is drawn at the arrow's midpoint (e.g. "5%").
+	export type FlowMove = { from: string; to: string; fail?: boolean; label?: string };
 	// `visible` omitted = every box is shown.
 	export type FlowStep = { caption: string; moves: FlowMove[]; visible?: string[] };
 </script>
@@ -41,8 +42,8 @@
 				<path class="d-arrow" d="M0,0 L10,5 L0,10 z" />
 			</marker>
 		</defs>
-		<!-- Each arrow is trimmed to the box edges along the line between centres. -->
-		{#each s.moves as m, i (i)}
+		<!-- A move to the same box just highlights it, so it gets no arrow. Each arrow is trimmed to the box edges along the line between centres. -->
+		{#each s.moves.filter((m) => m.from !== m.to) as m, i (i)}
 			{@const a = box(m.from)}
 			{@const b = box(m.to)}
 			{@const [x1, y1] = center(m.from)}
@@ -60,10 +61,14 @@
 				y2={y2 - dy * tTo}
 				marker-end="url(#{uid}-arrow)"
 			/>
+			{#if m.label}
+				<text class="d-meta" x={(x1 + x2) / 2} y={(y1 + y2) / 2 - 8} text-anchor="middle">{m.label}</text>
+			{/if}
 		{/each}
 		{#each boxes as bx (bx.id)}
 			{@const b = box(bx.id)}
-			<g style="opacity: {!s.visible || s.visible.includes(b.id) ? 1 : 0}">
+			{@const shown = !s.visible || s.visible.includes(b.id)}
+			<g style="opacity: {shown ? 1 : 0}" aria-hidden={!shown || undefined}>
 				<rect class="d-box" x={b.x} y={b.y} width={b.w} height={b.h} rx="6" />
 				<text class="d-text" x={b.x + b.w / 2} y={b.y + b.h / 2 + 4} text-anchor="middle">{b.label}</text>
 			</g>

@@ -64,27 +64,27 @@ sources:
 quiz:
   - prompt: What is the difference between authentication and authorization?
     options:
-      - They are the same
       - Authentication checks who you are; authorization checks what you may do
       - Authentication is for APIs; authorization is for websites
       - Authorization always comes first
-    correct: 1
+      - They are the same
+    correct: 0
     explanation: Prove identity first, then check permissions on each action.
   - prompt: With server-side sessions, what does the browser hold?
     options:
-      - The user's password
-      - A random session ID in a cookie; the data lives on the server
       - The whole user record
       - Nothing
-    correct: 1
+      - The user's password
+      - A random session ID in a cookie; the data lives on the server
+    correct: 3
     explanation: The server looks the ID up in a session store, often Redis.
   - prompt: Why can any service verify a JWT without calling the auth server?
     options:
+      - JWTs never expire
       - JWTs are encrypted with the user's password
       - The token is signed, so a service with the key can check it was not changed
       - Every service stores every token
-      - JWTs never expire
-    correct: 1
+    correct: 2
     explanation: The signature proves who issued it; the claims say who the user is and when it expires.
   - prompt: What is the main weakness of long-lived JWTs?
     options:
@@ -96,27 +96,27 @@ quiz:
     explanation: Use short-lived access tokens plus refresh tokens, or a deny list.
   - prompt: What is OAuth 2.0 for?
     options:
-      - Hashing passwords
       - Letting a user grant an app limited access to their data on another service without sharing their password
       - Encrypting disks
       - Load balancing
-    correct: 1
+      - Hashing passwords
+    correct: 0
     explanation: OAuth is about delegated authorization; OpenID Connect adds login on top.
   - prompt: What does OpenID Connect add to OAuth 2.0?
     options:
-      - An ID token that tells the app who the user is
       - Rate limiting
       - A database
       - Payment processing
-    correct: 0
+      - An ID token that tells the app who the user is
+    correct: 3
     explanation: OIDC is an identity layer, used for "Sign in with ..." buttons.
   - prompt: In role-based access control, permissions are attached to...
     options:
-      - Roles, and users are given roles
-      - IP addresses
       - Each HTTP request individually
       - Database tables only
-    correct: 0
+      - Roles, and users are given roles
+      - IP addresses
+    correct: 2
     explanation: e.g. an "editor" role can publish; users get the role instead of each permission.
 ---
 

@@ -38,27 +38,27 @@ quiz:
     explanation: Every feature ships together; a change to one part redeploys the whole thing.
   - prompt: What is a key benefit of microservices?
     options:
-      - Calls between parts are faster
       - Teams can deploy and scale each service independently
       - There is less to monitor
       - Transactions across services are easy
-    correct: 1
+      - Calls between parts are faster
+    correct: 0
     explanation: Independent deploys and scaling are the point; the cost is a distributed system.
   - prompt: Which problem do microservices add that a monolith does not have?
     options:
-      - Function calls become network calls that can fail or be slow
       - Code cannot be split into modules
       - You cannot use a database
       - You cannot scale horizontally
-    correct: 0
+      - Function calls become network calls that can fail or be slow
+    correct: 3
     explanation: Every remote call needs timeouts, retries and handling for partial failure.
   - prompt: A two-person startup is building its first product. What is the usual advice?
     options:
+      - Write everything in one file
       - Start with 30 microservices
       - Start with a well-structured monolith and split out services when there is a clear reason
       - Use only serverless functions for everything, always
-      - Write everything in one file
-    correct: 1
+    correct: 2
     explanation: Service boundaries are hard to get right before you understand the domain.
   - prompt: In microservices, why should each service own its data?
     options:
@@ -70,11 +70,11 @@ quiz:
     explanation: A shared database couples services' schemas and deploys back together.
   - prompt: What is a typical downside of serverless functions?
     options:
-      - You must patch the servers yourself
       - Cold starts add latency, and run time and vendor features are limited
       - You pay for idle servers
       - They cannot scale
-    correct: 1
+      - You must patch the servers yourself
+    correct: 0
     explanation: The provider manages servers and scales to zero, which brings cold starts and lock-in.
 ---
 

@@ -498,5 +498,77 @@ export const glossary: GlossaryEntry[] = [
 			'Role-based access control: permissions are given to roles, and users are given roles.',
 		module: 'authentication-and-authorization',
 		source: { title: 'Wikipedia, Role-based access control', url: 'https://en.wikipedia.org/wiki/Role-based_access_control', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'container',
+		term: 'Container',
+		definition:
+			'An isolated process that shares the host kernel but has its own filesystem, network and process view.',
+		module: 'docker',
+		source: { title: 'Wikipedia, OS-level virtualization', url: 'https://en.wikipedia.org/wiki/OS-level_virtualization', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'container-image',
+		term: 'Container image',
+		definition:
+			'A read-only package of an app with its libraries and settings, from which containers are started.',
+		module: 'docker',
+		source: { title: 'Kubernetes Documentation, Containers', url: 'https://kubernetes.io/docs/concepts/containers/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'kubernetes',
+		term: 'Kubernetes',
+		definition:
+			'An open-source platform that runs containers across a cluster, keeping the actual state matched to the declared desired state.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Overview', url: 'https://kubernetes.io/docs/concepts/overview/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'pod',
+		term: 'Pod',
+		definition:
+			'The smallest deployable unit in Kubernetes: one or more containers that share a network address and storage.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Pods', url: 'https://kubernetes.io/docs/concepts/workloads/pods/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'ci-cd',
+		term: 'CI/CD',
+		definition:
+			'Continuous integration and continuous delivery or deployment: automatically building, testing and releasing every change.',
+		module: 'ci-cd-and-deployment',
+		source: { title: 'Wikipedia, Continuous integration', url: 'https://en.wikipedia.org/wiki/Continuous_integration', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'blue-green',
+		term: 'Blue-green deployment',
+		definition:
+			'Running two identical environments and switching traffic from the old (blue) to the new (green) at once, so rollback is a switch back.',
+		module: 'ci-cd-and-deployment',
+		source: { title: 'Wikipedia, Blue–green deployment', url: 'https://en.wikipedia.org/wiki/Blue%E2%80%93green_deployment', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'canary-release',
+		term: 'Canary release',
+		definition:
+			'Sending a small share of traffic to a new version first and widening it while metrics stay healthy.',
+		module: 'ci-cd-and-deployment',
+		source: { title: 'Martin Fowler, Canary Release', url: 'https://martinfowler.com/bliki/CanaryRelease.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'observability',
+		term: 'Observability',
+		definition:
+			'The ability to understand a system from its outputs (logs, metrics and traces) and answer new questions without shipping new code.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Observability primer', url: 'https://opentelemetry.io/docs/concepts/observability-primer/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'distributed-tracing',
+		term: 'Distributed tracing',
+		definition:
+			'Following one request across services as a trace: a tree of spans, linked by a trace ID passed in request headers.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Traces', url: 'https://opentelemetry.io/docs/concepts/signals/traces/', license: 'CC BY 4.0' }
 	}
 ];

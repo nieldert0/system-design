@@ -38,43 +38,43 @@ quiz:
     explanation: Instances come and go with autoscaling and failures, so hard-coded addresses go stale.
   - prompt: What does a service registry hold?
     options:
-      - Source code
       - A list of services and the addresses of their live instances
       - User passwords
       - Cached web pages
-    correct: 1
+      - Source code
+    correct: 0
     explanation: Instances register on start and are removed when they stop or fail health checks.
   - prompt: In client-side discovery, who picks the instance?
     options:
-      - The DNS root servers
-      - The calling service, after querying the registry
       - The database
       - The user's browser
-    correct: 1
+      - The DNS root servers
+      - The calling service, after querying the registry
+    correct: 3
     explanation: The client asks the registry and load balances itself; server-side discovery puts a load balancer in between.
   - prompt: How does a registry learn an instance has died?
     options:
+      - DNS TTL
       - It never does
       - Missed heartbeats or failed health checks
       - The user reports it
-      - DNS TTL
-    correct: 1
+    correct: 2
     explanation: Instances send heartbeats or the registry polls a health endpoint, and expired entries are removed.
   - prompt: Which tools are commonly used as a service registry?
     options:
+      - S3
       - Consul, etcd and ZooKeeper
       - Redis Pub/Sub only
       - Git
-      - S3
-    correct: 0
+    correct: 1
     explanation: They are consistent key-value stores with health checks or watches.
   - prompt: What is a drawback of DNS-based discovery?
     options:
-      - DNS cannot return several addresses
       - Cached records can point to dead instances until the TTL expires
       - DNS is too new
       - It needs a client library in every language
-    correct: 1
+      - DNS cannot return several addresses
+    correct: 0
     explanation: Short TTLs help, but some clients cache longer than they should.
 ---
 

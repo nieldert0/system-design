@@ -49,51 +49,51 @@ sources:
 quiz:
   - prompt: What does encryption in transit protect against?
     options:
-      - Someone reading or changing data as it crosses the network
       - Bugs in your code
       - A full disk
       - Slow queries
-    correct: 0
+      - Someone reading or changing data as it crosses the network
+    correct: 3
     explanation: TLS keeps traffic between client and server, and between services, private and intact.
   - prompt: What is the main defence against SQL injection?
     options:
+      - Longer passwords
       - Hiding error messages
       - Parameterised queries, so user input is never parsed as SQL
       - Using NoSQL
-      - Longer passwords
-    correct: 1
+    correct: 2
     explanation: Bound parameters keep data and code separate.
   - prompt: How should passwords be stored?
     options:
-      - In plain text so support can read them
       - Encrypted with a key in the config file
       - Hashed with a slow, salted algorithm such as Argon2id or bcrypt
       - Hashed with plain SHA-256
-    correct: 2
+      - In plain text so support can read them
+    correct: 1
     explanation: Slow salted hashes make stolen password tables very expensive to crack.
   - prompt: What does the principle of least privilege say?
     options:
-      - Give everyone admin to save time
       - Give each user and service only the access it needs
       - Use the fewest servers possible
       - Log as little as possible
-    correct: 1
+      - Give everyone admin to save time
+    correct: 0
     explanation: It limits the damage a compromised account or bug can do.
   - prompt: Where should API keys and database passwords live?
     options:
-      - In the git repository
-      - In a secrets manager or environment injected at run time
       - In the front-end bundle
       - In log messages
-    correct: 1
+      - In the git repository
+      - In a secrets manager or environment injected at run time
+    correct: 3
     explanation: Secrets in code leak through history, forks and builds.
   - prompt: What is cross-site scripting (XSS)?
     options:
+      - A type of DDoS
       - Running too many sites on one server
       - An attacker getting their script to run in other users' browsers on your site
       - A CSS bug
-      - A type of DDoS
-    correct: 1
+    correct: 2
     explanation: Escape output by context and use a Content Security Policy.
 ---
 
