@@ -144,7 +144,7 @@ Notes
 1 ms = 10^-3 seconds = 1,000 us = 1,000,000 ns
 ```
 
-The lessons to take from it: memory is far faster than disk, sequential reads beat random ones, and a trip across the world costs about a thousand times a trip inside the data centre.
+The lessons to take from it: memory is far faster than disk, sequential reads beat random ones, and a trip across the world costs about 300 times a trip inside the data centre.
 
 ### A worked example
 
