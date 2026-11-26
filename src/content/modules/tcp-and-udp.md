@@ -10,6 +10,11 @@ sources:
     url: https://github.com/donnemartin/system-design-primer#transmission-control-protocol-tcp
     license: CC BY 4.0
     use: copied
+  - id: wiki-tcp
+    title: Wikipedia, Transmission Control Protocol
+    url: https://en.wikipedia.org/wiki/Transmission_Control_Protocol
+    license: CC BY-SA 4.0
+    use: reworded
 quiz:
   - prompt: Which protocol guarantees that data arrives intact and in order?
     options:
@@ -64,6 +69,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import TcpFlow from '#lib/diagrams/TcpFlow.svelte';
+	import UdpFlow from '#lib/diagrams/UdpFlow.svelte';
 </script>
 
 TCP and UDP are the two main transport protocols. TCP is reliable and ordered, at some cost in speed. UDP is fast and simple, and leaves reliability to you.
@@ -81,11 +88,17 @@ TCP gets its guarantees through: <Src id="primer" />
 - Sequence numbers and checksum fields for each packet
 - Acknowledgement packets and automatic retransmission
 
+A connection opens with a three-way handshake: the client sends SYN, the server answers SYN-ACK, and the client replies ACK. <Src id="wiki-tcp" />
+
 If the sender does not receive a correct response, it will resend the packets. If there are multiple timeouts, the connection is dropped. TCP also implements flow control and congestion control. These guarantees cause delays and generally result in less efficient transmission than UDP. <Src id="primer" />
+
+<TcpFlow />
 
 To ensure high <Term id="throughput">throughput</Term>, web servers can keep a large number of TCP connections open, resulting in high memory usage. It can be expensive to have a large number of open connections between web server threads and say, a memcached server. Connection pooling can help in addition to switching to UDP where applicable. <Src id="primer" />
 
 UDP can broadcast, sending datagrams to all devices on the subnet. This is useful with DHCP because the client has not yet received an <Term id="ip-address">IP address</Term>, thus preventing a way for TCP to stream without the IP address. <Src id="primer" />
+
+<UdpFlow />
 
 ## Trade-offs
 

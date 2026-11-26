@@ -10,6 +10,11 @@ sources:
     url: https://github.com/donnemartin/system-design-primer#domain-name-system
     license: CC BY 4.0
     use: copied
+  - id: wiki-dns
+    title: Wikipedia, Domain Name System
+    url: https://en.wikipedia.org/wiki/Domain_Name_System
+    license: CC BY-SA 4.0
+    use: reworded
 quiz:
   - prompt: What does DNS do?
     options:
@@ -64,6 +69,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import DnsLookupFlow from '#lib/diagrams/DnsLookupFlow.svelte';
 </script>
 
 DNS is the internet's phone book. It turns names people can remember into <Term id="ip-address">IP addresses</Term> machines can route to.
@@ -75,6 +81,10 @@ A **<Term id="dns">Domain Name System (DNS)</Term>** translates a domain name su
 ## How it works
 
 DNS is hierarchical, with a few authoritative servers at the top level. Your router or ISP provides information about which DNS server(s) to contact when doing a lookup. Lower level DNS servers <Term id="cache">cache</Term> mappings, which could become stale due to DNS propagation delays. DNS results can also be cached by your browser or OS for a certain period of time, determined by the <Term id="ttl">time to live (TTL)</Term>. <Src id="primer" />
+
+A lookup that is not cached walks down the hierarchy: the resolver asks a root server, which points it to the servers for the top-level domain (such as `.com`), which point it to the domain's authoritative server, which returns the record. The resolver caches the answer for its TTL, so the next lookup stops there. <Src id="wiki-dns" />
+
+<DnsLookupFlow />
 
 Common records: <Src id="primer" />
 

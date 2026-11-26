@@ -74,6 +74,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import RealTimeLanesFlow from '#lib/diagrams/RealTimeLanesFlow.svelte';
 </script>
 
 <Term id="http">HTTP</Term> is built for the client to ask. Real-time features need the server to tell. Polling, server-sent events and WebSockets are three ways to get there.
@@ -92,6 +93,8 @@ Long polling looks like ordinary HTTP, so it passes through any proxy, but every
 SSE uses a normal HTTP response with the content type `text/event-stream`. In the browser, an `EventSource` reads the stream and fires an event for each message; if the connection drops it reconnects and can resume from the last event id. <Src id="mdn-sse" />
 
 A WebSocket starts as an HTTP request that asks to upgrade the connection. After that, the same <Term id="tcp">TCP</Term> connection carries framed messages in both directions, text or binary. <Src id="mdn-ws" />
+
+<RealTimeLanesFlow />
 
 At scale, every open SSE or WebSocket connection is pinned to one server. To send a message to a user, the system must find the server holding their connection, which is usually solved with a <Term id="pub-sub">pub/sub</Term> channel that all connection servers subscribe to.
 

@@ -63,6 +63,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import InterviewGrowsFlow from '#lib/diagrams/InterviewGrowsFlow.svelte';
 </script>
 
 A design interview is a conversation you lead. Work through four steps: scope the problem, sketch a high-level design, go deep on the core parts, then scale it.
@@ -110,6 +111,8 @@ Dive into details for each core component. <Src id="primer" /> For a URL shorten
 Identify and address bottlenecks, given the constraints. <Src id="primer" /> Ask whether you need a load balancer, <Term id="horizontal-scaling">horizontal scaling</Term>, caching or database <Term id="sharding">sharding</Term>, and for each one say what problem it solves.
 
 Discuss potential solutions and trade-offs. Everything is a trade-off. <Src id="primer" />
+
+<InterviewGrowsFlow />
 
 ### Estimates
 

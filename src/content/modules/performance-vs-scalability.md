@@ -64,6 +64,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import ScaleUpOutFlow from '#lib/diagrams/ScaleUpOutFlow.svelte';
 </script>
 
 Performance is how fast the system is for one user. Scalability is whether it stays fast as you add users and add machines.
@@ -89,6 +90,8 @@ There are two ways to add capacity:
 
 - **Vertical scaling** (scaling up): give one machine more CPU, memory or faster disks. It is simple and needs no code changes, but it has a ceiling and one machine is still one point of failure.
 - **<Term id="horizontal-scaling">Horizontal scaling</Term>** (scaling out): add more machines and spread the work across them, usually behind a <Term id="load-balancer">load balancer</Term>. There is no hard ceiling, but the app must be able to run as many copies, which usually means keeping no user state on the servers themselves.
+
+<ScaleUpOutFlow />
 
 A system scales well when doubling the machines roughly doubles the work it can do. If doubling the machines adds only a little, look for the shared part that every request still goes through.
 

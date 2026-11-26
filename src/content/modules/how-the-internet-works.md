@@ -74,6 +74,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import PageLoadFlow from '#lib/diagrams/PageLoadFlow.svelte';
 </script>
 
 The internet is a network of networks. Machines get addresses, data is cut into packets, and routers pass each packet along until it reaches the right address.
@@ -105,6 +106,8 @@ A typical page load:
 2. It opens a TCP connection to that address (and a <Term id="tls">TLS</Term> session for HTTPS).
 3. It sends an HTTP request; routers forward the packets hop by hop.
 4. The server replies, and the packets travel back the same way.
+
+<PageLoadFlow />
 
 Distance matters. Light in fiber covers about 200 km per millisecond, so a round trip between continents costs tens of milliseconds no matter how much <Term id="bandwidth">bandwidth</Term> you buy.
 

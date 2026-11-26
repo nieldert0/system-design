@@ -75,6 +75,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import TlsHandshakeFlow from '#lib/diagrams/TlsHandshakeFlow.svelte';
 </script>
 
 HTTP is how browsers and services ask for things and get answers. HTTPS is the same protocol inside an encrypted TLS tunnel.
@@ -102,6 +103,8 @@ A basic HTTP request consists of a verb (method) and a resource (endpoint). Belo
 HTTP is an application layer protocol relying on lower-level protocols such as **<Term id="tcp">TCP</Term>** and **<Term id="udp">UDP</Term>**. <Src id="primer" />
 
 **The TLS handshake.** Before any HTTP is sent, client and server agree on a cipher, the server presents a certificate signed by a trusted authority, and both derive shared session keys. TLS 1.3 does this in one round trip. <Src id="mdn-tls" />
+
+<TlsHandshakeFlow />
 
 **Versions.** HTTP/1.1 sends one request at a time per connection, so browsers open several connections. HTTP/2 multiplexes many requests over one connection with compressed headers. HTTP/3 runs over QUIC on UDP, so one lost packet no longer stalls every stream. <Src id="mdn-http" />
 
