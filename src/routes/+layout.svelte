@@ -8,6 +8,7 @@
 	import { Button } from '#lib/components/ui/button/index.js';
 	import Sidebar from '#lib/components/Sidebar.svelte';
 	import ThemeToggle from '#lib/components/ThemeToggle.svelte';
+	import Search from '#lib/components/Search.svelte';
 	import { SITE_NAME } from '#lib/site.js';
 	import { hydrateProgress } from '#lib/progress-state.svelte.js';
 	import { onMount } from 'svelte';
@@ -43,6 +44,7 @@
 		><span class="grid size-6 place-items-center rounded-md bg-primary text-primary-foreground"><Layers class="size-3.5" aria-hidden="true" /></span>{SITE_NAME}</a
 	>
 	<nav class="ml-auto flex items-center gap-1">
+		<Search />
 		<a href={resolve('/study-plan')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12 max-md:hidden">Study plan</a>
 		<a href={resolve('/glossary')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12 max-md:hidden">Glossary</a>
 		<ThemeToggle />

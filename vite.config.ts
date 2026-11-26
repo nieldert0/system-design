@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [
-		mdsvex({ extensions: ['.md'] }),
+		mdsvex({ extensions: ['.md'], heading_ids: true }),
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {

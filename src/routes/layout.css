@@ -131,6 +131,7 @@
 	--tw-prose-captions: var(--ink-11);
 }
 .prose :where(h2, h3) {
+	scroll-margin-top: 4rem; /* clear the sticky header when linked */
 	font-weight: 550;
 	letter-spacing: -0.01em;
 }

@@ -18,6 +18,11 @@
 	// Written modules in reading order, each with the section it belongs to.
 	const ready = outline.flatMap((s) => s.modules.filter((m) => written.has(m.slug)).map((m) => ({ ...m, section: s })));
 	const planned = allModules.length - ready.length;
+	// Opened by default when linked to as #roadmap.
+	let roadmapOpen = $state(false);
+	$effect(() => {
+		if (location.hash === '#roadmap') roadmapOpen = true;
+	});
 	const href = (slug: string) => resolve('/modules/[slug]', { slug });
 </script>
 
@@ -54,7 +59,7 @@
 	{/if}
 
 	{#if planned}
-		<details class="group/roadmap mt-12">
+		<details id="roadmap" class="group/roadmap mt-12 scroll-mt-16" open={roadmapOpen}>
 			<summary class="flex w-fit cursor-pointer list-none items-center gap-1.5 text-sm text-ink-11 hover:text-ink-12 [&::-webkit-details-marker]:hidden">
 				<ChevronDown class="size-4 transition-transform duration-150 group-open/roadmap:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
 				{planned} more planned
