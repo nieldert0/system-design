@@ -194,5 +194,69 @@ export const glossary: GlossaryEntry[] = [
 			'A content delivery network: a globally distributed network of proxy servers, serving content from locations closer to the user.',
 		module: 'cdn',
 		source: primer('content-delivery-network')
+	},
+	{
+		id: 'cp',
+		term: 'CP system',
+		definition:
+			'A system that, during a network partition, keeps consistency and may return errors or time out instead of stale data.',
+		module: 'cap-theorem',
+		source: primer('cp---consistency-and-partition-tolerance')
+	},
+	{
+		id: 'ap',
+		term: 'AP system',
+		definition:
+			'A system that, during a network partition, keeps answering with the most readily available data, which might not be the latest.',
+		module: 'cap-theorem',
+		source: primer('ap---availability-and-partition-tolerance')
+	},
+	{
+		id: 'eventual-consistency',
+		term: 'Eventual consistency',
+		definition:
+			'After a write, reads will eventually see it (typically within milliseconds). Data is replicated asynchronously.',
+		module: 'consistency-patterns',
+		source: primer('eventual-consistency')
+	},
+	{
+		id: 'strong-consistency',
+		term: 'Strong consistency',
+		definition:
+			'After a write, reads will see it. Data is replicated synchronously.',
+		module: 'consistency-patterns',
+		source: primer('strong-consistency')
+	},
+	{
+		id: 'failover',
+		term: 'Fail-over',
+		definition:
+			'Switching traffic to a standby copy when the active one fails, for example when heartbeats stop.',
+		module: 'availability-patterns',
+		source: primer('fail-over')
+	},
+	{
+		id: 'cache',
+		term: 'Cache',
+		definition:
+			'A fast store that keeps previous results so a request can be answered without repeating the work.',
+		module: 'where-to-cache',
+		source: primer('cache')
+	},
+	{
+		id: 'cache-aside',
+		term: 'Cache-aside',
+		definition:
+			'The application checks the cache, loads from the database on a miss and adds the entry to the cache. Also called lazy loading.',
+		module: 'cache-strategies-and-eviction',
+		source: primer('cache-aside')
+	},
+	{
+		id: 'lru',
+		term: 'LRU',
+		definition:
+			'Least recently used: an eviction policy that drops the cache entry that has gone longest without being used.',
+		module: 'cache-strategies-and-eviction',
+		source: { title: 'Wikipedia, Cache replacement policies', url: 'https://en.wikipedia.org/wiki/Cache_replacement_policies', license: 'CC BY-SA 4.0' }
 	}
 ];
