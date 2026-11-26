@@ -65,6 +65,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import CacheLayersFlow from '#lib/diagrams/CacheLayersFlow.svelte';
 </script>
 
 A cache keeps a copy of an answer close to where it is needed so you do not compute or fetch it again. You can cache at every layer, from the browser down to the database.
@@ -84,6 +85,8 @@ Caches can be located on the client side (OS or browser), server side, or in a d
 - **Web server caching** - Reverse proxies and caches such as Varnish can serve static and dynamic content directly. Web servers can also cache requests, returning responses without having to contact application servers. <Src id="primer" />
 - **Database caching** - Your database usually includes some level of caching in a default configuration, optimized for a generic use case. Tweaking these settings for specific usage patterns can further boost performance. <Src id="primer" />
 - **Application caching** - In-memory caches such as Memcached and Redis are key-value stores between your application and your data storage. Since the data is held in RAM, it is much faster than typical databases where data is stored on disk. <Src id="primer" />
+
+<CacheLayersFlow />
 
 There are multiple levels you can cache that fall into two general categories: **database queries** and **objects**. Generally, you should try to avoid file-based caching, as it makes cloning and auto-scaling more difficult. <Src id="primer" />
 

@@ -75,6 +75,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import TokenBucketFlow from '#lib/diagrams/TokenBucketFlow.svelte';
 </script>
 
 Rate limiting caps how many requests a client may make in a period. It keeps one noisy client from hurting everyone else.
@@ -93,6 +94,8 @@ Common algorithms: <Src id="wiki-tb" />
 - **Leaky bucket**: requests enter a queue that drains at a fixed rate, smoothing traffic into a steady flow.
 - **Fixed window counter**: count requests per key per minute. Simple, but bursts at window edges can let through up to twice the limit.
 - **Sliding window**: weigh the previous window's count by how much of it overlaps, or keep a log of timestamps, to avoid the edge burst.
+
+<TokenBucketFlow />
 
 **Where to enforce.** Usually at the API gateway or <Term id="reverse-proxy">reverse proxy</Term>, before requests reach the service. With many servers, keep counters in a shared store like Redis, using atomic increments with an expiry, so the limit is global. <Src id="wiki-rl" />
 

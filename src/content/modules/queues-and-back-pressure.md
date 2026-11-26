@@ -64,6 +64,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import BackPressureFlow from '#lib/diagrams/BackPressureFlow.svelte';
 </script>
 
 A queue lets you accept work now and do it later. Back pressure stops that queue from growing until it drags everything down.
@@ -90,6 +91,8 @@ Brokers differ: <Src id="primer" />
 - **Amazon SQS** is hosted but can have high <Term id="latency">latency</Term> and has the possibility of messages being delivered twice.
 
 **<Term id="back-pressure">Back pressure</Term>.** If queues start to grow significantly, the queue size can become larger than memory, resulting in <Term id="cache">cache</Term> misses, disk reads, and even slower performance. Back pressure can help by limiting the queue size, thereby maintaining a high <Term id="throughput">throughput</Term> rate and good response times for jobs already in the queue. Once the queue fills up, clients get a server busy or <Term id="http">HTTP</Term> 503 status code to try again later. Clients can retry the request at a later time, perhaps with exponential backoff. <Src id="primer" />
+
+<BackPressureFlow />
 
 Messages that keep failing go to a **dead-letter queue** after a few attempts, so one bad message cannot block the rest.
 

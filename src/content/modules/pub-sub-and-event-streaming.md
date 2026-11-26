@@ -69,6 +69,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import PubSubReplayFlow from '#lib/diagrams/PubSubReplayFlow.svelte';
 </script>
 
 With pub/sub, a service announces that something happened and any number of other services react, without the sender knowing who they are. Event streams add a durable, replayable log.
@@ -86,6 +87,8 @@ An **event stream** such as Apache Kafka stores messages in an append-only, part
 **Partitions.** A Kafka topic is split into partitions spread over brokers. Messages with the same key always land in the same partition, and each partition is strictly ordered. A consumer group divides the partitions among its members, so a group's parallelism is capped by the partition count. <Src id="wiki-kafka" />
 
 **Replay.** Because the log is retained, a new service can read from the beginning to build its own view, and a buggy consumer can be fixed and rewound. <Src id="wiki-kafka" />
+
+<PubSubReplayFlow />
 
 | | Work queue | Pub/sub | Event stream |
 |---|---|---|---|

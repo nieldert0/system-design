@@ -69,6 +69,9 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import CacheAsideFlow from '#lib/diagrams/CacheAsideFlow.svelte';
+	import WriteThroughBehindFlow from '#lib/diagrams/WriteThroughBehindFlow.svelte';
+	import LruFlow from '#lib/diagrams/LruFlow.svelte';
 </script>
 
 A <Term id="cache">cache</Term> needs two policies: how data gets in and stays fresh (the update strategy), and what to throw out when it is full (the eviction policy).
@@ -90,9 +93,13 @@ RAM is more limited than disk, so cache invalidation algorithms such as least re
 
 Subsequent reads of data added to cache are fast. Cache-aside is also referred to as lazy loading. Only requested data is cached, which avoids filling up the cache with data that isn't requested. <Src id="primer" />
 
+<CacheAsideFlow />
+
 **Write-through.** The application uses the cache as the main data store, reading and writing data to it, while the cache is responsible for reading and writing to the database. Write-through is a slow overall operation due to the write operation, but subsequent reads of just written data are fast. Users are generally more tolerant of <Term id="latency">latency</Term> when updating data than reading data. Data in the cache is not stale. <Src id="primer" />
 
 **Write-behind (write-back).** The application adds or updates the entry in cache, then asynchronously writes the entry to the data store, improving write performance. <Src id="primer" />
+
+<WriteThroughBehindFlow />
 
 **Refresh-ahead.** You can configure the cache to automatically refresh any recently accessed cache entry prior to its expiration. Refresh-ahead can result in reduced latency vs read-through if the cache can accurately predict which items are likely to be needed in the future. <Src id="primer" />
 
@@ -102,6 +109,8 @@ Subsequent reads of data added to cache are fast. Cache-aside is also referred t
 - **LFU** (least frequently used): drop the entry used least often. Good for stable popularity, slow to adapt.
 - **FIFO**: drop the oldest entry regardless of use. Simple, often worse.
 - **<Term id="ttl">TTL</Term> expiry**: entries expire after a set time, which also bounds staleness.
+
+<LruFlow />
 
 ## Trade-offs
 
