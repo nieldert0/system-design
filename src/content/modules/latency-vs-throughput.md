@@ -78,13 +78,14 @@ quiz:
 
 <script>
 	import Src from '#lib/components/Src.svelte';
+	import Term from '#lib/components/Term.svelte';
 </script>
 
-**Latency** is how long one thing takes. **Throughput** is how many things get done in a given time. Good systems push throughput up while keeping latency acceptable.
+**<Term id="latency">Latency</Term>** is how long one thing takes. **<Term id="throughput">Throughput</Term>** is how many things get done in a given time. Good systems push throughput up while keeping latency acceptable.
 
 ## What it is
 
-**Latency** is the time to perform some action or to produce some result. <Src id="primer" />
+**<Term id="latency">Latency</Term>** is the time to perform some action or to produce some result. <Src id="primer" />
 
 **Throughput** is the number of such actions or results per unit of time. <Src id="primer" />
 
@@ -99,9 +100,9 @@ The two are measured in different units:
 - **Latency** is a time: milliseconds per request, or seconds per job.
 - **Throughput** is a rate: requests per second, messages per second, or megabytes per second.
 
-Don't confuse throughput with bandwidth. Bandwidth is the maximum achievable speed or capacity. Throughput is the actual speed or capacity achieved and is always less than bandwidth. <Src id="wiki-throughput" />
+Don't confuse throughput with <Term id="bandwidth">bandwidth</Term>. Bandwidth is the maximum achievable speed or capacity. Throughput is the actual speed or capacity achieved and is always less than bandwidth. <Src id="wiki-throughput" />
 
-They are linked by how much work is in flight at once. If every request takes 100 ms and the server works on 10 requests at a time, it finishes about 10 / 0.1 = 100 requests per second. This is Little's law from queueing theory:
+They are linked by how much work is in flight at once. If every request takes 100 ms and the server works on 10 requests at a time, it finishes about 10 / 0.1 = 100 requests per second. This is <Term id="littles-law">Little's law</Term> from queueing theory:
 
 > the long-term average number of customers (L) in a stationary system is equal to the long-term average effective arrival rate (λ) multiplied by the average time that a customer spends in the system (W). <Src id="wiki-little" />
 

@@ -2,13 +2,18 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { outline as siteOutline, type OutlineSection } from '../src/lib/outline.ts';
+import { glossary as siteGlossary, type GlossaryEntry } from '../src/lib/glossary.ts';
 
 export const REQUIRED_SECTIONS = ['What it is', 'How it works', 'Trade-offs', 'Interview tips'];
 const USES = ['copied', 'reworded', 'quoted'];
 
 type Mod = { file: string; slug: string; metadata: Record<string, any>; body: string };
 
-export function checkModule({ file, slug, metadata: md, body }: Mod, outline: OutlineSection[]): string[] {
+export function checkModule(
+	{ file, slug, metadata: md, body }: Mod,
+	outline: OutlineSection[],
+	glossaryIds?: Set<string>
+): string[] {
 	const errors: string[] = [];
 	const err = (msg: string) => errors.push(`${file}: ${msg}`);
 	const slugs = new Set(outline.flatMap((s) => s.modules.map((m) => m.slug)));
@@ -33,6 +38,10 @@ export function checkModule({ file, slug, metadata: md, body }: Mod, outline: Ou
 	for (const s of sources) if (s && !USES.includes(s.use)) err(`source "${s.id}" use must be one of ${USES.join('/')}`);
 	const ids = new Set(sources.map((s) => s?.id));
 	for (const [, id] of body.matchAll(/<Src\s+id="([^"]*)"/g)) if (!ids.has(id)) err(`chip cites undeclared source "${id}"`);
+	if (glossaryIds)
+		for (const [, id] of body.matchAll(/<Term\s+id="([^"]*)"/g))
+			if (!glossaryIds.has(id)) err(`term "${id}" is not in the glossary`);
+
 	const quiz = md.quiz;
 	if (!Array.isArray(quiz) || quiz.length < 5 || quiz.length > 8) err('quiz must have 5-8 questions');
 	else
@@ -47,6 +56,23 @@ export function checkModule({ file, slug, metadata: md, body }: Mod, outline: Ou
 	return errors;
 }
 
+export function checkGlossary(entries: GlossaryEntry[], outline: OutlineSection[]): string[] {
+	const errors: string[] = [];
+	const slugs = new Set(outline.flatMap((s) => s.modules.map((m) => m.slug)));
+	const seen = new Set<string>();
+	for (const e of entries) {
+		const err = (msg: string) => errors.push(`glossary "${e.id}": ${msg}`);
+		if (seen.has(e.id)) err('duplicate id');
+		seen.add(e.id);
+		if (!e.term) err('missing term');
+		if (!e.definition) err('missing definition');
+		if (!slugs.has(e.module)) err(`teaching module "${e.module}" is an unknown slug`);
+		if (!e.source) err('missing source');
+		else for (const key of ['title', 'url', 'license'] as const) if (!e.source[key]) err(`source is missing its ${key}`);
+	}
+	return errors;
+}
+
 export function readModules(dir = 'src/content/modules'): Mod[] {
 	return readdirSync(dir).filter((f) => f.endsWith('.md')).map((file) => {
 		const raw = readFileSync(`${dir}/${file}`, 'utf8');
@@ -56,7 +82,11 @@ export function readModules(dir = 'src/content/modules'): Mod[] {
 }
 
 if (import.meta.main) {
-	const errors = readModules().flatMap((mod) => checkModule(mod, siteOutline));
+	const ids = new Set(siteGlossary.map((e) => e.id));
+	const errors = [
+		...checkGlossary(siteGlossary, siteOutline),
+		...readModules().flatMap((mod) => checkModule(mod, siteOutline, ids))
+	];
 	if (errors.length) {
 		console.error(`Content check failed:\n  ${errors.join('\n  ')}`);
 		process.exit(1);

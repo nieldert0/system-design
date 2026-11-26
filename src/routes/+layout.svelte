@@ -38,7 +38,10 @@
 	<a href={resolve('/')} class="flex items-center gap-2 text-sm text-ink-12"
 		><span class="grid size-6 place-items-center rounded-md bg-primary text-primary-foreground"><Layers class="size-3.5" aria-hidden="true" /></span>{SITE_NAME}</a
 	>
-	<div class="ml-auto"><ThemeToggle /></div>
+	<nav class="ml-auto flex items-center gap-1">
+		<a href={resolve('/glossary')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12">Glossary</a>
+		<ThemeToggle />
+	</nav>
 </header>
 
 <div class="mx-auto flex max-w-6xl gap-10 px-4 md:px-6">

@@ -14,6 +14,16 @@
 	let { data }: PageProps = $props();
 	// Source chips read the module's sources from here.
 	setContext('sources', () => data.meta.sources);
+	setContext('module-slug', () => data.slug);
+	// Glossary terms: the first <Term> per id in this module claims the underline.
+	let seen = new Set<string>();
+	let seenFor = '';
+	setContext('glossary-claim', (id: string) => {
+		if (seenFor !== data.slug) [seen, seenFor] = [new Set(), data.slug];
+		const first = !seen.has(id);
+		seen.add(id);
+		return first;
+	});
 	const nav = $derived(neighbours(data.slug));
 	const SectionIcon = $derived(sectionIcon(data.meta.section));
 	const readFirst = $derived((data.meta.readFirst ?? []).map((s: string) => findModule(s)!));
