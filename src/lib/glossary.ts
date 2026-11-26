@@ -594,5 +594,21 @@ export const glossary: GlossaryEntry[] = [
 			'The queue of URLs a web crawler has found but not yet fetched, usually split per host to stay polite.',
 		module: 'web-crawler',
 		source: { title: 'Wikipedia, Web crawler', url: 'https://en.wikipedia.org/wiki/Web_crawler', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'autoscaling',
+		term: 'Autoscaling',
+		definition:
+			'Adding or removing servers automatically as load changes, based on metrics such as CPU or request rate.',
+		module: 'scaling-on-aws',
+		source: { title: 'Wikipedia, Autoscaling', url: 'https://en.wikipedia.org/wiki/Autoscaling', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'fixed-window-counter',
+		term: 'Fixed window counter',
+		definition:
+			'A rate-limiting algorithm that counts requests per caller in fixed time windows and rejects them once the count passes the limit.',
+		module: 'api-rate-limiter',
+		source: { title: 'Wikipedia, Rate limiting', url: 'https://en.wikipedia.org/wiki/Rate_limiting', license: 'CC BY-SA 4.0' }
 	}
 ];
