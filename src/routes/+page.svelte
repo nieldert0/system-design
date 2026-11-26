@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { afterNavigate } from '$app/navigation';
 	import { outline, allModules } from '#lib/outline.js';
 	import { written } from '#lib/content.js';
 	import { SITE_NAME } from '#lib/site.js';
@@ -20,7 +21,7 @@
 	const planned = allModules.length - ready.length;
 	// Opened by default when linked to as #roadmap.
 	let roadmapOpen = $state(false);
-	$effect(() => {
+	afterNavigate(() => {
 		if (location.hash === '#roadmap') roadmapOpen = true;
 	});
 	const href = (slug: string) => resolve('/modules/[slug]', { slug });
@@ -59,7 +60,7 @@
 	{/if}
 
 	{#if planned}
-		<details id="roadmap" class="group/roadmap mt-12 scroll-mt-16" open={roadmapOpen}>
+		<details id="roadmap" class="group/roadmap mt-12 scroll-mt-16" bind:open={roadmapOpen}>
 			<summary class="flex w-fit cursor-pointer list-none items-center gap-1.5 text-sm text-ink-11 hover:text-ink-12 [&::-webkit-details-marker]:hidden">
 				<ChevronDown class="size-4 transition-transform duration-150 group-open/roadmap:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
 				{planned} more planned

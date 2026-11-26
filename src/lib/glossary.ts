@@ -50,5 +50,29 @@ export const glossary: GlossaryEntry[] = [
 			url: 'https://en.wikipedia.org/wiki/Little%27s_law',
 			license: 'CC BY-SA 4.0'
 		}
+	},
+	{
+		id: 'scalability',
+		term: 'Scalability',
+		definition:
+			'A service is scalable if it results in increased performance in a manner proportional to resources added.',
+		module: 'performance-vs-scalability',
+		source: primer('performance-vs-scalability')
+	},
+	{
+		id: 'horizontal-scaling',
+		term: 'Horizontal scaling',
+		definition:
+			'Scaling out by adding more machines that share the work, as opposed to scaling up one server on more expensive hardware (vertical scaling).',
+		module: 'performance-vs-scalability',
+		source: primer('horizontal-scaling')
+	},
+	{
+		id: 'back-of-the-envelope',
+		term: 'Back-of-the-envelope estimate',
+		definition:
+			'A quick estimate done by hand, such as how long a job takes or how much memory a structure needs, aiming for the right order of magnitude.',
+		module: 'back-of-the-envelope',
+		source: primer('appendix')
 	}
 ];
