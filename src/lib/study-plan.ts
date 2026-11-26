@@ -7,7 +7,7 @@ export type StudyTier = { id: Tier; label: string; summary: string; slugs: strin
 
 const short = [
 	'approach-a-design-interview', 'performance-vs-scalability', 'latency-vs-throughput', 'back-of-the-envelope',
-	'dns', 'http-https-tls', 'load-balancers', 'cdn', 'cap-theorem', 'replication',
+	'dns', 'http-https-tls', 'load-balancers', 'cdn', 'cap-theorem', 'handling-failure', 'replication',
 	'federation-sharding-denormalization', 'sql-vs-nosql', 'where-to-cache', 'cache-strategies-and-eviction',
 	'api-design', 'queues-and-back-pressure', 'url-shortener', 'api-rate-limiter'
 ];
@@ -15,11 +15,13 @@ const short = [
 const medium = [
 	...short.slice(0, 4), 'how-the-internet-works', 'tcp-and-udp', 'dns', 'http-https-tls', 'real-time',
 	'load-balancers', 'reverse-proxies-api-gateways', 'cdn', 'cap-theorem', 'consistency-patterns',
-	'availability-patterns', 'relational-and-acid', 'replication', 'federation-sharding-denormalization',
-	'consistent-hashing', 'indexes-and-sql-tuning', 'nosql-types', 'sql-vs-nosql', 'where-to-cache',
-	'cache-strategies-and-eviction', 'api-design', 'queues-and-back-pressure', 'pub-sub-and-event-streaming',
-	'rate-limiting', 'monolith-vs-microservices', 'authentication-and-authorization', 'docker',
-	'url-shortener', 'twitter-timeline', 'scaling-on-aws', 'api-rate-limiter'
+	'availability-patterns', 'handling-failure', 'consensus-and-leader-election', 'distributed-transactions',
+	'unique-id-generation', 'relational-and-acid', 'replication', 'federation-sharding-denormalization',
+	'consistent-hashing', 'indexes-and-sql-tuning', 'nosql-types', 'sql-vs-nosql', 'search-and-inverted-indexes',
+	'where-to-cache', 'cache-strategies-and-eviction', 'api-design', 'queues-and-back-pressure', 'pub-sub-and-event-streaming',
+	'rate-limiting', 'monolith-vs-microservices', 'event-driven-architecture', 'authentication-and-authorization',
+	'docker', 'url-shortener', 'api-rate-limiter', 'typeahead', 'notification-system', 'chat-system',
+	'twitter-timeline', 'payment-system', 'scaling-on-aws'
 ];
 
 export const studyPlan: StudyTier[] = [

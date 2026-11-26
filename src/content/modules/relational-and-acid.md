@@ -1,6 +1,6 @@
 ---
 slug: relational-and-acid
-title: Relational databases and ACID
+title: Relational databases, ACID and isolation levels
 section: databases
 readFirst:
   - consistency-patterns

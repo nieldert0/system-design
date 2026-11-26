@@ -27,19 +27,27 @@ export const outline: OutlineSection[] = [
 		m('reverse-proxies-api-gateways', 'Reverse proxies and API gateways'),
 		m('cdn', 'Content delivery networks')
 	] },
-	{ slug: 'availability', title: 'Availability & consistency', modules: [
+	{ slug: 'availability', title: 'Distributed systems', modules: [
 		m('cap-theorem', 'CAP theorem'),
 		m('consistency-patterns', 'Consistency patterns'),
-		m('availability-patterns', 'Availability patterns')
+		m('availability-patterns', 'Availability patterns'),
+		m('handling-failure', 'Timeouts, retries and idempotency'),
+		m('consensus-and-leader-election', 'Consensus and leader election'),
+		m('distributed-transactions', 'Distributed transactions'),
+		m('unique-id-generation', 'Unique ID generation')
 	] },
 	{ slug: 'databases', title: 'Databases', modules: [
-		m('relational-and-acid', 'Relational databases and ACID'),
+		m('relational-and-acid', 'Relational databases, ACID and isolation levels'),
 		m('replication', 'Replication'),
 		m('federation-sharding-denormalization', 'Federation, sharding and denormalization'),
 		m('consistent-hashing', 'Consistent hashing'),
 		m('indexes-and-sql-tuning', 'Indexes and SQL tuning'),
+		m('storage-engines', 'Storage engines: B-trees and LSM-trees'),
 		m('nosql-types', 'NoSQL types'),
 		m('sql-vs-nosql', 'SQL vs NoSQL'),
+		m('search-and-inverted-indexes', 'Search and inverted indexes'),
+		m('geospatial-indexing', 'Geospatial indexing'),
+		m('probabilistic-data-structures', 'Probabilistic data structures'),
 		m('object-storage', 'Object storage')
 	] },
 	{ slug: 'caching', title: 'Caching', modules: [
@@ -47,14 +55,17 @@ export const outline: OutlineSection[] = [
 		m('cache-strategies-and-eviction', 'Cache strategies and eviction')
 	] },
 	{ slug: 'communication', title: 'Communication', modules: [
-		m('api-design', 'API design'),
+		m('api-design', 'API design: REST, gRPC and GraphQL'),
 		m('queues-and-back-pressure', 'Queues and back pressure'),
 		m('pub-sub-and-event-streaming', 'Pub/sub and event streaming'),
+		m('batch-and-stream-processing', 'Batch and stream processing'),
 		m('rate-limiting', 'Rate limiting')
 	] },
 	{ slug: 'architecture', title: 'Architecture', modules: [
-		m('monolith-vs-microservices', 'Monolith vs microservices'),
-		m('service-discovery', 'Service discovery')
+		m('monolith-vs-microservices', 'Monolith vs microservices vs serverless'),
+		m('service-discovery', 'Service discovery'),
+		m('event-driven-architecture', 'Event-driven architecture'),
+		m('multi-region-and-disaster-recovery', 'Multi-region and disaster recovery')
 	] },
 	{ slug: 'security', title: 'Security', modules: [
 		m('security-basics', 'Security basics'),
@@ -68,10 +79,17 @@ export const outline: OutlineSection[] = [
 	] },
 	{ slug: 'case-studies', title: 'Case studies', modules: [
 		m('url-shortener', 'Design a URL shortener'),
+		m('api-rate-limiter', 'Design an API rate limiter'),
+		m('typeahead', 'Design typeahead autocomplete'),
+		m('notification-system', 'Design a notification system'),
+		m('chat-system', 'Design a chat system'),
 		m('twitter-timeline', 'Design the Twitter timeline and search'),
 		m('web-crawler', 'Design a web crawler'),
-		m('scaling-on-aws', 'Scale to millions of users on AWS'),
-		m('api-rate-limiter', 'Design an API rate limiter')
+		m('nearby-places', 'Design a nearby places service'),
+		m('video-streaming', 'Design a video streaming service'),
+		m('payment-system', 'Design a payment system'),
+		m('key-value-store', 'Design a key-value store'),
+		m('scaling-on-aws', 'Scale to millions of users on AWS')
 	] }
 ];
 
