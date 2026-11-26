@@ -59,7 +59,7 @@ quiz:
 	import Term from '#lib/components/Term.svelte';
 </script>
 
-Choose the database by the shape of the data and the queries you will run. SQL is the safe default; NoSQL wins for specific scale or flexibility needs.
+Choose the database by the shape of the data and the queries you will run. SQL is the safe default; <Term id="nosql">NoSQL</Term> wins for specific scale or flexibility needs.
 
 ## What it is
 
@@ -86,7 +86,7 @@ Reasons for **NoSQL**: <Src id="primer" />
 - No need for complex joins
 - Store many TB (or PB) of data
 - Very data intensive workload
-- Very high throughput for IOPS
+- Very high <Term id="throughput">throughput</Term> for IOPS
 
 Sample data well-suited for NoSQL: <Src id="primer" />
 
@@ -98,7 +98,7 @@ Sample data well-suited for NoSQL: <Src id="primer" />
 
 ## Trade-offs
 
-- **SQL** gives correctness and flexible queries; scaling writes beyond one machine takes sharding work.
+- **SQL** gives correctness and flexible queries; scaling writes beyond one machine takes <Term id="sharding">sharding</Term> work.
 - **NoSQL** scales out more easily and handles flexible data; you design around fixed queries and often give up transactions.
 - **Using both** is normal, but every extra store is more to run, back up and keep consistent.
 

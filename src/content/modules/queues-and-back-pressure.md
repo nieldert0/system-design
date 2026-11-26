@@ -87,9 +87,9 @@ Brokers differ: <Src id="primer" />
 
 - **Redis** is useful as a simple message broker but messages can be lost.
 - **RabbitMQ** is popular but requires you to adapt to the 'AMQP' protocol and manage your own nodes.
-- **Amazon SQS** is hosted but can have high latency and has the possibility of messages being delivered twice.
+- **Amazon SQS** is hosted but can have high <Term id="latency">latency</Term> and has the possibility of messages being delivered twice.
 
-**<Term id="back-pressure">Back pressure</Term>.** If queues start to grow significantly, the queue size can become larger than memory, resulting in cache misses, disk reads, and even slower performance. Back pressure can help by limiting the queue size, thereby maintaining a high throughput rate and good response times for jobs already in the queue. Once the queue fills up, clients get a server busy or HTTP 503 status code to try again later. Clients can retry the request at a later time, perhaps with exponential backoff. <Src id="primer" />
+**<Term id="back-pressure">Back pressure</Term>.** If queues start to grow significantly, the queue size can become larger than memory, resulting in <Term id="cache">cache</Term> misses, disk reads, and even slower performance. Back pressure can help by limiting the queue size, thereby maintaining a high <Term id="throughput">throughput</Term> rate and good response times for jobs already in the queue. Once the queue fills up, clients get a server busy or <Term id="http">HTTP</Term> 503 status code to try again later. Clients can retry the request at a later time, perhaps with exponential backoff. <Src id="primer" />
 
 Messages that keep failing go to a **dead-letter queue** after a few attempts, so one bad message cannot block the rest.
 

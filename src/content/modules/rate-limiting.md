@@ -83,7 +83,7 @@ Rate limiting caps how many requests a client may make in a period. It keeps one
 
 **<Term id="rate-limiting">Rate limiting</Term>** controls the rate of requests sent or received, to protect a service from overload, abuse such as brute-force logins or scraping, and runaway costs. <Src id="wiki-rl" />
 
-When a client is over its limit, an HTTP API answers **429 Too Many Requests**, and can add a `Retry-After` header saying when to try again. <Src id="mdn-429" />
+When a client is over its limit, an <Term id="http">HTTP</Term> API answers **429 Too Many Requests**, and can add a `Retry-After` header saying when to try again. <Src id="mdn-429" />
 
 ## How it works
 
@@ -94,7 +94,7 @@ Common algorithms: <Src id="wiki-tb" />
 - **Fixed window counter**: count requests per key per minute. Simple, but bursts at window edges can let through up to twice the limit.
 - **Sliding window**: weigh the previous window's count by how much of it overlaps, or keep a log of timestamps, to avoid the edge burst.
 
-**Where to enforce.** Usually at the API gateway or reverse proxy, before requests reach the service. With many servers, keep counters in a shared store like Redis, using atomic increments with an expiry, so the limit is global. <Src id="wiki-rl" />
+**Where to enforce.** Usually at the API gateway or <Term id="reverse-proxy">reverse proxy</Term>, before requests reach the service. With many servers, keep counters in a shared store like Redis, using atomic increments with an expiry, so the limit is global. <Src id="wiki-rl" />
 
 **What to key on.** Per user or API key for authenticated traffic, per IP for anonymous traffic, and sometimes per endpoint, with tighter limits on expensive or sensitive ones such as login.
 

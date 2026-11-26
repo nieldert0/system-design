@@ -69,26 +69,26 @@ A reverse proxy is the single front door to your servers. An API gateway is a re
 
 A **<Term id="reverse-proxy">reverse proxy</Term>** is a web server that centralizes internal services and provides unified interfaces to the public. Requests from clients are forwarded to a server that can fulfill it before the reverse proxy returns the server's response to the client. <Src id="primer" />
 
-An **API gateway** is a reverse proxy for APIs. It routes each call to the right backend service and handles shared concerns such as authentication, rate limiting, request transformation and analytics. <Src id="wiki-gw" />
+An **API gateway** is a reverse proxy for APIs. It routes each call to the right backend service and handles shared concerns such as <Term id="authentication">authentication</Term>, <Term id="rate-limiting">rate limiting</Term>, request transformation and analytics. <Src id="wiki-gw" />
 
 ## How it works
 
 Benefits of a reverse proxy include: <Src id="primer" />
 
 - **Increased security** - Hide information about backend servers, blacklist IPs, limit number of connections per client
-- **Increased scalability and flexibility** - Clients only see the reverse proxy's IP, allowing you to scale servers or change their configuration
+- **Increased <Term id="scalability">scalability</Term> and flexibility** - Clients only see the reverse proxy's IP, allowing you to scale servers or change their configuration
 - **SSL termination** - Decrypt incoming requests and encrypt server responses so backend servers do not have to perform these potentially expensive operations
 - **Compression** - Compress server responses
 - **Caching** - Return the response for cached requests
 - **Static content** - Serve static content directly (HTML/CSS/JS, photos, videos)
 
-Load balancer vs reverse proxy: <Src id="primer" />
+<Term id="load-balancer">Load balancer</Term> vs reverse proxy: <Src id="primer" />
 
 - Deploying a load balancer is useful when you have multiple servers. Often, load balancers route traffic to a set of servers serving the same function.
 - Reverse proxies can be useful even with just one web server or application server, opening up the benefits described in the previous section.
 - Solutions such as NGINX and HAProxy can support both layer 7 reverse proxying and load balancing.
 
-With microservices, the gateway gives clients one endpoint and maps paths such as `/users` and `/orders` to different services, so clients do not need to know the internal layout. <Src id="wiki-gw" />
+With <Term id="microservices">microservices</Term>, the gateway gives clients one endpoint and maps paths such as `/users` and `/orders` to different services, so clients do not need to know the internal layout. <Src id="wiki-gw" />
 
 ## Trade-offs
 
@@ -98,6 +98,6 @@ With microservices, the gateway gives clients one endpoint and maps paths such a
 
 ## Interview tips
 
-- Draw the edge as: DNS → CDN → load balancer / gateway → services.
-- Put cross-cutting concerns at the gateway: auth checks, rate limiting, TLS. Keep business logic out of it.
+- Draw the edge as: <Term id="dns">DNS</Term> → <Term id="cdn">CDN</Term> → load balancer / gateway → services.
+- Put cross-cutting concerns at the gateway: auth checks, rate limiting, <Term id="tls">TLS</Term>. Keep business logic out of it.
 - Remember the difference: a load balancer spreads load over identical servers; a reverse proxy or gateway is a front door and may route to different ones.

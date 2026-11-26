@@ -90,11 +90,11 @@ A typical upload flow:
 2. The API returns a short-lived **pre-signed URL** for one key.
 3. The client uploads the file directly to object storage.
 4. The API saves the key and metadata in the database.
-5. Reads go through a CDN with object storage as the origin.
+5. Reads go through a <Term id="cdn">CDN</Term> with object storage as the origin.
 
 ## Trade-offs
 
-- **Cheap and durable at any scale,** but higher latency per request than a local disk or a database row.
+- **Cheap and durable at any scale,** but higher <Term id="latency">latency</Term> per request than a local disk or a database row.
 - **Whole-object writes only.** Fine for media and backups, wrong for data that changes in small pieces.
 - **Simple key lookups;** listing and searching need the database or an index you maintain.
 - **Storage classes** (hot, infrequent, archive) trade lower cost for slower or pricier retrieval.

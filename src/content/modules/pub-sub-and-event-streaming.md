@@ -97,12 +97,12 @@ An **event stream** such as Apache Kafka stores messages in an append-only, part
 ## Trade-offs
 
 - **Loose coupling** makes it easy to add consumers, but harder to see the whole flow and debug it.
-- **Eventual consistency**: consumers update after the event, not with it.
+- **<Term id="eventual-consistency">Eventual consistency</Term>**: consumers update after the event, not with it.
 - **Ordering is local**: only within a partition, so choose keys carefully.
 - **Delivery is usually at least once**; consumers must be idempotent.
 
 ## Interview tips
 
 - Use pub/sub when one event has several independent reactions (notifications, analytics, search indexing).
-- Use Kafka when you need high throughput, ordering per key or replay.
+- Use Kafka when you need high <Term id="throughput">throughput</Term>, ordering per key or replay.
 - Name the partition key and explain why ("user id, so each user's events stay in order").

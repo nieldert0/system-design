@@ -71,7 +71,7 @@ A CDN keeps copies of your content in data centers all over the world, so users 
 
 ## What it is
 
-A **<Term id="cdn">content delivery network (CDN)</Term>** is a globally distributed network of proxy servers, serving content from locations closer to the user. Generally, static files such as HTML/CSS/JS, photos, and videos are served from CDN, although some CDNs such as Amazon's CloudFront support dynamic content. The site's DNS resolution will tell clients which server to contact. <Src id="primer" />
+A **<Term id="cdn">content delivery network (CDN)</Term>** is a globally distributed network of proxy servers, serving content from locations closer to the user. Generally, static files such as HTML/CSS/JS, photos, and videos are served from CDN, although some CDNs such as Amazon's CloudFront support dynamic content. The site's <Term id="dns">DNS</Term> resolution will tell clients which server to contact. <Src id="primer" />
 
 Serving content from CDNs can significantly improve performance in two ways: <Src id="primer" />
 
@@ -86,7 +86,7 @@ Sites with a small amount of traffic or sites with content that isn't often upda
 
 **Pull CDNs.** Pull CDNs grab new content from your server when the first user requests the content. You leave the content on your server and rewrite URLs to point to the CDN. This results in a slower request until the content is cached on the CDN. <Src id="primer" />
 
-A time-to-live (TTL) determines how long content is cached. Pull CDNs minimize storage space on the CDN, but can create redundant traffic if files expire and are pulled before they have actually changed. <Src id="primer" />
+A <Term id="ttl">time-to-live</Term> (TTL) determines how long content is cached. Pull CDNs minimize storage space on the CDN, but can create redundant traffic if files expire and are pulled before they have actually changed. <Src id="primer" />
 
 Sites with heavy traffic work well with pull CDNs, as traffic is spread out more evenly with only recently-requested content remaining on the CDN. <Src id="primer" />
 
@@ -98,6 +98,6 @@ Sites with heavy traffic work well with pull CDNs, as traffic is spread out more
 
 ## Interview tips
 
-- Put images, video and static assets on a CDN early; it is the cheapest latency win.
-- Use versioned file names (`app.3f9a.js`) so you can cache forever and still ship updates instantly.
+- Put images, video and static assets on a CDN early; it is the cheapest <Term id="latency">latency</Term> win.
+- Use versioned file names (`app.3f9a.js`) so you can <Term id="cache">cache</Term> forever and still ship updates instantly.
 - For global users, mention that CDNs also absorb traffic spikes and some DDoS.

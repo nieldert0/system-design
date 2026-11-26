@@ -66,7 +66,7 @@ quiz:
 	import Term from '#lib/components/Term.svelte';
 </script>
 
-DNS is the internet's phone book. It turns names people can remember into IP addresses machines can route to.
+DNS is the internet's phone book. It turns names people can remember into <Term id="ip-address">IP addresses</Term> machines can route to.
 
 ## What it is
 
@@ -74,7 +74,7 @@ A **<Term id="dns">Domain Name System (DNS)</Term>** translates a domain name su
 
 ## How it works
 
-DNS is hierarchical, with a few authoritative servers at the top level. Your router or ISP provides information about which DNS server(s) to contact when doing a lookup. Lower level DNS servers cache mappings, which could become stale due to DNS propagation delays. DNS results can also be cached by your browser or OS for a certain period of time, determined by the <Term id="ttl">time to live (TTL)</Term>. <Src id="primer" />
+DNS is hierarchical, with a few authoritative servers at the top level. Your router or ISP provides information about which DNS server(s) to contact when doing a lookup. Lower level DNS servers <Term id="cache">cache</Term> mappings, which could become stale due to DNS propagation delays. DNS results can also be cached by your browser or OS for a certain period of time, determined by the <Term id="ttl">time to live (TTL)</Term>. <Src id="primer" />
 
 Common records: <Src id="primer" />
 
@@ -102,5 +102,5 @@ Services such as CloudFlare and Route 53 provide managed DNS services. Some DNS 
 ## Interview tips
 
 - DNS is the first hop in "what happens when you type a URL". Mention caching at every level.
-- DNS can do coarse load balancing and route users to the nearest region, but clients cache answers, so it is slow to react to failures. Put a load balancer behind it.
+- DNS can do coarse load balancing and route users to the nearest region, but clients cache answers, so it is slow to react to failures. Put a <Term id="load-balancer">load balancer</Term> behind it.
 - Before a migration, lower the TTL in advance so the switch takes effect quickly.

@@ -66,7 +66,7 @@ Consistent hashing decides which server owns which key, in a way where adding or
 
 ## How it works
 
-The naive approach, `server = hash(key) mod N`, works until N changes. Then almost every key maps to a different server, which for a cache means a near-total miss storm and for a database means moving nearly all data. <Src id="wiki-ch" />
+The naive approach, `server = hash(key) mod N`, works until N changes. Then almost every key maps to a different server, which for a <Term id="cache">cache</Term> means a near-total miss storm and for a database means moving nearly all data. <Src id="wiki-ch" />
 
 With a ring: <Src id="wiki-ch" />
 
@@ -83,7 +83,7 @@ Systems such as Amazon's Dynamo, Cassandra and many distributed caches use this 
 
 - **Minimal movement** on scaling, at the cost of a little more logic than modulo.
 - **Uneven load without virtual nodes;** with them, more metadata to track.
-- **Hot keys are not fixed by hashing.** One celebrity key still lands on one node; you need replication or key splitting for that.
+- **Hot keys are not fixed by hashing.** One celebrity key still lands on one node; you need <Term id="replication">replication</Term> or key splitting for that.
 
 ## Interview tips
 

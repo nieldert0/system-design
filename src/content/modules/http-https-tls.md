@@ -99,7 +99,7 @@ A basic HTTP request consists of a verb (method) and a resource (endpoint). Belo
 
 *Can be called many times without different outcomes. <Src id="primer" />
 
-HTTP is an application layer protocol relying on lower-level protocols such as **TCP** and **UDP**. <Src id="primer" />
+HTTP is an application layer protocol relying on lower-level protocols such as **<Term id="tcp">TCP</Term>** and **<Term id="udp">UDP</Term>**. <Src id="primer" />
 
 **The TLS handshake.** Before any HTTP is sent, client and server agree on a cipher, the server presents a certificate signed by a trusted authority, and both derive shared session keys. TLS 1.3 does this in one round trip. <Src id="mdn-tls" />
 
@@ -107,12 +107,12 @@ HTTP is an application layer protocol relying on lower-level protocols such as *
 
 ## Trade-offs
 
-- **HTTPS costs a little latency and CPU,** mostly in the handshake. Connection reuse and TLS 1.3 make it small; there is no good reason to serve plain HTTP today.
-- **Terminating TLS at the load balancer** keeps certificates in one place and spares app servers, but traffic inside your network is then unencrypted unless you re-encrypt.
-- **Stateless requests scale well** behind load balancers and caches, but anything stateful (sessions) has to live somewhere shared.
+- **HTTPS costs a little <Term id="latency">latency</Term> and CPU,** mostly in the handshake. Connection reuse and TLS 1.3 make it small; there is no good reason to serve plain HTTP today.
+- **Terminating TLS at the <Term id="load-balancer">load balancer</Term>** keeps certificates in one place and spares app servers, but traffic inside your network is then unencrypted unless you re-encrypt.
+- **Stateless requests scale well** behind load balancers and <Term id="cache">caches</Term>, but anything stateful (sessions) has to live somewhere shared.
 
 ## Interview tips
 
 - Use verbs correctly in API design, and call out idempotency when you talk about retries.
 - Say where TLS ends: "TLS terminates at the load balancer; internal traffic uses mTLS" is a solid default.
-- When latency matters, count round trips: DNS, TCP, TLS, then the request. Keep-alive and HTTP/2 cut most of them.
+- When latency matters, count round trips: <Term id="dns">DNS</Term>, TCP, TLS, then the request. Keep-alive and HTTP/2 cut most of them.

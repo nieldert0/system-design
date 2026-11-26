@@ -99,7 +99,7 @@ Outline a high level design with all important components. <Src id="primer" />
 - Sketch the main components and connections
 - Justify your ideas
 
-A first sketch is often just clients, a load balancer, a few app servers and a database. Make it work end to end before making it big.
+A first sketch is often just clients, a <Term id="load-balancer">load balancer</Term>, a few app servers and a database. Make it work end to end before making it big.
 
 ### Step 3: Design core components
 
@@ -107,7 +107,7 @@ Dive into details for each core component. <Src id="primer" /> For a URL shorten
 
 ### Step 4: Scale the design
 
-Identify and address bottlenecks, given the constraints. <Src id="primer" /> Ask whether you need a load balancer, horizontal scaling, caching or database sharding, and for each one say what problem it solves.
+Identify and address bottlenecks, given the constraints. <Src id="primer" /> Ask whether you need a load balancer, <Term id="horizontal-scaling">horizontal scaling</Term>, caching or database <Term id="sharding">sharding</Term>, and for each one say what problem it solves.
 
 Discuss potential solutions and trade-offs. Everything is a trade-off. <Src id="primer" />
 

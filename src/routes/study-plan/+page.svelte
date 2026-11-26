@@ -14,7 +14,7 @@
 
 <div class="max-w-[68ch]">
 	<h1 class="text-3xl tracking-tight text-ink-12">Study plan</h1>
-	<p class="mt-2 text-base text-ink-11">How long until your interview? Pick a timeline for a list that fits it.</p>
+	<p class="mt-3 text-base text-ink-11">How long until your interview? Pick a timeline for a list that fits it.</p>
 
 	<fieldset class="mt-8">
 		<legend class="sr-only">Time until your interview</legend>

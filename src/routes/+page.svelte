@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { afterNavigate } from '$app/navigation';
 	import { outline, allModules } from '#lib/outline.js';
 	import { written } from '#lib/content.js';
 	import { SITE_NAME } from '#lib/site.js';
@@ -19,17 +18,12 @@
 	// Written modules in reading order, each with the section it belongs to.
 	const ready = outline.flatMap((s) => s.modules.filter((m) => written.has(m.slug)).map((m) => ({ ...m, section: s })));
 	const planned = allModules.length - ready.length;
-	// Opened by default when linked to as #roadmap.
-	let roadmapOpen = $state(false);
-	afterNavigate(() => {
-		if (location.hash === '#roadmap') roadmapOpen = true;
-	});
 	const href = (slug: string) => resolve('/modules/[slug]', { slug });
 </script>
 
 <div class="max-w-3xl">
 	<h1 class="text-3xl tracking-tight text-ink-12">{SITE_NAME}</h1>
-	<p class="mt-2 text-base text-ink-11">
+	<p class="mt-3 text-base text-ink-11">
 		Free, sourced notes on the system design topics interviewers ask about.
 	</p>
 
@@ -43,7 +37,7 @@
 			<span class="grid size-10 shrink-0 place-items-center rounded-md bg-ink-3 text-ink-11"><Icon class="size-5" aria-hidden="true" /></span>
 			<span class="min-w-0 flex-1">
 				<span class="block text-sm text-ink-11">Start reading · {first.section.title}</span>
-				<span class="block text-xl text-ink-12">{first.title}</span>
+				<span class="mt-1 block text-xl text-ink-12">{first.title}</span>
 			</span>
 			<span class="hidden h-9 items-center gap-1.5 rounded-md bg-primary px-3.5 text-sm tracking-[-0.01em] text-primary-foreground sm:inline-flex"
 				>Read<ArrowRight class="size-4 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" /></span
@@ -51,7 +45,7 @@
 		</a>
 
 		{#if rest.length}
-			<ul class="mt-4 flex flex-col gap-1 text-sm">
+			<ul class="mt-5 flex flex-col gap-2 text-sm">
 				{#each rest as mod (mod.slug)}
 					<li><a class="underline underline-offset-2" href={href(mod.slug)}>{mod.title}</a> <span class="text-ink-10">· {mod.section.title}</span></li>
 				{/each}
@@ -60,7 +54,7 @@
 	{/if}
 
 	{#if planned}
-		<details id="roadmap" class="group/roadmap mt-12 scroll-mt-16" bind:open={roadmapOpen}>
+		<details class="group/roadmap mt-12">
 			<summary class="flex w-fit cursor-pointer list-none items-center gap-1.5 text-sm text-ink-11 hover:text-ink-12 [&::-webkit-details-marker]:hidden">
 				<ChevronDown class="size-4 transition-transform duration-150 group-open/roadmap:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
 				{planned} more planned

@@ -88,7 +88,7 @@ A **<Term id="thread">thread</Term>** is a sequence of instructions the OS can s
 
 ## How it works
 
-The OS scheduler gives each runnable thread a slice of CPU time. Switching from one thread to another (a context switch) means saving and loading registers and often losing CPU cache warmth, so it is not free. <Src id="wiki-thread" />
+The OS scheduler gives each runnable thread a slice of CPU time. Switching from one thread to another (a context switch) means saving and loading registers and often losing CPU <Term id="cache">cache</Term> warmth, so it is not free. <Src id="wiki-thread" />
 
 Threads are cheap to create and share data easily, but shared memory means races and locks. Processes are heavier but isolated: a crash in one does not corrupt another. <Src id="wiki-process" />
 

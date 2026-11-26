@@ -103,7 +103,7 @@ Handy commands when a server misbehaves: `top` or `htop` (CPU and memory), `df -
 
 ## Trade-offs
 
-- **Least privilege vs convenience.** Running services as their own unprivileged user is safer and costs a little setup.
+- **<Term id="least-privilege">Least privilege</Term> vs convenience.** Running services as their own unprivileged user is safer and costs a little setup.
 - **Higher descriptor limits** let a server hold more connections but use more kernel memory.
 - **Shell one-liners** are fast for exploring, but anything you run repeatedly belongs in a script or proper tooling.
 

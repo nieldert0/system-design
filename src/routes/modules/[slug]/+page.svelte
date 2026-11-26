@@ -42,7 +42,7 @@
 
 <article class="max-w-[68ch]">
 	<p class="flex items-center gap-1.5 text-sm text-ink-11"><SectionIcon class="size-4" aria-hidden="true" />{data.sectionTitle}</p>
-	<h1 class="mt-1 text-3xl tracking-tight text-ink-12">{data.meta.title}</h1>
+	<h1 class="mt-3 text-3xl tracking-tight text-ink-12">{data.meta.title}</h1>
 
 	{#if readFirst.length}
 		<p class="mt-4 flex flex-wrap items-center gap-x-1.5 text-sm text-ink-11">
@@ -59,14 +59,14 @@
 
 	<section class="mt-12">
 		<h2 class="text-xl text-ink-12">Sources</h2>
-		<ul class="mt-3 flex flex-col gap-2 text-sm">
+		<ol class="mt-3 flex list-decimal flex-col gap-2 pl-6 text-sm marker:text-ink-11 marker:tabular-nums">
 			{#each data.meta.sources as s (s.id)}
-				<li>
+				<li id="source-{s.id}" class="scroll-mt-24 rounded target:bg-raised">
 					<a class="underline underline-offset-2" href={s.url} rel="external noopener" target="_blank">{s.title}<ArrowUpRight class="ml-0.5 inline size-3.5 align-[-2px] text-ink-10" aria-hidden="true" /></a>
 					<span class="text-ink-11">· {s.license} · {s.use}</span>
 				</li>
 			{/each}
-		</ul>
+		</ol>
 	</section>
 
 	{#if nav.prev || nav.next}
@@ -81,7 +81,7 @@
 			<p class="text-ink-12">That's everything written so far.</p>
 			<p class="mt-1 text-ink-11">
 				{allModules.length - written.size} more modules are planned.
-				<a class="underline underline-offset-2" href="{resolve('/')}#roadmap">See the roadmap</a>
+				<a class="underline underline-offset-2" href={resolve('/')}>See the roadmap</a>
 			</p>
 		</div>
 	{/if}

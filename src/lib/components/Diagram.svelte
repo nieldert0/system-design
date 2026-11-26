@@ -14,8 +14,9 @@
 </script>
 
 <figure class="not-prose my-8">
-	<div class="rounded-lg bg-raised p-4 shadow-card">
-		<svg {viewBox} role="img" aria-labelledby="{uid}-t {uid}-d" class="diagram block h-auto w-full">
+	<div class="overflow-x-auto rounded-lg bg-raised p-4 shadow-card">
+		<!-- Never shrink below 80% of drawn size, so 12px labels stay ≥9.6px; narrower screens scroll the figure. -->
+		<svg {viewBox} role="img" aria-labelledby="{uid}-t {uid}-d" class="diagram block h-auto w-full" style:min-width="{Number(viewBox.split(' ')[2]) * 0.8}px">
 			<title id="{uid}-t">{title}</title>
 			<desc id="{uid}-d">{desc}</desc>
 			{@render children()}

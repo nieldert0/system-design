@@ -92,7 +92,7 @@ An API is a contract between services. Pick a style (REST, RPC or GraphQL), then
 
 **<Term id="rpc">RPC</Term>**: in an RPC, a client causes a procedure to execute on a different address space, usually a remote server. The procedure is coded as if it were a local procedure call, abstracting away the details of how to communicate with the server from the client program. <Src id="primer" />
 
-**gRPC** is a modern RPC framework: services and messages are defined in Protocol Buffers, clients are generated from that schema, and calls run over HTTP/2 with streaming support. <Src id="wiki-grpc" />
+**gRPC** is a modern RPC framework: services and messages are defined in Protocol Buffers, clients are generated from that schema, and calls run over <Term id="http">HTTP</Term>/2 with streaming support. <Src id="wiki-grpc" />
 
 **GraphQL** is a query language for APIs. The client sends one query that names exactly the fields it wants, across related objects, and the server returns that shape. <Src id="wiki-graphql" />
 

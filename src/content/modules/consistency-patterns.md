@@ -73,7 +73,7 @@ With multiple copies of the same data, we are faced with options on how to synch
 
 **Weak consistency.** After a write, reads may or may not see it. A best effort approach is taken. This approach is seen in systems such as memcached. Weak consistency works well in real time use cases such as VoIP, video chat, and realtime multiplayer games. For example, if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss. <Src id="primer" />
 
-**<Term id="eventual-consistency">Eventual consistency</Term>.** After a write, reads will eventually see it (typically within milliseconds). Data is replicated asynchronously. This approach is seen in systems such as DNS and email. Eventual consistency works well in highly available systems. <Src id="primer" />
+**<Term id="eventual-consistency">Eventual consistency</Term>.** After a write, reads will eventually see it (typically within milliseconds). Data is replicated asynchronously. This approach is seen in systems such as <Term id="dns">DNS</Term> and email. Eventual consistency works well in highly available systems. <Src id="primer" />
 
 **<Term id="strong-consistency">Strong consistency</Term>.** After a write, reads will see it. Data is replicated synchronously. This approach is seen in file systems and RDBMSes. Strong consistency works well in systems that need transactions. <Src id="primer" />
 
@@ -84,12 +84,12 @@ Between eventual and strong there are useful middle grounds. **Read-your-writes*
 | | Weak | Eventual | Strong |
 |---|---|---|---|
 | Read sees latest write | Maybe never | Soon | Always |
-| Write latency | Lowest | Low | Highest (waits for replicas) |
+| Write <Term id="latency">latency</Term> | Lowest | Low | Highest (waits for replicas) |
 | Availability under failure | High | High | Lower |
-| Typical use | Live media, caches | DNS, feeds, likes | Payments, inventory |
+| Typical use | Live media, <Term id="cache">caches</Term> | DNS, feeds, likes | Payments, inventory |
 
 ## Interview tips
 
 - Name the level per feature, not for the whole system.
 - For eventual consistency, say how stale is acceptable ("a few seconds") and how users avoid seeing glitches (read-your-writes).
-- Link strong consistency to synchronous replication and its latency cost.
+- Link strong consistency to synchronous <Term id="replication">replication</Term> and its latency cost.

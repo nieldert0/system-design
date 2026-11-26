@@ -139,12 +139,12 @@ Handy metrics, as the Primer lists them: <Src id="primer-numbers" />
 - **Queues** absorb bursts and keep throughput steady, but every item waiting in the queue adds latency.
 - **Running hot** (high utilisation) gets the most work out of each server but makes latency spiky. Leaving headroom costs money and buys predictable latency.
 - **Parallelism** (more servers or threads) raises throughput. It only lowers latency when one request can be split across them.
-- **Caching** and **moving data closer** (a CDN, a replica in the user's region) lower latency, and often raise throughput too because the slow backend does less work.
+- **Caching** and **moving data closer** (a <Term id="cdn">CDN</Term>, a replica in the user's region) lower latency, and often raise throughput too because the slow backend does less work.
 
 ## Interview tips
 
 - Say which one the design is optimising. A chat app cares about latency. A nightly analytics job cares about throughput.
 - Put numbers on both: "p99 under 200 ms at 5,000 requests per second" is a requirement; "fast" is not.
 - Expect the follow-up "what happens at 10× traffic?" Talk about queueing, headroom and where you'd add capacity.
-- When you add a queue, a batch or a cache, name the effect on latency and on throughput.
+- When you add a queue, a batch or a <Term id="cache">cache</Term>, name the effect on latency and on throughput.
 - Mention tail latency (p99) when a request fans out to many services.

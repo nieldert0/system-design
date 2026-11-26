@@ -76,7 +76,7 @@ quiz:
 	import Term from '#lib/components/Term.svelte';
 </script>
 
-HTTP is built for the client to ask. Real-time features need the server to tell. Polling, server-sent events and WebSockets are three ways to get there.
+<Term id="http">HTTP</Term> is built for the client to ask. Real-time features need the server to tell. Polling, server-sent events and WebSockets are three ways to get there.
 
 ## What it is
 
@@ -91,16 +91,16 @@ Long polling looks like ordinary HTTP, so it passes through any proxy, but every
 
 SSE uses a normal HTTP response with the content type `text/event-stream`. In the browser, an `EventSource` reads the stream and fires an event for each message; if the connection drops it reconnects and can resume from the last event id. <Src id="mdn-sse" />
 
-A WebSocket starts as an HTTP request that asks to upgrade the connection. After that, the same TCP connection carries framed messages in both directions, text or binary. <Src id="mdn-ws" />
+A WebSocket starts as an HTTP request that asks to upgrade the connection. After that, the same <Term id="tcp">TCP</Term> connection carries framed messages in both directions, text or binary. <Src id="mdn-ws" />
 
-At scale, every open SSE or WebSocket connection is pinned to one server. To send a message to a user, the system must find the server holding their connection, which is usually solved with a pub/sub channel that all connection servers subscribe to.
+At scale, every open SSE or WebSocket connection is pinned to one server. To send a message to a user, the system must find the server holding their connection, which is usually solved with a <Term id="pub-sub">pub/sub</Term> channel that all connection servers subscribe to.
 
 ## Trade-offs
 
 | | Short polling | Long polling | SSE | WebSockets |
 |---|---|---|---|---|
 | Direction | Client asks | Client asks | Server → client | Both ways |
-| Latency | Up to one interval | Low | Low | Lowest |
+| <Term id="latency">Latency</Term> | Up to one interval | Low | Low | Lowest |
 | Overhead | High, many empty requests | A request per message | One open response | One open connection |
 | Infrastructure | Plain HTTP | Plain HTTP | Plain HTTP | Needs upgrade support, sticky connections |
 

@@ -90,29 +90,29 @@ Networking is built in **layers**. Each layer does one job and relies on the one
 
 | Layer | Job | Examples |
 |---|---|---|
-| Application | What the program means | HTTP, DNS, SMTP |
-| Transport | Process-to-process delivery, ports, reliability | TCP, UDP |
+| Application | What the program means | <Term id="http">HTTP</Term>, <Term id="dns">DNS</Term>, SMTP |
+| Transport | Process-to-process delivery, ports, reliability | <Term id="tcp">TCP</Term>, <Term id="udp">UDP</Term> |
 | Internet | Addressing and routing between networks | IP |
 | Link | Moving frames on one physical network | Ethernet, Wi-Fi |
 
-The seven-layer OSI model splits the same work more finely. Interviewers mostly use its numbers as shorthand: "L4 load balancer" means one that looks at TCP/UDP, "L7" means one that reads HTTP. <Src id="wiki-osi" />
+The seven-layer OSI model splits the same work more finely. Interviewers mostly use its numbers as shorthand: "L4 <Term id="load-balancer">load balancer</Term>" means one that looks at TCP/UDP, "L7" means one that reads HTTP. <Src id="wiki-osi" />
 
 When you send a request, each layer wraps the data from the layer above in its own header (encapsulation). The HTTP message goes inside a TCP segment, that goes inside an IP packet, and that goes inside an Ethernet or Wi-Fi frame. The receiver unwraps them in reverse.
 
 A typical page load:
 
 1. The browser asks DNS for the IP address of the name.
-2. It opens a TCP connection to that address (and a TLS session for HTTPS).
+2. It opens a TCP connection to that address (and a <Term id="tls">TLS</Term> session for HTTPS).
 3. It sends an HTTP request; routers forward the packets hop by hop.
 4. The server replies, and the packets travel back the same way.
 
-Distance matters. Light in fiber covers about 200 km per millisecond, so a round trip between continents costs tens of milliseconds no matter how much bandwidth you buy.
+Distance matters. Light in fiber covers about 200 km per millisecond, so a round trip between continents costs tens of milliseconds no matter how much <Term id="bandwidth">bandwidth</Term> you buy.
 
 ## Trade-offs
 
 - **Layers make the network flexible.** You can swap Wi-Fi for Ethernet without touching HTTP. The cost is header overhead and some lost information between layers.
 - **Best-effort IP keeps the core simple.** Reliability is pushed to the edges (TCP), which is why the core scales, and why apps must handle loss.
-- **Latency is bounded by physics.** Putting servers and caches near users is often the only way to cut it.
+- **<Term id="latency">Latency</Term> is bounded by physics.** Putting servers and <Term id="cache">caches</Term> near users is often the only way to cut it.
 
 ## Interview tips
 

@@ -83,9 +83,9 @@ TCP gets its guarantees through: <Src id="primer" />
 
 If the sender does not receive a correct response, it will resend the packets. If there are multiple timeouts, the connection is dropped. TCP also implements flow control and congestion control. These guarantees cause delays and generally result in less efficient transmission than UDP. <Src id="primer" />
 
-To ensure high throughput, web servers can keep a large number of TCP connections open, resulting in high memory usage. It can be expensive to have a large number of open connections between web server threads and say, a memcached server. Connection pooling can help in addition to switching to UDP where applicable. <Src id="primer" />
+To ensure high <Term id="throughput">throughput</Term>, web servers can keep a large number of TCP connections open, resulting in high memory usage. It can be expensive to have a large number of open connections between web server threads and say, a memcached server. Connection pooling can help in addition to switching to UDP where applicable. <Src id="primer" />
 
-UDP can broadcast, sending datagrams to all devices on the subnet. This is useful with DHCP because the client has not yet received an IP address, thus preventing a way for TCP to stream without the IP address. <Src id="primer" />
+UDP can broadcast, sending datagrams to all devices on the subnet. This is useful with DHCP because the client has not yet received an <Term id="ip-address">IP address</Term>, thus preventing a way for TCP to stream without the IP address. <Src id="primer" />
 
 ## Trade-offs
 
@@ -96,12 +96,12 @@ TCP is useful for applications that require high reliability but are less time c
 
 UDP is less reliable but works well in real time use cases such as VoIP, video chat, streaming, and realtime multiplayer games. Use UDP over TCP when: <Src id="primer" />
 
-- You need the lowest latency
+- You need the lowest <Term id="latency">latency</Term>
 - Late data is worse than loss of data
 - You want to implement your own error correction
 
 ## Interview tips
 
-- Default to TCP (via HTTP or gRPC). Reach for UDP only for real-time media or games, and say why: late data is worthless.
-- A new TCP connection costs a round trip before any data; add TLS and it costs more. That is why keep-alive and connection pools matter.
+- Default to TCP (via <Term id="http">HTTP</Term> or gRPC). Reach for UDP only for real-time media or games, and say why: late data is worthless.
+- A new TCP connection costs a round trip before any data; add <Term id="tls">TLS</Term> and it costs more. That is why keep-alive and connection pools matter.
 - Mention that HTTP/3 runs over QUIC, which is built on UDP, to avoid TCP's head-of-line blocking.

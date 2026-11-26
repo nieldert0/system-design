@@ -88,7 +88,7 @@ The two questions call for different fixes.
 There are two ways to add capacity:
 
 - **Vertical scaling** (scaling up): give one machine more CPU, memory or faster disks. It is simple and needs no code changes, but it has a ceiling and one machine is still one point of failure.
-- **<Term id="horizontal-scaling">Horizontal scaling</Term>** (scaling out): add more machines and spread the work across them, usually behind a load balancer. There is no hard ceiling, but the app must be able to run as many copies, which usually means keeping no user state on the servers themselves.
+- **<Term id="horizontal-scaling">Horizontal scaling</Term>** (scaling out): add more machines and spread the work across them, usually behind a <Term id="load-balancer">load balancer</Term>. There is no hard ceiling, but the app must be able to run as many copies, which usually means keeping no user state on the servers themselves.
 
 A system scales well when doubling the machines roughly doubles the work it can do. If doubling the machines adds only a little, look for the shared part that every request still goes through.
 
@@ -103,5 +103,5 @@ A system scales well when doubling the machines roughly doubles the work it can 
 
 - Ask early whether the concern is "slow for everyone" or "slow at peak". It tells you which problem you are solving.
 - When you add servers, say what makes that work: stateless app servers, and a load balancer in front.
-- Name the next bottleneck. "With more app servers, the database becomes the limit, so next I'd add read replicas or a cache."
+- Name the next bottleneck. "With more app servers, the database becomes the limit, so next I'd add read replicas or a <Term id="cache">cache</Term>."
 - Use numbers: "one server handles about 1,000 requests per second, we need 10,000, so about 10 servers plus headroom."

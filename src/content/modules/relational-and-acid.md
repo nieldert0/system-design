@@ -97,7 +97,7 @@ Full isolation (serializable) is costly, so databases offer weaker levels that a
 | Repeatable read | Non-repeatable reads | Phantoms (in some databases) |
 | Serializable | All of the above | Nothing, but more waits and retries |
 
-There are many techniques to scale a relational database: replication, federation, sharding, denormalization, and SQL tuning. <Src id="primer" />
+There are many techniques to scale a relational database: <Term id="replication">replication</Term>, federation, <Term id="sharding">sharding</Term>, <Term id="denormalization">denormalization</Term>, and SQL tuning. <Src id="primer" />
 
 ## Trade-offs
 

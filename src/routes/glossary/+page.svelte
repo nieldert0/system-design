@@ -11,7 +11,7 @@
 
 <div class="max-w-[68ch]">
 	<h1 class="text-3xl tracking-tight text-ink-12">Glossary</h1>
-	<p class="mt-2 text-base text-ink-11">Every term the modules define, with where the definition comes from.</p>
+	<p class="mt-3 text-base text-ink-11">Every term the modules define, with where the definition comes from.</p>
 
 	<dl class="mt-10 flex flex-col gap-6">
 		{#each terms as e (e.id)}

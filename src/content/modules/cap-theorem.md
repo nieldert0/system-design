@@ -80,9 +80,9 @@ In a distributed computer system, you can only support two of the following guar
 
 **<Term id="cp">CP - consistency and partition tolerance</Term>.** Waiting for a response from the partitioned node might result in a timeout error. CP is a good choice if your business needs require atomic reads and writes. <Src id="primer" />
 
-**<Term id="ap">AP - availability and partition tolerance</Term>.** Responses return the most readily available version of the data available on any node, which might not be the latest. Writes might take some time to propagate when the partition is resolved. AP is a good choice if the business needs to allow for eventual consistency or when the system needs to continue working despite external errors. <Src id="primer" />
+**<Term id="ap">AP - availability and partition tolerance</Term>.** Responses return the most readily available version of the data available on any node, which might not be the latest. Writes might take some time to propagate when the partition is resolved. AP is a good choice if the business needs to allow for <Term id="eventual-consistency">eventual consistency</Term> or when the system needs to continue working despite external errors. <Src id="primer" />
 
-CAP only describes behaviour during a partition. The PACELC idea extends it: if there is a Partition, choose Availability or Consistency; Else, even when all is well, choose Latency or Consistency, because waiting for replicas to agree takes time. <Src id="wiki-pacelc" />
+CAP only describes behaviour during a partition. The PACELC idea extends it: if there is a Partition, choose Availability or Consistency; Else, even when all is well, choose <Term id="latency">Latency</Term> or Consistency, because waiting for replicas to agree takes time. <Src id="wiki-pacelc" />
 
 ## Trade-offs
 

@@ -103,7 +103,7 @@ A **composite index** on several columns, such as `(country, city)`, is sorted b
 - Avoid storing large `BLOBS`, store the location of where to get the object instead.
 - Set the `NOT NULL` constraint where applicable to improve search performance.
 
-**Other fixes.** Denormalize where performance demands it, to avoid expensive joins. Break up a table by putting hot spots in a separate table to help keep it in memory. In some cases, the query cache could lead to performance issues. <Src id="primer" />
+**Other fixes.** Denormalize where performance demands it, to avoid expensive joins. Break up a table by putting hot spots in a separate table to help keep it in memory. In some cases, the query <Term id="cache">cache</Term> could lead to performance issues. <Src id="primer" />
 
 ## Trade-offs
 
@@ -115,4 +115,4 @@ A **composite index** on several columns, such as `(country, city)`, is sorted b
 
 - When a read path is slow, first say which index serves it, including column order.
 - Mention `EXPLAIN` and the slow query log to show you'd measure before changing things.
-- Keep large blobs out of the database; store a pointer to object storage.
+- Keep large blobs out of the database; store a pointer to <Term id="object-storage">object storage</Term>.

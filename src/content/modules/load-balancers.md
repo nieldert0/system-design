@@ -89,16 +89,16 @@ Additional benefits include: <Src id="primer" />
 
 To protect against failures, it's common to set up multiple load balancers, either in active-passive or active-active mode. Load balancers can route traffic based on various metrics, including random, least loaded, and session/cookies. <Src id="primer" />
 
-**Layer 4.** Layer 4 load balancers look at info at the transport layer to decide how to distribute requests. Generally, this involves the source, destination IP addresses, and ports in the header, but not the contents of the packet. Layer 4 load balancers forward network packets to and from the upstream server, performing Network Address Translation (NAT). <Src id="primer" />
+**Layer 4.** Layer 4 load balancers look at info at the transport layer to decide how to distribute requests. Generally, this involves the source, destination <Term id="ip-address">IP addresses</Term>, and ports in the header, but not the contents of the packet. Layer 4 load balancers forward network packets to and from the upstream server, performing Network Address Translation (NAT). <Src id="primer" />
 
 **Layer 7.** Layer 7 load balancers look at the application layer to decide how to distribute requests. This can involve contents of the header, message, and cookies. Layer 7 load balancers terminate network traffic, reads the message, makes a load-balancing decision, then opens a connection to the selected server. For example, a layer 7 load balancer can direct video traffic to servers that host videos while directing more sensitive user billing traffic to security-hardened servers. <Src id="primer" />
 
 At the cost of flexibility, layer 4 load balancing requires less time and computing resources than Layer 7, although the performance impact can be minimal on modern commodity hardware. <Src id="primer" />
 
-Load balancers make horizontal scaling work, which brings its own needs: <Src id="primer" />
+Load balancers make <Term id="horizontal-scaling">horizontal scaling</Term> work, which brings its own needs: <Src id="primer" />
 
 - Servers should be stateless: they should not contain any user-related data like sessions or profile pictures
-- Sessions can be stored in a centralized data store such as a database (SQL, NoSQL) or a persistent cache (Redis, Memcached)
+- Sessions can be stored in a centralized data store such as a database (SQL, <Term id="nosql">NoSQL</Term>) or a persistent <Term id="cache">cache</Term> (Redis, Memcached)
 - Downstream servers such as caches and databases need to handle more simultaneous connections as upstream servers scale out
 
 ## Trade-offs

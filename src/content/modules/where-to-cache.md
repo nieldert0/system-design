@@ -79,8 +79,8 @@ Databases often benefit from a uniform distribution of reads and writes across i
 
 Caches can be located on the client side (OS or browser), server side, or in a distinct cache layer. <Src id="primer" />
 
-- **Client caching** - the browser or OS keeps responses (HTTP cache headers decide for how long).
-- **CDN caching** - CDNs are considered a type of cache. <Src id="primer" />
+- **Client caching** - the browser or OS keeps responses (<Term id="http">HTTP</Term> cache headers decide for how long).
+- **<Term id="cdn">CDN</Term> caching** - CDNs are considered a type of cache. <Src id="primer" />
 - **Web server caching** - Reverse proxies and caches such as Varnish can serve static and dynamic content directly. Web servers can also cache requests, returning responses without having to contact application servers. <Src id="primer" />
 - **Database caching** - Your database usually includes some level of caching in a default configuration, optimized for a generic use case. Tweaking these settings for specific usage patterns can further boost performance. <Src id="primer" />
 - **Application caching** - In-memory caches such as Memcached and Redis are key-value stores between your application and your data storage. Since the data is held in RAM, it is much faster than typical databases where data is stored on disk. <Src id="primer" />
@@ -103,5 +103,5 @@ Suggestions of what to cache: user sessions, fully rendered web pages, activity 
 ## Interview tips
 
 - Cache read-heavy data that changes rarely; quote a target hit rate and what a miss costs.
-- Walk the layers: browser → CDN → reverse proxy → Redis → database cache.
-- Say how stale is acceptable; that decides the TTL and the invalidation approach.
+- Walk the layers: browser → CDN → <Term id="reverse-proxy">reverse proxy</Term> → Redis → database cache.
+- Say how stale is acceptable; that decides the <Term id="ttl">TTL</Term> and the invalidation approach.

@@ -24,7 +24,8 @@
 	<title>{SITE_NAME}</title>
 </svelte:head>
 
-<header class="sticky top-0 z-40 flex h-13 items-center gap-2 bg-background/90 px-4 backdrop-blur md:px-6">
+<header class="sticky top-0 z-40 bg-background/90 backdrop-blur">
+<div class="mx-auto flex h-13 max-w-6xl items-center gap-2 px-4 md:px-8">
 	<Sheet.Root bind:open={menuOpen}>
 		<Sheet.Trigger>
 			{#snippet child({ props }: { props: Record<string, unknown> })}
@@ -49,10 +50,11 @@
 		<a href={resolve('/glossary')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12 max-md:hidden">Glossary</a>
 		<ThemeToggle />
 	</nav>
+</div>
 </header>
 
 <div class="mx-auto flex max-w-6xl gap-10 px-4 md:px-6">
-	<aside class="sticky top-13 hidden h-[calc(100dvh-3.25rem)] w-60 shrink-0 overflow-y-auto pt-4 pb-10 md:block">
+	<aside class="sticky top-13 hidden h-[calc(100dvh-3.25rem)] w-60 shrink-0 overflow-y-auto pt-6 pb-10 md:block">
 		<Sidebar />
 	</aside>
 	<main class="min-w-0 flex-1 pt-6 pb-16">

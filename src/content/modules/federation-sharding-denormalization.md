@@ -78,7 +78,7 @@ When one database cannot keep up, you split it: by function (federation), by row
 
 ## How it works
 
-**Federation** results in less read and write traffic to each database and therefore less replication lag. Smaller databases result in more data that can fit in memory, which in turn results in more cache hits due to improved cache locality. With no single central master serializing writes you can write in parallel, increasing throughput. <Src id="primer" />
+**Federation** results in less read and write traffic to each database and therefore less <Term id="replication">replication</Term> lag. Smaller databases result in more data that can fit in memory, which in turn results in more <Term id="cache">cache</Term> hits due to improved cache locality. With no single central master serializing writes you can write in parallel, increasing <Term id="throughput">throughput</Term>. <Src id="primer" />
 
 **Sharding** similarly results in less read and write traffic, less replication, and more cache hits. Index size is also reduced, which generally improves performance with faster queries. If one shard goes down, the other shards are still operational, although you'll want to add some form of replication to avoid data loss. Common ways to shard a table of users is either through the user's last name initial or the user's geographic location. <Src id="primer" />
 
@@ -96,7 +96,7 @@ When one database cannot keep up, you split it: by function (federation), by row
 **Sharding** <Src id="primer" />
 
 - You'll need to update your application logic to work with shards, which could result in complex SQL queries.
-- Data distribution can become lopsided in a shard. For example, a set of power users on a shard could result in increased load to that shard compared to others. Rebalancing adds additional complexity. A sharding function based on consistent hashing can reduce the amount of transferred data.
+- Data distribution can become lopsided in a shard. For example, a set of power users on a shard could result in increased load to that shard compared to others. Rebalancing adds additional complexity. A sharding function based on <Term id="consistent-hashing">consistent hashing</Term> can reduce the amount of transferred data.
 - Joining data from multiple shards is more complex.
 - Sharding adds more hardware and additional complexity.
 

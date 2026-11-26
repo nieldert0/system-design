@@ -13,6 +13,7 @@
 	--ink-9: #8d8d86; --ink-10: #82827c; --ink-11: #63635e; --ink-12: #21201c;
 	--ground: var(--ink-2);
 	--raised: #ffffff;
+	--control: var(--raised); /* buttons and the current nav row: white in light */
 	--shadow-ink: 33 32 28;
 	--shadow-button: 0 1px 2px 0 rgb(var(--shadow-ink) / 0.12), 0 0 0 1px rgb(var(--shadow-ink) / 0.08);
 	--shadow-card: 0 0 0 1px rgb(var(--shadow-ink) / 0.07), 0 1px 2px 0 rgb(var(--shadow-ink) / 0.12),
@@ -50,6 +51,7 @@
 	--ink-9: #6f6d66; --ink-10: #7c7b74; --ink-11: #b5b3ad; --ink-12: #eeeeec;
 	--ground: #1c1b1a;
 	--raised: #252423;
+	--control: var(--ink-5); /* dark: three steps above the ground so the current row reads, outlined in ink-7 */
 	--shadow-button: 0 0 0 0.5px var(--ink-7), 0 1px 2px 0 rgb(0 0 0 / 0.5);
 	--shadow-card: 0 0 0 0.5px var(--ink-6), 0 1px 2px 0 rgb(0 0 0 / 0.5), 0 3px 4px -2px rgb(0 0 0 / 0.4);
 	--muted: var(--ink-4);
@@ -62,12 +64,21 @@
 }
 
 @theme inline {
+	--color-ink-1: var(--ink-1);
+	--color-ink-2: var(--ink-2);
+	--color-ink-3: var(--ink-3);
+	--color-ink-4: var(--ink-4);
+	--color-ink-5: var(--ink-5);
+	--color-ink-6: var(--ink-6);
+	--color-ink-7: var(--ink-7);
+	--color-ink-8: var(--ink-8);
 	--font-sans: 'Inter Variable', system-ui, sans-serif;
 	--color-ink-9: var(--ink-9);
 	--color-ink-10: var(--ink-10);
 	--color-ink-11: var(--ink-11);
 	--color-ink-12: var(--ink-12);
 	--color-raised: var(--raised);
+	--color-control: var(--control);
 	--color-green-11: var(--green-11);
 	--color-red-11: var(--red-11);
 	--shadow-button: var(--shadow-button);
@@ -126,9 +137,23 @@
 	--tw-prose-quotes: var(--ink-11);
 	--tw-prose-quote-borders: var(--ink-6);
 	--tw-prose-code: var(--ink-12);
+	--tw-prose-pre-code: var(--ink-12);
+	--tw-prose-pre-bg: var(--ink-3); /* code blocks are wells, not a foreign navy */
 	--tw-prose-th-borders: var(--ink-6);
 	--tw-prose-td-borders: var(--ink-5);
 	--tw-prose-captions: var(--ink-11);
+}
+/* Code blocks: scroll sideways inside their well, smaller on phones so tables fit more. */
+.prose :where(pre) {
+	overflow-x: auto;
+	border-radius: 8px;
+}
+@media (max-width: 767px) {
+	.prose :where(pre) {
+		font-size: 12px;
+		line-height: 18px;
+		padding: 12px 14px;
+	}
 }
 .prose :where(h2, h3) {
 	scroll-margin-top: 4rem; /* clear the sticky header when linked */
@@ -182,3 +207,13 @@
 	.walkthrough .diagram * { transition: none; }
 	.walkthrough .diagram .flow-dot { animation: none; }
 }
+
+/* Wide tables scroll inside the column instead of pushing the page sideways on phones. */
+.prose table {
+	display: block;
+	width: max-content;
+	min-width: 100%;
+	max-width: 100%;
+	overflow-x: auto;
+}
+.prose :where(th, td) { min-width: 7.5rem; }
