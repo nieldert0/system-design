@@ -32,6 +32,10 @@
 		</Sheet.Trigger>
 		<Sheet.Content side="left" class="overflow-y-auto bg-background p-4 pt-12">
 			<Sheet.Title class="sr-only">Modules</Sheet.Title>
+			<nav aria-label="Pages" class="mb-6 flex flex-col gap-px text-sm">
+				<a href={resolve('/study-plan')} onclick={() => (menuOpen = false)} class="flex min-h-11 items-center rounded-md px-2">Study plan</a>
+				<a href={resolve('/glossary')} onclick={() => (menuOpen = false)} class="flex min-h-11 items-center rounded-md px-2">Glossary</a>
+			</nav>
 			<Sidebar onnavigate={() => (menuOpen = false)} />
 		</Sheet.Content>
 	</Sheet.Root>
@@ -39,7 +43,8 @@
 		><span class="grid size-6 place-items-center rounded-md bg-primary text-primary-foreground"><Layers class="size-3.5" aria-hidden="true" /></span>{SITE_NAME}</a
 	>
 	<nav class="ml-auto flex items-center gap-1">
-		<a href={resolve('/glossary')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12">Glossary</a>
+		<a href={resolve('/study-plan')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12 max-md:hidden">Study plan</a>
+		<a href={resolve('/glossary')} class="rounded-md px-2.5 py-1.5 text-sm text-ink-11 transition-colors duration-150 hover:text-ink-12 max-md:hidden">Glossary</a>
 		<ThemeToggle />
 	</nav>
 </header>

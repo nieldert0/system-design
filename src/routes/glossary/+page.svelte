@@ -28,7 +28,7 @@
 						· Taught in
 						{#if written.has(mod.slug)}
 							<a class="underline underline-offset-2" href={resolve('/modules/[slug]', { slug: mod.slug })}>{mod.title}</a>
-						{:else}{mod.title} (coming soon){/if}
+						{:else}{mod.title} (planned){/if}
 					{/if}
 				</dd>
 			</div>

@@ -15,7 +15,7 @@ export type ModuleMeta = {
 const docs = import.meta.glob<{ default: Component; metadata: ModuleMeta }>('/src/content/modules/*.md');
 const path = (slug: string) => `/src/content/modules/${slug}.md`;
 
-/** Slugs of modules that have been written. Unwritten ones render as "coming soon", never as links. */
+/** Slugs of modules that have been written. Unwritten ones render as planned text, never as links. */
 export const written = new Set(Object.keys(docs).map((p) => p.slice(p.lastIndexOf('/') + 1, -3)));
 
 export const loadModule = async (slug: string) => {

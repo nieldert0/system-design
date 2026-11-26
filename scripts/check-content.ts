@@ -3,6 +3,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { outline as siteOutline, type OutlineSection } from '../src/lib/outline.ts';
 import { glossary as siteGlossary, type GlossaryEntry } from '../src/lib/glossary.ts';
+import { studyPlan as siteStudyPlan } from '../src/lib/study-plan.ts';
 
 export const REQUIRED_SECTIONS = ['What it is', 'How it works', 'Trade-offs', 'Interview tips'];
 const USES = ['copied', 'reworded', 'quoted'];
@@ -73,6 +74,14 @@ export function checkGlossary(entries: GlossaryEntry[], outline: OutlineSection[
 	return errors;
 }
 
+export function checkStudyPlan(tiers: { id: string; slugs: string[] }[], outline: OutlineSection[]): string[] {
+	const slugs = new Set(outline.flatMap((s) => s.modules.map((m) => m.slug)));
+	return tiers.flatMap((t) => [
+		...(t.slugs.length ? [] : [`study plan "${t.id}" is empty`]),
+		...t.slugs.filter((s) => !slugs.has(s)).map((s) => `study plan "${t.id}" lists unknown slug "${s}"`)
+	]);
+}
+
 export function readModules(dir = 'src/content/modules'): Mod[] {
 	return readdirSync(dir).filter((f) => f.endsWith('.md')).map((file) => {
 		const raw = readFileSync(`${dir}/${file}`, 'utf8');
@@ -85,6 +94,7 @@ if (import.meta.main) {
 	const ids = new Set(siteGlossary.map((e) => e.id));
 	const errors = [
 		...checkGlossary(siteGlossary, siteOutline),
+		...checkStudyPlan(siteStudyPlan, siteOutline),
 		...readModules().flatMap((mod) => checkModule(mod, siteOutline, ids))
 	];
 	if (errors.length) {

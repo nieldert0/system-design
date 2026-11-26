@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { checkGlossary, checkModule } from './check-content.ts';
+import { checkGlossary, checkModule, checkStudyPlan } from './check-content.ts';
 
 const outline = [{ slug: 's', title: 'S', modules: [{ slug: 'a', title: 'A' }, { slug: 'b', title: 'B' }] }];
 const good = () => ({
@@ -84,3 +84,10 @@ test('a term marker citing an unknown glossary id fails', () => {
 	mod.body = good().body + '<Term id="lat">x</Term>';
 	assert.deepEqual(checkModule(mod, outline, new Set(['lat'])), []);
 });
+
+test('study plan with known slugs passes', () =>
+	assert.deepEqual(checkStudyPlan([{ id: 'short', label: '1 week', slugs: ['a', 'b'] }], outline), []));
+test('study plan with an unknown slug fails', () =>
+	assert.match(checkStudyPlan([{ id: 'short', label: '1 week', slugs: ['a', 'ghost'] }], outline).join(), /short.*ghost/));
+test('study plan with an empty tier fails', () =>
+	assert.match(checkStudyPlan([{ id: 'long', label: '3+ months', slugs: [] }], outline).join(), /long.*empty/));

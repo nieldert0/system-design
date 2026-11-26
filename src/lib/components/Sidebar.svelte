@@ -24,12 +24,12 @@
 								href={resolve('/modules/[slug]', { slug: mod.slug })}
 								onclick={onnavigate}
 								aria-current={current ? 'page' : undefined}
-								class="flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors duration-150 hover:bg-accent aria-[current=page]:bg-raised aria-[current=page]:shadow-button"
+								class="flex items-center gap-2 rounded-md px-2 py-1.5 text-ink-12 transition-colors duration-150 hover:bg-accent aria-[current=page]:bg-raised aria-[current=page]:shadow-button"
 								><span class="flex-1">{mod.title}</span
 								>{#if progress.isPassed(mod.slug)}<Check class="size-3.5 shrink-0 text-green-11" aria-label="Passed" />{/if}</a
 							>
 						{:else}
-							<span class="block px-2 py-1.5 text-ink-11">{mod.title} <span class="text-xs">· soon</span></span>
+							<span class="block px-2 py-1.5 text-ink-10">{mod.title}<span class="sr-only"> (planned)</span></span>
 						{/if}
 					</li>
 				{/each}

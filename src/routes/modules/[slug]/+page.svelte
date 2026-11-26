@@ -32,11 +32,11 @@
 
 <svelte:head><title>{data.meta.title} · {SITE_NAME}</title></svelte:head>
 
-{#snippet modLink(mod: { slug: string; title: string }, soon = 'coming soon')}
+{#snippet modLink(mod: { slug: string; title: string })}
 	{#if written.has(mod.slug)}
 		<a class="underline underline-offset-2" href={resolve('/modules/[slug]', { slug: mod.slug })}>{mod.title}</a>
 	{:else}
-		<span class="text-ink-11">{mod.title} <span class="text-xs">· {soon}</span></span>
+		<span class="text-ink-10">{mod.title}<span class="sr-only"> (planned)</span></span>
 	{/if}
 {/snippet}
 
@@ -46,7 +46,7 @@
 
 	{#if readFirst.length}
 		<p class="mt-4 flex flex-wrap items-center gap-x-1.5 text-sm text-ink-11">
-			<BookOpen class="size-4" aria-hidden="true" />Helps to read first:
+			<BookOpen class="size-4" aria-hidden="true" />Read first:
 			{#each readFirst as mod, i (mod.slug)}{#if i}, {/if}{@render modLink(mod)}{/each}
 		</p>
 	{/if}
@@ -70,8 +70,8 @@
 	</section>
 
 	<nav aria-label="Previous and next" class="mt-12 flex justify-between gap-4 text-sm">
-		<div>{#if nav.prev}<span class="flex items-center gap-1 text-xs text-ink-11"><ArrowLeft class="size-3.5" aria-hidden="true" />Previous</span>{@render modLink(nav.prev, 'soon')}{/if}</div>
-		<div class="text-right">{#if nav.next}<span class="flex items-center justify-end gap-1 text-xs text-ink-11">Next<ArrowRight class="size-3.5" aria-hidden="true" /></span>{@render modLink(nav.next, 'soon')}{/if}</div>
+		<div>{#if nav.prev}<span class="flex items-center gap-1 text-xs text-ink-11"><ArrowLeft class="size-3.5" aria-hidden="true" />Previous</span>{@render modLink(nav.prev)}{/if}</div>
+		<div class="text-right">{#if nav.next}<span class="flex items-center justify-end gap-1 text-xs text-ink-11">Next<ArrowRight class="size-3.5" aria-hidden="true" /></span>{@render modLink(nav.next)}{/if}</div>
 	</nav>
 
 	{#if !nav.next}

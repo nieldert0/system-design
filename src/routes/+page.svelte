@@ -5,6 +5,14 @@
 	import { SITE_NAME } from '#lib/site.js';
 	import { sectionIcon } from '#lib/icons.js';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import { studyPlan } from '#lib/study-plan.js';
+	import { findModule } from '#lib/content.js';
+	import { progress } from '#lib/progress-state.svelte.js';
+
+	// Continue: the next unfinished, written module in the remembered tier.
+	const tier = $derived(studyPlan.find((t) => t.id === progress.getTier()));
+	const next = $derived(tier && progress.nextUnfinished(tier.slugs.filter((s) => written.has(s))));
+	const nextMod = $derived(next ? findModule(next) : undefined);
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 
 	// Written modules in reading order, each with the section it belongs to.
@@ -67,7 +75,7 @@
 									{#if written.has(mod.slug)}
 										<a class="text-ink-12 underline underline-offset-2" href={href(mod.slug)}>{mod.title}</a>
 									{:else}
-										<span class="text-ink-10">{mod.title}</span>
+										<span class="text-ink-10">{mod.title}<span class="sr-only"> (planned)</span></span>
 									{/if}
 								</li>
 							{/each}
