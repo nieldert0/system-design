@@ -74,6 +74,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import ConcurrencyModelsFlow from '#lib/diagrams/ConcurrencyModelsFlow.svelte';
 </script>
 
 Every server you design runs as processes and threads on an operating system. Knowing how they share CPU and memory explains many scaling limits.
@@ -99,6 +100,8 @@ Servers handle concurrency in a few common ways:
 - **Process per worker** (e.g. PHP-FPM, Gunicorn workers): isolated, uses more memory.
 - **Thread per request** (e.g. classic Java servers): simple code, memory and switching cost grow with connections.
 - **Event loop** (e.g. Node.js, NGINX): one thread serves many connections that mostly wait on I/O; CPU-heavy work blocks everyone.
+
+<ConcurrencyModelsFlow />
 
 ## Trade-offs
 

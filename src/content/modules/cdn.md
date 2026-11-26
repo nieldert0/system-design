@@ -65,6 +65,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import CdnPullFlow from '#lib/diagrams/CdnPullFlow.svelte';
 </script>
 
 A CDN keeps copies of your content in data centers all over the world, so users download from somewhere close instead of from your origin.
@@ -85,6 +86,8 @@ Serving content from CDNs can significantly improve performance in two ways: <Sr
 Sites with a small amount of traffic or sites with content that isn't often updated work well with push CDNs. Content is placed on the CDNs once, instead of being re-pulled at regular intervals. <Src id="primer" />
 
 **Pull CDNs.** Pull CDNs grab new content from your server when the first user requests the content. You leave the content on your server and rewrite URLs to point to the CDN. This results in a slower request until the content is cached on the CDN. <Src id="primer" />
+
+<CdnPullFlow />
 
 A <Term id="ttl">time-to-live</Term> (TTL) determines how long content is cached. Pull CDNs minimize storage space on the CDN, but can create redundant traffic if files expire and are pulled before they have actually changed. <Src id="primer" />
 

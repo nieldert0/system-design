@@ -62,6 +62,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import CapPartitionFlow from '#lib/diagrams/CapPartitionFlow.svelte';
 </script>
 
 When a network splits your servers apart, each side must choose: refuse to answer, or answer with data that might be out of date. That choice is the CAP theorem.
@@ -81,6 +82,8 @@ In a distributed computer system, you can only support two of the following guar
 **<Term id="cp">CP - consistency and partition tolerance</Term>.** Waiting for a response from the partitioned node might result in a timeout error. CP is a good choice if your business needs require atomic reads and writes. <Src id="primer" />
 
 **<Term id="ap">AP - availability and partition tolerance</Term>.** Responses return the most readily available version of the data available on any node, which might not be the latest. Writes might take some time to propagate when the partition is resolved. AP is a good choice if the business needs to allow for <Term id="eventual-consistency">eventual consistency</Term> or when the system needs to continue working despite external errors. <Src id="primer" />
+
+<CapPartitionFlow />
 
 CAP only describes behaviour during a partition. The PACELC idea extends it: if there is a Partition, choose Availability or Consistency; Else, even when all is well, choose <Term id="latency">Latency</Term> or Consistency, because waiting for replicas to agree takes time. <Src id="wiki-pacelc" />
 

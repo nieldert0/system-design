@@ -61,6 +61,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import GatewayFlow from '#lib/diagrams/GatewayFlow.svelte';
 </script>
 
 A reverse proxy is the single front door to your servers. An API gateway is a reverse proxy that also handles API chores like auth and rate limits.
@@ -89,6 +90,8 @@ Benefits of a reverse proxy include: <Src id="primer" />
 - Solutions such as NGINX and HAProxy can support both layer 7 reverse proxying and load balancing.
 
 With <Term id="microservices">microservices</Term>, the gateway gives clients one endpoint and maps paths such as `/users` and `/orders` to different services, so clients do not need to know the internal layout. <Src id="wiki-gw" />
+
+<GatewayFlow />
 
 ## Trade-offs
 

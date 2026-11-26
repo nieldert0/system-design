@@ -65,6 +65,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import LoadBalancerFlow from '#lib/diagrams/LoadBalancerFlow.svelte';
 </script>
 
 A load balancer sits in front of a group of servers and spreads requests across them, so you can add servers and survive losing one.
@@ -88,6 +89,10 @@ Additional benefits include: <Src id="primer" />
 - **Session persistence** - Issue cookies and route a specific client's requests to same instance if the web apps do not keep track of sessions
 
 To protect against failures, it's common to set up multiple load balancers, either in active-passive or active-active mode. Load balancers can route traffic based on various metrics, including random, least loaded, and session/cookies. <Src id="primer" />
+
+With **round robin**, requests go to each server in turn. The load balancer also runs health checks and stops sending requests to a server that fails them. <Src id="primer" />
+
+<LoadBalancerFlow />
 
 **Layer 4.** Layer 4 load balancers look at info at the transport layer to decide how to distribute requests. Generally, this involves the source, destination <Term id="ip-address">IP addresses</Term>, and ports in the header, but not the contents of the packet. Layer 4 load balancers forward network packets to and from the upstream server, performing Network Address Translation (NAT). <Src id="primer" />
 

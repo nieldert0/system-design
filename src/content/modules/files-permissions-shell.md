@@ -74,6 +74,8 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import FilePermissions from '#lib/diagrams/FilePermissions.svelte';
+	import PipeFlow from '#lib/diagrams/PipeFlow.svelte';
 </script>
 
 On Linux, almost everything is a file. Files, permissions and the shell are the everyday tools for running and debugging servers.
@@ -90,6 +92,8 @@ The **shell** runs programs and connects them. A pipe (`|`) sends one program's 
 
 Permissions are often written in octal: read = 4, write = 2, execute = 1, added up for each of owner, group and others. `chmod 755` gives the owner everything and others read and execute; `chmod 600` keeps a file private to its owner. <Src id="wiki-perm" />
 
+<FilePermissions />
+
 Each process has a limit on open file descriptors. Every network connection uses one, so a busy server can hit "too many open files" long before it runs out of CPU. <Src id="wiki-fd" />
 
 Pipes let small tools combine into one-off analyses: <Src id="wiki-pipe" />
@@ -98,6 +102,8 @@ Pipes let small tools combine into one-off analyses: <Src id="wiki-pipe" />
 # Top 5 client IPs in an access log
 cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -5
 ```
+
+<PipeFlow />
 
 Handy commands when a server misbehaves: `top` or `htop` (CPU and memory), `df -h` (disk space), `ss -tlnp` (listening sockets), `tail -f` (follow a log), `journalctl -u name` (service logs).
 

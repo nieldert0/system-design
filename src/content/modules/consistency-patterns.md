@@ -61,6 +61,7 @@ quiz:
 <script>
 	import Src from '#lib/components/Src.svelte';
 	import Term from '#lib/components/Term.svelte';
+	import ConsistencyFlow from '#lib/diagrams/ConsistencyFlow.svelte';
 </script>
 
 Once data lives in more than one place, copies can disagree for a while. Consistency patterns describe how long, and what readers see meanwhile.
@@ -76,6 +77,8 @@ With multiple copies of the same data, we are faced with options on how to synch
 **<Term id="eventual-consistency">Eventual consistency</Term>.** After a write, reads will eventually see it (typically within milliseconds). Data is replicated asynchronously. This approach is seen in systems such as <Term id="dns">DNS</Term> and email. Eventual consistency works well in highly available systems. <Src id="primer" />
 
 **<Term id="strong-consistency">Strong consistency</Term>.** After a write, reads will see it. Data is replicated synchronously. This approach is seen in file systems and RDBMSes. Strong consistency works well in systems that need transactions. <Src id="primer" />
+
+<ConsistencyFlow />
 
 Between eventual and strong there are useful middle grounds. **Read-your-writes** means a user always sees their own updates. **Monotonic reads** means a user never sees data go backwards in time. Both are cheaper than full strong consistency and fix the most visible glitches. <Src id="wiki-ec" />
 
