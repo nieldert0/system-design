@@ -87,7 +87,7 @@
 			<button
 				type="button"
 				onclick={retry}
-				class="h-9 rounded-md bg-primary px-3.5 text-sm tracking-[-0.01em] text-primary-foreground transition-transform duration-150 ease-out active:scale-[.97] max-md:h-11"
+				class="h-9 rounded-md bg-primary px-3.5 text-sm tracking-ui text-primary-foreground transition-transform duration-150 ease-out active:scale-[.97] max-md:h-11"
 				>Try again</button
 			>
 		</div>

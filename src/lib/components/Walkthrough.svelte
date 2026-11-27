@@ -43,7 +43,7 @@
 	});
 
 	const btn =
-		'h-8 rounded-md px-3 text-sm tracking-[-0.01em] transition-transform duration-150 ease-out active:scale-[.97] disabled:opacity-60 max-md:h-11';
+		'h-8 rounded-md px-3 text-sm tracking-ui transition-transform duration-150 ease-out active:scale-[.97] disabled:opacity-60 max-md:h-11';
 </script>
 
 <div class="walkthrough not-prose my-8" class:reduced>

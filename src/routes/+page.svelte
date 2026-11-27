@@ -32,14 +32,14 @@
 		{@const Icon = sectionIcon(first.section.slug)}
 		<a
 			href={href(first.slug)}
-			class="group mt-10 flex items-center gap-4 rounded-lg bg-raised p-5 shadow-card transition-transform duration-150 ease-[cubic-bezier(.23,1,.32,1)] active:scale-[.99] motion-reduce:transition-none motion-reduce:active:scale-100"
+			class="group mt-10 flex items-center gap-4 rounded-lg bg-raised p-5 shadow-card transition-transform duration-150 ease-out active:scale-[.99] motion-reduce:transition-none motion-reduce:active:scale-100"
 		>
 			<span class="grid size-10 shrink-0 place-items-center rounded-md bg-ink-3 text-ink-11"><Icon class="size-5" aria-hidden="true" /></span>
 			<span class="min-w-0 flex-1">
 				<span class="block text-sm text-ink-11">Start reading · {first.section.title}</span>
 				<span class="mt-1 block text-xl text-ink-12">{first.title}</span>
 			</span>
-			<span class="hidden h-9 items-center gap-1.5 rounded-md bg-primary px-3.5 text-sm tracking-[-0.01em] text-primary-foreground sm:inline-flex"
+			<span class="hidden h-9 items-center gap-1.5 rounded-md bg-primary px-3.5 text-sm tracking-ui text-primary-foreground sm:inline-flex"
 				>Read<ArrowRight class="size-4 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" /></span
 			>
 		</a>
@@ -67,7 +67,7 @@
 						<div class="flex items-center gap-2">
 							<Icon class="size-4 text-ink-10" aria-hidden="true" />
 							<h2 class="text-base text-ink-12">{section.title}</h2>
-							<span class="ml-auto text-xs text-ink-10 tabular-nums">{done}/{section.modules.length}</span>
+							<span class="ml-auto text-xs text-ink-10 font-mono tabular-nums">{done}/{section.modules.length}</span>
 						</div>
 						<ul class="mt-3 flex flex-col gap-1 text-sm">
 							{#each section.modules as mod (mod.slug)}
