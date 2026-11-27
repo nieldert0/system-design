@@ -722,5 +722,101 @@ export const glossary: GlossaryEntry[] = [
 			'A factor of ten. Estimates aim to land within the right order of magnitude (100 vs 1,000), not on an exact figure.',
 		module: 'back-of-the-envelope',
 		source: { title: 'Wikipedia, Order of magnitude', url: 'https://en.wikipedia.org/wiki/Order_of_magnitude', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'bgp',
+		term: 'BGP (Border Gateway Protocol)',
+		definition:
+			'The routing protocol networks run by different operators use to tell each other which IP address ranges they can reach, so routers across the internet can build their forwarding tables.',
+		module: 'how-the-internet-works',
+		source: { title: 'Wikipedia, Border Gateway Protocol', url: 'https://en.wikipedia.org/wiki/Border_Gateway_Protocol', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'nat',
+		term: 'NAT (network address translation)',
+		definition:
+			'A router rewriting the addresses on packets as they pass, typically so many machines with private addresses share one public IP address. Machines behind NAT can open connections out but cannot easily be reached from outside.',
+		module: 'how-the-internet-works',
+		source: { title: 'Wikipedia, Network address translation', url: 'https://en.wikipedia.org/wiki/Network_address_translation', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'rtt',
+		term: 'Round-trip time (RTT)',
+		definition:
+			'The time for a packet to go from one machine to another and for the reply to come back. Handshakes and request/response exchanges each cost at least one RTT.',
+		module: 'how-the-internet-works',
+		source: { title: 'Wikipedia, Round-trip delay', url: 'https://en.wikipedia.org/wiki/Round-trip_delay', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'head-of-line-blocking',
+		term: 'Head-of-line blocking',
+		definition:
+			'When one delayed or lost item at the front of an ordered queue holds back everything behind it, even items that are ready. In TCP, one lost packet stalls all later bytes until it is resent.',
+		module: 'tcp-and-udp',
+		source: { title: 'Wikipedia, Head-of-line blocking', url: 'https://en.wikipedia.org/wiki/Head-of-line_blocking', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'congestion-control',
+		term: 'Congestion control',
+		definition:
+			'How a TCP sender limits the data it has in flight to avoid overloading the network: it starts small, grows while data is acknowledged, and cuts back sharply when packets are lost.',
+		module: 'tcp-and-udp',
+		source: { title: 'Wikipedia, TCP congestion control', url: 'https://en.wikipedia.org/wiki/TCP_congestion_control', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'quic',
+		term: 'QUIC',
+		definition:
+			'A transport protocol built on UDP that provides reliable, ordered, encrypted streams with TLS 1.3 built in. Each stream is ordered independently, avoiding TCP head-of-line blocking. HTTP/3 runs on it.',
+		module: 'tcp-and-udp',
+		source: { title: 'Wikipedia, QUIC', url: 'https://en.wikipedia.org/wiki/QUIC', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'connection-pooling',
+		term: 'Connection pooling',
+		definition:
+			'Keeping a set of already-open connections (to a database or service) and lending them to requests, instead of opening and closing a connection per request, which saves handshakes and server resources.',
+		module: 'tcp-and-udp',
+		source: { title: 'Wikipedia, Connection pool', url: 'https://en.wikipedia.org/wiki/Connection_pool', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'recursive-resolver',
+		term: 'Recursive resolver',
+		definition:
+			'A DNS server that answers a client by walking the DNS tree (root, top-level domain, authoritative server) on its behalf, and caches the answers for every client it serves.',
+		module: 'dns',
+		source: { title: 'Wikipedia, Domain Name System', url: 'https://en.wikipedia.org/wiki/Domain_Name_System', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'anycast',
+		term: 'Anycast',
+		definition:
+			'Announcing the same IP address from many locations at once, so internet routing delivers each user to the nearest one. Used by DNS root servers, public resolvers and CDNs.',
+		module: 'dns',
+		source: { title: 'Wikipedia, Anycast', url: 'https://en.wikipedia.org/wiki/Anycast', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'certificate-authority',
+		term: 'Certificate authority (CA)',
+		definition:
+			'An organisation that clients trust to sign certificates, vouching that the holder of a private key controls a given domain name. Browsers and operating systems ship a list of trusted CAs.',
+		module: 'http-https-tls',
+		source: { title: 'Wikipedia, Certificate authority', url: 'https://en.wikipedia.org/wiki/Certificate_authority', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'mtls',
+		term: 'mTLS (mutual TLS)',
+		definition:
+			'TLS in which both the client and the server present certificates, so each side proves its identity to the other. Common for service-to-service traffic inside a network.',
+		module: 'http-https-tls',
+		source: { title: 'Wikipedia, Mutual authentication', url: 'https://en.wikipedia.org/wiki/Mutual_authentication', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'sticky-session',
+		term: 'Sticky session',
+		definition:
+			'A load-balancer setting that keeps sending a given client to the same backend server, usually by cookie or client IP, so state held on that server stays reachable.',
+		module: 'real-time',
+		source: { title: 'Wikipedia, Load balancing (computing)', url: 'https://en.wikipedia.org/wiki/Load_balancing_(computing)', license: 'CC BY-SA 4.0' }
 	}
 ];
