@@ -58,12 +58,12 @@ quiz:
       - About 750
     correct: 1
     explanation: The dead server gets 750 requests/s until it is marked down after 3 × 5 s = 15 s, so about 11,000 requests fail unless retries or passive checks catch them sooner.
-  - prompt: Requests take anywhere from 5 ms to 2 s depending on the endpoint. Why does least-connections beat round robin here?
+  - prompt: Requests take anywhere from 5 ms to 2 s depending on the endpoint. Why does least-request (fewest requests in flight) beat round robin here?
     options:
       - It is cheaper to compute
-      - Round robin keeps handing new requests to a server stuck on slow ones, while least-connections steers them to servers with fewer requests in flight
+      - Round robin keeps handing new requests to a server stuck on slow ones, while least-request steers them to servers with fewer requests in flight
       - Round robin does not support health checks
-      - Least-connections encrypts traffic
+      - Least-request encrypts traffic
     correct: 1
     explanation: Round robin balances request counts, not work. When request cost varies, counting in-flight requests tracks real load much better.
   - prompt: You enable sticky sessions and one server holds 40% of active users after a deploy. What went wrong?
@@ -111,8 +111,8 @@ Decrypting at the load balancer is called TLS termination. It saves backends the
 The balancing algorithm decides which healthy server gets the next request or connection. <Src id="wiki-lb" />
 
 - **Round robin** hands requests to each server in turn. It is the usual default and works well when requests cost roughly the same and servers are identical. **Weighted round robin** gives a bigger server a bigger share.
-- **Least connections** (or least outstanding requests) sends the request to the server with the fewest in flight. It adapts when some requests are much slower than others, because a server stuck on slow work accumulates open requests and stops being chosen.
-- **Power of two choices** picks two servers at random and sends the request to the less loaded one. It gets close to least-connections behaviour without every load balancer needing a perfectly current view of every server, which matters when you run many load balancer instances.
+- **Least connections** sends new work to the server with the fewest open connections, and **least outstanding requests** (least-request) to the one with the fewest requests in flight. Both adapt when some requests are much slower than others, because a server stuck on slow work accumulates open requests and stops being chosen. They are only the same when each connection carries one request at a time. With HTTP/2 or gRPC, one connection can carry dozens of requests, so counting connections stops tracking load and you need least-request.
+- **Power of two choices** picks two servers at random and sends the request to the less loaded one. It gets close to least-request behaviour without every load balancer needing a perfectly current view of every server, which matters when you run many load balancer instances.
 - **Hashing** on client IP, a header, or a URL sends the same key to the same server. Plain modulo hashing reshuffles almost every key when a server is added, so systems that need affinity use [consistent hashing](/modules/consistent-hashing) to move only about 1/N of keys.
 
 ### Health checks
@@ -141,7 +141,7 @@ An API runs on **4 servers**. Each handles about **1,000 requests/s** before lat
 
 **Step 3, the survivors.** Once server 3 is removed, 3,000 requests/s land on 3 servers: **1,000 each, exactly their limit**. Any spike now pushes latency up and requests start queuing. This is why you plan capacity as N+1: with a 3,000 requests/s peak and 1,000 per server, you need 3 servers for load plus 1 spare, which is what we had, with no headroom left. Running 5 servers keeps each at 750 even with one down.
 
-**Step 4, uneven requests.** Suppose 1% of requests are a report endpoint that takes 2 s instead of 20 ms. With round robin, each server gets 7.5 slow requests/s, each holding a worker for 2 s, so about 15 extra requests in flight per server, doubling concurrency. If those slow requests happen to cluster on one server, round robin keeps feeding it new work anyway. Least-connections sees that server's in-flight count rise and steers new requests elsewhere, which keeps tail latency down. This is why Envoy and NGINX users often switch from round robin to least-request for mixed workloads.
+**Step 4, uneven requests.** Suppose 1% of requests are a report endpoint that takes 2 s instead of 20 ms. With round robin, each server gets 7.5 slow requests/s, each holding a worker for 2 s, so about 15 extra requests in flight per server, doubling concurrency. If those slow requests happen to cluster on one server, round robin keeps feeding it new work anyway. Least-request (or least-connections, when each connection carries one request at a time, as with HTTP/1.1) sees that server's in-flight count rise and steers new requests elsewhere, which keeps tail latency down. This is why Envoy and NGINX users often switch from round robin to least-request for mixed workloads.
 
 **Step 5, a deploy.** You restart servers one at a time. Before stopping each, the load balancer marks it as *draining*: no new requests, but in-flight ones finish (connection draining, often with a 30 s limit). Without draining, every restart drops the 15 or so requests in progress on that server.
 

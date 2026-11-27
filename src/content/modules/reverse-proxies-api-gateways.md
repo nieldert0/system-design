@@ -144,7 +144,7 @@ A shopping app gets **5,000 requests/s** at peak through a gateway to four servi
 - **NGINX.** The most common reverse proxy. `proxy_pass` forwards a location to an upstream, `proxy_buffering on` (the default) buffers backend responses, `client_max_body_size` defaults to 1 MB, and `proxy_cache` adds caching. Many API gateways (Kong, for example) are built on NGINX with OpenResty.
 - **Envoy.** A proxy built for service-to-service traffic with configuration that can change at runtime through its xDS APIs. It ships circuit breaking (by default at most 1,024 connections and 1,024 pending requests per upstream cluster), retries, outlier detection, and rich metrics. It is the data plane in Istio and the base of gateways such as Envoy Gateway.
 - **Kong.** An API gateway with plugins for `key-auth`, `jwt`, `rate-limiting` (with `local`, `cluster`, or `redis` counting policies), request transformation, and logging. Plugins can be applied globally, per service, per route, or per consumer.
-- **AWS API Gateway.** A managed gateway. Default account throttling is 10,000 requests/s with a burst of 5,000, it can verify JWTs from an identity provider before invoking a backend, and REST APIs have a hard 29 s integration timeout, which rules it out for long-running requests.
+- **AWS API Gateway.** A managed gateway. Default account throttling is 10,000 requests/s with a burst of 5,000, it can verify JWTs from an identity provider before invoking a backend, and REST APIs default to a 29 s integration timeout. Regional and private REST APIs can raise it with a quota increase, which may lower your account's throttle, but edge-optimized APIs stay capped at 29 s, so long-running requests usually belong elsewhere.
 
 ## Trade-offs
 
