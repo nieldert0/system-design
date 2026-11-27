@@ -7,6 +7,33 @@ import { studyPlan as siteStudyPlan } from '../src/lib/study-plan.ts';
 
 export const REQUIRED_SECTIONS = ['What it is', 'How it works', 'Trade-offs', 'Interview tips'];
 const USES = ['copied', 'reworded', 'quoted'];
+// The depth standard, enforced only on modules marked `upgraded: true` until the backfill lands.
+export const DEPTH_SECTIONS = ['Worked example', 'In the real world', 'Common follow-up questions', 'Go deeper'];
+export const CASE_STUDY_SECTIONS = [
+	'Requirements',
+	'Capacity estimates',
+	'API',
+	'Data model',
+	'High-level design',
+	'Deep dives',
+	'Bottlenecks and scaling',
+	'Common follow-up questions',
+	'Go deeper'
+];
+export const MIN_WORDS = { concept: 1500, caseStudy: 2000 };
+
+function sectionBody(body: string, heading: string): string {
+	const start = body.search(new RegExp(`^## ${heading}\\s*$`, 'm'));
+	if (start < 0) return '';
+	const rest = body.slice(start).replace(/^.*\n/, '');
+	const end = rest.search(/^## /m);
+	return end < 0 ? rest : rest.slice(0, end);
+}
+
+export function wordCount(body: string): number {
+	const text = body.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
+	return text.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
+}
 
 type Mod = { file: string; slug: string; metadata: Record<string, any>; body: string };
 
@@ -34,6 +61,18 @@ export function checkModule(
 	}
 	for (const h of REQUIRED_SECTIONS)
 		if (!new RegExp(`^## ${h}\\s*$`, 'm').test(body)) err(`missing section "## ${h}"`);
+	if (md.upgraded === true) {
+		const caseStudy = section?.slug === 'case-studies';
+		for (const h of caseStudy ? CASE_STUDY_SECTIONS : DEPTH_SECTIONS)
+			if (!new RegExp(`^## ${h}\\s*$`, 'm').test(body)) err(`missing section "## ${h}"`);
+		const links = sectionBody(body, 'Go deeper').match(/\]\(https?:\/\//g) ?? [];
+		if (links.length < 2) err('"Go deeper" needs at least 2 links');
+		const questions = sectionBody(body, 'Common follow-up questions').match(/^### /gm) ?? [];
+		if (questions.length < 3) err('"Common follow-up questions" needs at least 3 questions (### headings)');
+		const min = caseStudy ? MIN_WORDS.caseStudy : MIN_WORDS.concept;
+		const words = wordCount(body);
+		if (words < min) err(`body has ${words} words, below the ${min}-word floor`);
+	}
 	for (const ref of md.readFirst ?? []) if (!slugs.has(ref)) err(`readFirst "${ref}" is an unknown slug`);
 
 	const sources: any[] = Array.isArray(md.sources) ? md.sources : [];

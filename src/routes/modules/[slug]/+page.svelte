@@ -27,6 +27,17 @@
 	});
 	const nav = $derived(neighbours(data.slug));
 	const SectionIcon = $derived(sectionIcon(data.meta.section));
+	// On-page contents: built from the rendered h2s, which get ids so the links can jump to them.
+	let prose: HTMLElement;
+	let toc = $state<{ id: string; text: string }[]>([]);
+	$effect(() => {
+		void data.slug;
+		toc = [...prose.querySelectorAll('h2')].map((h) => {
+			h.id ||= h.textContent!.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+			h.classList.add('scroll-mt-24');
+			return { id: h.id, text: h.textContent! };
+		});
+	});
 	const readFirst = $derived((data.meta.readFirst ?? []).map((s: string) => findModule(s)!));
 </script>
 
@@ -51,7 +62,18 @@
 		</p>
 	{/if}
 
-	<div class="prose mt-8 max-w-none prose-h2:mt-10">
+	{#if toc.length >= 3}
+		<nav aria-labelledby="toc-heading" class="mt-6 rounded-lg bg-raised p-4 text-sm shadow-card">
+			<h2 id="toc-heading" class="text-xs font-medium tracking-wide text-ink-11 uppercase">On this page</h2>
+			<ol class="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+				{#each toc as item (item.id)}
+					<li><a class="text-ink-12 underline-offset-2 hover:underline" href="#{item.id}">{item.text}</a></li>
+				{/each}
+			</ol>
+		</nav>
+	{/if}
+
+	<div bind:this={prose} class="prose mt-8 max-w-none prose-h2:mt-10">
 		<data.component />
 	</div>
 
