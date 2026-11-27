@@ -62,14 +62,14 @@ quiz:
       - The TLS certificate check only
     correct: 1
     explanation: A pooled connection is already open, so the request skips the SYN/SYN-ACK round trip and the server skips the setup and teardown work.
-  - prompt: A link has 100 ms RTT and 1% packet loss. Why can a single TCP download be far slower than the link's bandwidth?
+  - prompt: A link has 100 ms RTT and 1% packet loss, and the sender uses classic Reno-style congestion control. Why can a single TCP download be far slower than the link's bandwidth?
     options:
       - TCP compresses data
       - Every loss makes congestion control halve its sending window, and the window only grows back by about one packet per round trip
       - UDP traffic always takes priority
       - The checksum takes too long
     correct: 1
-    explanation: Throughput is roughly window size divided by RTT, and loss keeps the window small. That is why long, lossy paths hurt TCP most.
+    explanation: Throughput is roughly window size divided by RTT, and loss keeps the window small. CUBIC and BBR react less sharply, but long, lossy paths still hurt loss-based TCP most.
   - prompt: HTTP/2 multiplexes 50 streams over one TCP connection and one packet is lost. What happens?
     options:
       - Only the stream that owned the packet waits
@@ -140,11 +140,11 @@ Each open TCP connection costs the server kernel memory for buffers and a <Term 
 
 An API service handles **5,000 requests a second**. Each request makes one query to a PostgreSQL database in the same data centre, **2 ms** round trip away. The query itself takes 3 ms.
 
-**Step 1, a new connection per request.** Every request pays the TCP handshake (one RTT, 2 ms), then, because the database requires TLS, a TLS 1.3 handshake (another 2 ms plus some CPU for key exchange), then the PostgreSQL login exchange (roughly one more RTT, 2 ms). The query is 2 ms of RTT plus 3 ms of work. Total: about **11 ms**, of which only 5 is the query. The database sets up and tears down 5,000 connections a second; PostgreSQL starts a whole operating-system process per connection, so it spends a large share of its CPU on connection churn. And every closed connection sits in TIME_WAIT on the client for about 60 seconds: 5,000 × 60 = **300,000** sockets in TIME_WAIT, enough to run out of local ports (about 28,000 in Linux's default ephemeral range).
+**Step 1, a new connection per request.** Every request pays the TCP handshake (one RTT, 2 ms), then, because the database requires TLS, a TLS 1.3 handshake (another 2 ms plus some CPU for key exchange), then the PostgreSQL login exchange (roughly one more RTT, 2 ms). The query is 2 ms of RTT plus 3 ms of work. Total: about **11 ms**, of which only 5 is the query. The database sets up and tears down 5,000 connections a second; PostgreSQL starts a whole operating-system process per connection, so it spends a large share of its CPU on connection churn. And every closed connection sits in TIME_WAIT on the client for about 60 seconds. Spread over 20 app servers, each one opens 250 connections a second, so 250 × 60 = **15,000** of its sockets sit in TIME_WAIT. That is more than half of the roughly 28,000 local ports in Linux's default ephemeral range, and the limit applies per client IP talking to one database address and port. Uneven traffic, or a single busy host such as a batch worker doing 1,000 connections a second (60,000 in TIME_WAIT), runs out of ports.
 
 **Step 2, add a connection pool.** Each of the 20 app servers keeps a pool of 10 open connections, 200 in total. A request borrows one, runs the query, and returns it. Latency drops to **5 ms**. The database holds 200 steady connections instead of creating 5,000 a second. Is 10 per server enough? By <Term id="littles-law">Little's law</Term>, connections in use = arrival rate × time held = 5,000/s × 0.005 s = **25** on average across the fleet, so 200 leaves plenty of headroom for bursts.
 
-**Step 3, a lossy long-distance link.** Now a nightly job copies a 1 GB backup to another region, **100 ms** away, over a 1 Gbit/s link with **1% packet loss**. In theory 1 GB takes 8 seconds. In practice, each loss makes TCP roughly halve its congestion window, and the window regrows by about one packet per round trip. A rough rule (the Mathis formula) puts the ceiling at about 1,460 bytes ÷ (0.1 s × √0.01) ≈ **146 KB/s** for one connection, so the copy would take nearly two hours. Fixes: run many parallel connections, use a modern congestion control algorithm such as BBR that does not treat every loss as congestion, or fix the loss itself.
+**Step 3, a lossy long-distance link.** Now a nightly job copies a 1 GB backup to another region, **100 ms** away, over a 1 Gbit/s link with **1% packet loss**. In theory 1 GB takes 8 seconds. Under classic Reno-style congestion control, each loss halves the congestion window, and the window regrows by about one packet per round trip. For that model, a rough rule (the Mathis formula) puts the ceiling at about 1,460 bytes ÷ (0.1 s × √0.01) ≈ **146 KB/s** for one connection, so the copy would take nearly two hours. Linux's default, CUBIC, backs off less (to about 70% of the window) and regrows faster on long paths, so it does better, but random loss on a long path still costs it a lot of throughput. Fixes: run many parallel connections, use a modern congestion control algorithm such as BBR that does not treat every loss as congestion, or fix the loss itself.
 
 The lesson: on short paths, the cost of TCP is the handshakes, so reuse connections. On long, lossy paths, the cost is congestion control, so parallelise or tune.
 
