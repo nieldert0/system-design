@@ -634,5 +634,93 @@ export const glossary: GlossaryEntry[] = [
 			'Letting only the first of many identical concurrent requests do the expensive work (such as a database read) while the others wait for and share its result.',
 		module: 'cache-strategies-and-eviction',
 		source: { title: 'Wikipedia, Cache stampede', url: 'https://en.wikipedia.org/wiki/Cache_stampede', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'functional-requirements',
+		term: 'Functional requirements',
+		definition:
+			'What a system must do: the features and behaviours users rely on, such as \'shorten a URL\' or \'redirect on visit\'.',
+		module: 'approach-a-design-interview',
+		source: { title: 'Wikipedia, Functional requirement', url: 'https://en.wikipedia.org/wiki/Functional_requirement', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'non-functional-requirements',
+		term: 'Non-functional requirements',
+		definition:
+			'How well a system must do its job: targets for scale, latency, availability, durability, consistency and cost.',
+		module: 'approach-a-design-interview',
+		source: { title: 'Wikipedia, Non-functional requirement', url: 'https://en.wikipedia.org/wiki/Non-functional_requirement', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'percentile',
+		term: 'Percentile (p50, p99)',
+		definition:
+			'The value below which a given share of measurements fall. p99 latency is the time that 99% of requests beat, so it describes the slowest 1 in 100.',
+		module: 'latency-vs-throughput',
+		source: { title: 'Wikipedia, Percentile', url: 'https://en.wikipedia.org/wiki/Percentile', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'tail-latency',
+		term: 'Tail latency',
+		definition:
+			'The latency of the slowest requests, usually p99 or above. It dominates user experience when one action fans out to many services.',
+		module: 'latency-vs-throughput',
+		source: { title: 'The Tail at Scale (Dean and Barroso)', url: 'https://research.google/pubs/the-tail-at-scale/', license: 'Cited, not copied' }
+	},
+	{
+		id: 'hedged-requests',
+		term: 'Hedged requests',
+		definition:
+			'Sending a duplicate request to a second replica when the first has not answered within a short deadline, and using whichever reply arrives first, to cut tail latency.',
+		module: 'latency-vs-throughput',
+		source: { title: 'The Tail at Scale (Dean and Barroso)', url: 'https://research.google/pubs/the-tail-at-scale/', license: 'Cited, not copied' }
+	},
+	{
+		id: 'utilisation',
+		term: 'Utilisation',
+		definition:
+			'The fraction of time a resource such as a CPU core or disk is busy. Queueing delay rises sharply as utilisation approaches 100%.',
+		module: 'latency-vs-throughput',
+		source: { title: 'Wikipedia, Queueing theory', url: 'https://en.wikipedia.org/wiki/Queueing_theory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'vertical-scaling',
+		term: 'Vertical scaling',
+		definition:
+			'Adding capacity by making one machine bigger (more CPU, memory or faster disks) instead of adding machines. Also called scaling up.',
+		module: 'performance-vs-scalability',
+		source: { title: 'Wikipedia, Scalability', url: 'https://en.wikipedia.org/wiki/Scalability', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'stateless',
+		term: 'Stateless service',
+		definition:
+			'A service whose servers keep no per-user data between requests, so any copy can handle any request and copies can be added or removed freely.',
+		module: 'performance-vs-scalability',
+		source: { title: 'Wikipedia, Stateless protocol', url: 'https://en.wikipedia.org/wiki/Stateless_protocol', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'amdahls-law',
+		term: "Amdahl's law",
+		definition:
+			'The overall speed-up from parallelising work is limited by the part that cannot be parallelised: with a serial fraction s, the speed-up can never exceed 1/s.',
+		module: 'performance-vs-scalability',
+		source: { title: "Wikipedia, Amdahl's law", url: 'https://en.wikipedia.org/wiki/Amdahl%27s_law', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'connection-pool',
+		term: 'Connection pool',
+		definition:
+			'A set of open database connections that many application threads share and reuse, so the database is not overwhelmed by opening one connection per request.',
+		module: 'performance-vs-scalability',
+		source: { title: 'Wikipedia, Connection pool', url: 'https://en.wikipedia.org/wiki/Connection_pool', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'order-of-magnitude',
+		term: 'Order of magnitude',
+		definition:
+			'A factor of ten. Estimates aim to land within the right order of magnitude (100 vs 1,000), not on an exact figure.',
+		module: 'back-of-the-envelope',
+		source: { title: 'Wikipedia, Order of magnitude', url: 'https://en.wikipedia.org/wiki/Order_of_magnitude', license: 'CC BY-SA 4.0' }
 	}
 ];
