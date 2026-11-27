@@ -218,7 +218,7 @@ The conclusion matters more than the digits: storage and egress, not request rat
 
 ### How many servers do you need?
 
-Divide peak load by what one server can handle at a safe utilisation, then add spares. If one server handles 2,000 requests per second at 60% busy and the peak is 20,000, that is 10 servers, plus one or two so losing a server or an availability zone does not overload the rest. Say the per-server figure is an assumption to be confirmed by a load test.
+Divide peak load by what one server can handle at a safe utilisation, then add spares. If one server handles 2,000 requests per second at 60% busy and the peak is 20,000, that is 10 servers, plus one or two so losing a single server does not overload the rest. Surviving a whole availability zone needs more: size so the servers left after losing the largest zone still carry the peak at a safe load. Across three zones that means 10 servers' worth in any two, so 15 in total, 5 per zone. Say the per-server figure is an assumption to be confirmed by a load test.
 
 ### Will the data fit in memory?
 
