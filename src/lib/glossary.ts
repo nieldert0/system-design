@@ -610,5 +610,29 @@ export const glossary: GlossaryEntry[] = [
 			'A rate-limiting algorithm that counts requests per caller in fixed time windows and rejects them once the count passes the limit.',
 		module: 'api-rate-limiter',
 		source: { title: 'Wikipedia, Rate limiting', url: 'https://en.wikipedia.org/wiki/Rate_limiting', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'hit-ratio',
+		term: 'Hit ratio',
+		definition:
+			'The share of reads a cache answers without going to the backing store. The miss ratio (1 minus the hit ratio) is the share that reaches the database.',
+		module: 'cache-strategies-and-eviction',
+		source: { title: 'Wikipedia, Cache (computing)', url: 'https://en.wikipedia.org/wiki/Cache_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'thundering-herd',
+		term: 'Thundering herd',
+		definition:
+			'When a popular cache entry expires and many requests miss at the same moment, all of them query the database for the same data at once. Also called a cache stampede.',
+		module: 'cache-strategies-and-eviction',
+		source: { title: 'Wikipedia, Cache stampede', url: 'https://en.wikipedia.org/wiki/Cache_stampede', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'request-coalescing',
+		term: 'Request coalescing',
+		definition:
+			'Letting only the first of many identical concurrent requests do the expensive work (such as a database read) while the others wait for and share its result.',
+		module: 'cache-strategies-and-eviction',
+		source: { title: 'Wikipedia, Cache stampede', url: 'https://en.wikipedia.org/wiki/Cache_stampede', license: 'CC BY-SA 4.0' }
 	}
 ];
