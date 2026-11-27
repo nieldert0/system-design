@@ -818,5 +818,37 @@ export const glossary: GlossaryEntry[] = [
 			'A load-balancer setting that keeps sending a given client to the same backend server, usually by cookie or client IP, so state held on that server stays reachable.',
 		module: 'real-time',
 		source: { title: 'Wikipedia, Load balancing (computing)', url: 'https://en.wikipedia.org/wiki/Load_balancing_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'health-check',
+		term: 'Health check',
+		definition:
+			'A regular probe, such as an HTTP request to /healthz, that a load balancer sends to each server so it can stop routing traffic to servers that fail it.',
+		module: 'load-balancers',
+		source: { title: 'Wikipedia, Load balancing (computing)', url: 'https://en.wikipedia.org/wiki/Load_balancing_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'circuit-breaker',
+		term: 'Circuit breaker',
+		definition:
+			'A guard that stops calling a dependency after repeated failures and fails fast for a while, giving the dependency time to recover instead of a flood of retries.',
+		module: 'reverse-proxies-api-gateways',
+		source: { title: 'Wikipedia, Circuit breaker design pattern', url: 'https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'origin-server',
+		term: 'Origin server',
+		definition:
+			'Your own server that holds the original copy of content. A CDN fetches from it on a cache miss and serves cached copies to users.',
+		module: 'cdn',
+		source: { title: 'Wikipedia, Content delivery network', url: 'https://en.wikipedia.org/wiki/Content_delivery_network', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'cache-control',
+		term: 'Cache-Control',
+		definition:
+			'The HTTP header that tells browsers and shared caches such as CDNs whether a response may be stored and for how long, for example max-age=86400 or private.',
+		module: 'cdn',
+		source: { title: 'MDN, Cache-Control', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control', license: 'CC BY-SA 2.5' }
 	}
 ];
