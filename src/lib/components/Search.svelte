@@ -44,12 +44,12 @@
 <button
 	type="button"
 	onclick={() => (open = true)}
-	class="inline-flex h-8 items-center gap-2 rounded-md bg-control pr-1.5 pl-2.5 text-sm tracking-[-0.01em] text-ink-11 shadow-button transition-[color,transform] duration-150 ease-[cubic-bezier(.23,1,.32,1)] hover:text-ink-12 focus-visible:outline-2 focus-visible:outline-ink-10 active:scale-[.97] motion-reduce:transition-none max-md:size-11 max-md:justify-center max-md:bg-transparent max-md:px-0 max-md:shadow-none"
+	class="inline-flex h-8 items-center gap-2 rounded-md bg-control pr-1.5 pl-2.5 text-sm tracking-ui text-ink-11 shadow-button transition-[color,transform] duration-150 ease-out hover:text-ink-12 focus-visible:outline-2 focus-visible:outline-ink-10 active:scale-[.97] motion-reduce:transition-none max-md:size-11 max-md:justify-center max-md:bg-transparent max-md:px-0 max-md:shadow-none"
 	aria-label="Search"
 >
 	<SearchIcon class="size-4" aria-hidden="true" />
 	<span class="max-md:hidden">Search</span>
-	<kbd class="ml-3 inline-flex h-[18px] items-center rounded bg-ink-3 px-1 font-sans text-[11px] text-ink-10 max-md:hidden">⌘K</kbd>
+	<kbd class="ml-3 inline-flex h-[18px] items-center rounded bg-ink-3 px-1 font-sans text-2xs text-ink-10 max-md:hidden">⌘K</kbd>
 </button>
 
 <Command.Dialog bind:open title="Search" description="Search modules, sections and glossary terms">

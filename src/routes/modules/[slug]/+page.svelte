@@ -59,7 +59,7 @@
 
 	<section class="mt-12">
 		<h2 class="text-xl text-ink-12">Sources</h2>
-		<ol class="mt-3 flex list-decimal flex-col gap-2 pl-6 text-sm marker:text-ink-11 marker:tabular-nums">
+		<ol class="mt-3 flex list-decimal flex-col gap-2 pl-6 text-sm marker:text-ink-11 marker:font-mono marker:tabular-nums">
 			{#each data.meta.sources as s (s.id)}
 				<li id="source-{s.id}" class="scroll-mt-24 rounded target:bg-raised">
 					<a class="underline underline-offset-2" href={s.url} rel="external noopener" target="_blank">{s.title}<ArrowUpRight class="ml-0.5 inline size-3.5 align-[-2px] text-ink-10" aria-hidden="true" /></a>

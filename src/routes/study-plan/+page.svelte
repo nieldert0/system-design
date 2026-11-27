@@ -18,7 +18,7 @@
 
 	<fieldset class="mt-8">
 		<legend class="sr-only">Time until your interview</legend>
-		<div class="inline-flex rounded-lg p-1 max-md:flex max-md:w-full" style="background: var(--ink-3)">
+		<div class="inline-flex rounded-lg bg-ink-3 p-1 max-md:flex max-md:w-full">
 			{#each studyPlan as t (t.id)}
 				<label
 					class="relative flex h-8 cursor-pointer items-center rounded-md px-3.5 text-sm text-ink-11 transition-colors duration-150 has-checked:bg-raised has-checked:text-ink-12 has-checked:shadow-button has-focus-visible:outline-2 has-focus-visible:outline-ring max-md:h-11 max-md:flex-1 max-md:justify-center"
@@ -43,8 +43,8 @@
 		{#each tier.slugs as slug, i (slug)}
 			{@const mod = findModule(slug)!}
 			{@const done = progress.isPassed(slug)}
-			<li class="flex min-h-10 items-center gap-3 border-b border-[var(--ink-5)] py-2 text-sm [border-bottom-width:0.5px]">
-				<span class="w-6 shrink-0 text-xs text-ink-11 tabular-nums">{i + 1}</span>
+			<li class="flex min-h-10 items-center gap-3 border-b border-ink-5 py-2 text-sm [border-bottom-width:0.5px]">
+				<span class="w-6 shrink-0 text-xs text-ink-11 font-mono tabular-nums">{i + 1}</span>
 				<span class="flex-1">
 					{#if written.has(slug)}
 						<a class="underline underline-offset-2" href={resolve('/modules/[slug]', { slug })}>{mod.title}</a>

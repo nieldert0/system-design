@@ -34,7 +34,7 @@
 		<Popover.Content
 			onpointerenter={hover(true)}
 			onpointerleave={hover(false)}
-			class="w-80 gap-2 bg-raised p-3 ring-0 shadow-[0_0_0_1px_rgb(var(--shadow-ink)/.08),0_1px_2px_0_rgb(var(--shadow-ink)/.12),0_4px_8px_-4px_rgb(var(--shadow-ink)/.16)] dark:shadow-[0_0_0_0.5px_var(--ink-7),0_1px_2px_0_rgb(0_0_0/.5),0_4px_8px_-4px_rgb(0_0_0/.5)]"
+			class="w-80 gap-2 bg-raised p-3 ring-0 shadow-popover"
 		>
 			<p class="text-base text-ink-12">{entry.term}</p>
 			<p class="text-sm text-ink-12">{entry.definition}</p>
