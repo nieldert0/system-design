@@ -2,7 +2,7 @@
 
 One small set of tokens, defined once in [`src/routes/layout.css`](../src/routes/layout.css), used everywhere through Tailwind utilities. The look is tactile: a warm sand neutral, white cards that sit on the page with a soft shadow, and hue only where it means something. When this doc and the CSS disagree, the CSS wins; fix the doc.
 
-Visual reference: _Doop canvas link goes here._
+Visual reference: [Sysdes · Design system](https://doop.design/c/9VyRNwPNey) on Doop.
 
 ## Tokens
 
