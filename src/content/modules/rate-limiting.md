@@ -113,7 +113,7 @@ Every limiter has three parts: a **key** (who is being counted), an **algorithm*
 
 **<Term id="fixed-window-counter">Fixed window counter</Term>.** Count requests per key in the current clock window, for example the key `rl:key42:12:01` for the minute starting 12:01, and reject once the count passes the limit. It is one counter per key and trivial to build with an atomic increment and an expiry. Its flaw is the window edge: a client can send the full limit at the end of one window and again at the start of the next, getting twice the limit within a couple of seconds.
 
-**Sliding window log.** Keep a timestamp for every request in the last window and count them. It is exact, but it stores one entry per request, which is expensive for high limits.
+**Sliding window log.** Keep a timestamp for every request in the last window and count them. It enforces the limit exactly over every rolling window, but it stores one entry per request, which is expensive for high limits. It does not smooth bursts: a client can still send all N requests in one instant, so if you need that, use a token bucket with a small bucket size.
 
 **<Term id="sliding-window-counter">Sliding window counter</Term>.** Keep the fixed-window counts for the current and previous windows, and estimate the count over the last full window by weighting the previous one by how much of it still overlaps: estimate = previous × (fraction of the window remaining) + current. It costs two counters per key, removes most of the edge burst, and is what many large systems use.
 
@@ -138,7 +138,7 @@ Return `429` with `Retry-After`, and on every response include headers such as `
 
 An API allows **100 requests per minute per API key**. It runs on 20 servers behind a load balancer.
 
-**Step 1, the fixed-window edge burst.** The client sends nothing until 12:00:59, then 100 requests. The 12:00 window count goes from 0 to 100, all allowed. At 12:01:00 a new window starts at 0, and the client sends 100 more, all allowed. That is **200 requests in about one second**, twice the intended rate, and a well-timed attacker can do it every minute.
+**Step 1, the fixed-window edge burst.** The client sends nothing until 12:00:59, then 100 requests. The 12:00 window count goes from 0 to 100, all allowed. At 12:01:00 a new window starts at 0, and the client sends 100 more, all allowed. That is **200 requests in about one second**, twice the intended rate. This double burst can only happen around a boundary: each window still caps at 100, so across those two windows the client still averages the limit, and it cannot repeat the trick in the next minute without first using up that window's allowance.
 
 **Step 2, the sliding window counter.** Same client, same limit. At 12:01:15 the previous window (12:00) has 100 requests and the current window (12:01) has 30. We are 15 s into the current minute, so 45 s, or 75%, of the previous window still overlaps the last 60 seconds. Estimate = 100 × 0.75 + 30 = **105**, which is over 100, so the request is rejected. The edge burst is gone, for the cost of one more counter.
 
@@ -162,7 +162,7 @@ An API allows **100 requests per minute per API key**. It runs on 20 servers beh
 | Token bucket | 2 numbers | Allowed up to *b* | Exact average |
 | Leaky bucket | A queue | Smoothed (delayed) | Exact output rate |
 | Fixed window | 1 counter | Up to 2× at edges | Poor at edges |
-| Sliding window log | 1 entry per request | None | Exact |
+| Sliding window log | 1 entry per request | Up to the full limit at once, never more per rolling window | Exact |
 | Sliding window counter | 2 counters | Small | Close |
 
 - **Central store against local counters.** A shared Redis gives accurate global limits but adds a network hop and a dependency; local counters are free and fast but approximate.

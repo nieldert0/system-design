@@ -141,7 +141,7 @@ A shop produces **5,000 order events per second** at peak, about 1 KB each. Thre
 
 **Step 4, a hot key.** Someone suggests keying by `merchant_id` so each merchant's events are in order. But one merchant makes 40% of orders, so one partition would get 2,000 events/s while the other 11 share 3,000, and the single consumer on that partition cannot keep up. Keying by `order_id` keeps each order's events in order (all that the business needs) and spreads the merchant's orders across all 12 partitions.
 
-**Step 5, a duplicate.** The email consumer sends an email, then crashes before committing its offset. On restart it re-reads the last few records and sends the same email again. This is at-least-once delivery. The fix is idempotency: record the event ID of each email sent and skip repeats.
+**Step 5, a duplicate.** The email consumer sends an email, then crashes before committing its offset. On restart it re-reads the last few records and sends the same email again. This is at-least-once delivery. Recording the event ID of each email sent does not close the gap on its own: if the process sends the email and crashes before recording the ID, the email still goes out twice. The real fix is to pass the event ID as an idempotency key to the email provider, so the provider drops the repeat (or record the intent first and rely on the provider's dedupe). Otherwise, accept that a rare duplicate email is the price of at-least-once delivery.
 
 ## In the real world
 
