@@ -1082,5 +1082,125 @@ export const glossary: GlossaryEntry[] = [
 			'Removing or replacing a cached copy when the data behind it changes, so readers stop seeing the old value. Usually done by deleting the key on write, purging a URL, or letting a TTL expire.',
 		module: 'where-to-cache',
 		source: { title: 'Wikipedia, Cache invalidation', url: 'https://en.wikipedia.org/wiki/Cache_invalidation', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'grpc',
+		term: 'gRPC',
+		definition:
+			'An open-source RPC framework from Google. Services and messages are defined in a Protocol Buffers schema, client and server code is generated from it, and calls run as binary messages over HTTP/2, with streaming in both directions.',
+		module: 'api-design',
+		source: { title: 'Wikipedia, GRPC', url: 'https://en.wikipedia.org/wiki/GRPC', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'protobuf',
+		term: 'Protocol Buffers',
+		definition:
+			'A schema language and compact binary format for structured data. Each field has a number that is sent instead of its name, so messages are small, and new fields can be added without breaking old readers.',
+		module: 'api-design',
+		source: { title: 'Wikipedia, Protocol Buffers', url: 'https://en.wikipedia.org/wiki/Protocol_Buffers', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'graphql',
+		term: 'GraphQL',
+		definition:
+			'A query language for APIs: the server publishes a typed schema, and the client sends one query naming exactly the fields it wants across related objects, receiving exactly that shape back.',
+		module: 'api-design',
+		source: { title: 'Wikipedia, GraphQL', url: 'https://en.wikipedia.org/wiki/GraphQL', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'n-plus-one',
+		term: 'N+1 query problem',
+		definition:
+			'Running one query to fetch a list of N items and then one more query per item, so a single request costs N+1 database round trips. Fixed by batching the per-item lookups into one query.',
+		module: 'api-design',
+		source: { title: 'Wikipedia, Object–relational impedance mismatch', url: 'https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'cursor-pagination',
+		term: 'Cursor pagination',
+		definition:
+			'Paging through a list by returning an opaque token that marks where the last page ended (usually its last sort key), so the next page is an index seek rather than skipping rows with OFFSET. Stays fast on deep pages and stable while rows are inserted.',
+		module: 'api-design',
+		source: { title: 'Wikipedia, Pagination', url: 'https://en.wikipedia.org/wiki/Pagination', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'at-least-once-delivery',
+		term: 'At-least-once delivery',
+		definition:
+			'A messaging guarantee that every message is delivered one or more times: nothing is lost, but a consumer that crashes before acknowledging will see the same message again, so consumers must be idempotent.',
+		module: 'queues-and-back-pressure',
+		source: { title: 'Wikipedia, Message queue', url: 'https://en.wikipedia.org/wiki/Message_queue', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'dead-letter-queue',
+		term: 'Dead-letter queue',
+		definition:
+			'A separate queue that receives messages which failed processing too many times, so one bad message cannot block or endlessly occupy workers. Someone inspects or replays it later.',
+		module: 'queues-and-back-pressure',
+		source: { title: 'Wikipedia, Dead letter queue', url: 'https://en.wikipedia.org/wiki/Dead_letter_queue', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'exponential-backoff',
+		term: 'Exponential backoff',
+		definition:
+			'A retry policy that waits longer after each failure, typically doubling (1 s, 2 s, 4 s, ...), usually with random jitter added so many clients do not retry at the same instant.',
+		module: 'queues-and-back-pressure',
+		source: { title: 'Wikipedia, Exponential backoff', url: 'https://en.wikipedia.org/wiki/Exponential_backoff', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'load-shedding',
+		term: 'Load shedding',
+		definition:
+			'Deliberately rejecting or dropping some work, usually the least important, when a system is near capacity, so the remaining work still completes in time.',
+		module: 'queues-and-back-pressure',
+		source: { title: "Amazon Builders' Library, Using load shedding to avoid overload", url: 'https://aws.amazon.com/builders-library/using-load-shedding-to-avoid-overload/', license: 'All rights reserved' }
+	},
+	{
+		id: 'transactional-outbox',
+		term: 'Transactional outbox',
+		definition:
+			'Writing a business change and an "outbox" record of the message to publish in the same database transaction, then having a separate relay publish outbox records to the broker. Avoids losing or inventing messages when the database and broker cannot share a transaction.',
+		module: 'queues-and-back-pressure',
+		source: { title: 'microservices.io, Transactional outbox', url: 'https://microservices.io/patterns/data/transactional-outbox.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'consumer-offset',
+		term: 'Offset',
+		definition:
+			"A record's position number in a partition of an event log. Each consumer group commits the offset it has processed up to, so it can resume there after a restart or rewind to replay.",
+		module: 'pub-sub-and-event-streaming',
+		source: { title: 'Wikipedia, Apache Kafka', url: 'https://en.wikipedia.org/wiki/Apache_Kafka', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'consumer-group',
+		term: 'Consumer group',
+		definition:
+			'A set of consumers that share reading a topic: each partition is assigned to exactly one member, so the group reads in parallel up to the partition count. Separate groups each receive every record independently.',
+		module: 'pub-sub-and-event-streaming',
+		source: { title: 'Wikipedia, Apache Kafka', url: 'https://en.wikipedia.org/wiki/Apache_Kafka', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'consumer-lag',
+		term: 'Consumer lag',
+		definition:
+			'How far a consumer group is behind the newest record in a partition, measured in records (newest offset minus committed offset) or in time. The main health metric for a stream consumer.',
+		module: 'pub-sub-and-event-streaming',
+		source: { title: 'Wikipedia, Apache Kafka', url: 'https://en.wikipedia.org/wiki/Apache_Kafka', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'token-bucket',
+		term: 'Token bucket',
+		definition:
+			'A rate-limiting algorithm: a bucket holds up to b tokens and refills at r per second; each request spends a token and is rejected when none are left. Allows bursts up to b while averaging at most r.',
+		module: 'rate-limiting',
+		source: { title: 'Wikipedia, Token bucket', url: 'https://en.wikipedia.org/wiki/Token_bucket', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'sliding-window-counter',
+		term: 'Sliding window counter',
+		definition:
+			"A rate-limiting algorithm that estimates requests in the last window as the previous window's count weighted by its remaining overlap, plus the current window's count. Removes most of the fixed window's edge burst using two counters per key.",
+		module: 'rate-limiting',
+		source: { title: 'Wikipedia, Rate limiting', url: 'https://en.wikipedia.org/wiki/Rate_limiting', license: 'CC BY-SA 4.0' }
 	}
 ];
