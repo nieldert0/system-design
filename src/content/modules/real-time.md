@@ -2,7 +2,6 @@
 slug: real-time
 title: 'Real-time: polling, SSE and WebSockets'
 section: networking
-upgraded: true
 readFirst:
   - http-https-tls
 sources:

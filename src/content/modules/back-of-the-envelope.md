@@ -2,7 +2,6 @@
 slug: back-of-the-envelope
 title: Back-of-the-envelope numbers
 section: start-here
-upgraded: true
 readFirst:
   - latency-vs-throughput
 sources:

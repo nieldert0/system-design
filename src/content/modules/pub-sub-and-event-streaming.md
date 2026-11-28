@@ -2,7 +2,6 @@
 slug: pub-sub-and-event-streaming
 title: Pub/sub and event streaming
 section: communication
-upgraded: true
 readFirst:
   - queues-and-back-pressure
 sources:

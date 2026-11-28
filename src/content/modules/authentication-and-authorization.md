@@ -2,7 +2,6 @@
 slug: authentication-and-authorization
 title: Authentication and authorization
 section: security
-upgraded: true
 readFirst:
   - security-basics
   - http-https-tls

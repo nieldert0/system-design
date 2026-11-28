@@ -2,7 +2,6 @@
 slug: scaling-on-aws
 title: Scale to millions of users on AWS
 section: case-studies
-upgraded: true
 readFirst:
   - approach-a-design-interview
   - load-balancers

@@ -2,7 +2,6 @@
 slug: cdn
 title: Content delivery networks
 section: edge
-upgraded: true
 readFirst:
   - dns
   - reverse-proxies-api-gateways

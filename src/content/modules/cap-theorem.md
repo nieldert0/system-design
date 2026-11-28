@@ -2,7 +2,6 @@
 slug: cap-theorem
 title: CAP theorem
 section: availability
-upgraded: true
 readFirst:
   - how-the-internet-works
   - load-balancers

@@ -2,7 +2,6 @@
 slug: monolith-vs-microservices
 title: Monolith vs microservices vs serverless
 section: architecture
-upgraded: true
 readFirst:
   - performance-vs-scalability
   - api-design

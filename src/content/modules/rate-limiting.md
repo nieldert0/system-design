@@ -2,7 +2,6 @@
 slug: rate-limiting
 title: Rate limiting
 section: communication
-upgraded: true
 readFirst:
   - reverse-proxies-api-gateways
   - queues-and-back-pressure

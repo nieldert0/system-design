@@ -2,7 +2,6 @@
 slug: reverse-proxies-api-gateways
 title: Reverse proxies and API gateways
 section: edge
-upgraded: true
 readFirst:
   - load-balancers
 sources:

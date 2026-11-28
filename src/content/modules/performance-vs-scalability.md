@@ -2,7 +2,6 @@
 slug: performance-vs-scalability
 title: Performance vs scalability
 section: start-here
-upgraded: true
 readFirst:
   - approach-a-design-interview
 sources:

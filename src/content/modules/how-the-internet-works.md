@@ -2,7 +2,6 @@
 slug: how-the-internet-works
 title: How the internet works
 section: networking
-upgraded: true
 readFirst:
   - latency-vs-throughput
 sources:

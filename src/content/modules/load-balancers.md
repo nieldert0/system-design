@@ -2,7 +2,6 @@
 slug: load-balancers
 title: Load balancers
 section: edge
-upgraded: true
 readFirst:
   - performance-vs-scalability
   - how-the-internet-works
