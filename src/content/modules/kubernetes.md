@@ -192,7 +192,7 @@ An API runs as a Deployment of **6 replicas**. Each pod requests **500m CPU** an
 
 - **Managed control planes (EKS, GKE, AKS).** The cloud runs the API server and etcd for you, with upgrades and backups. EKS charges about $0.10 per cluster-hour for the control plane; GKE Autopilot goes further and bills per pod request, managing the nodes as well. Most teams should not run etcd themselves.
 - **Deployment rollout knobs.** A Deployment's `strategy.rollingUpdate` defaults to `maxSurge: 25%` (extra pods allowed during the rollout) and `maxUnavailable: 25%` (pods allowed to be down). `revisionHistoryLimit` (default 10) keeps old ReplicaSets so `kubectl rollout undo` can roll back.
-- **HPA behaviour.** Defaults are a 15-second sync period, a 10% tolerance (no change if the ratio is within 0.9 to 1.1), and a 300-second scale-down stabilisation window, all tunable under `spec.behavior`. KEDA extends the HPA to scale on queue length, Kafka lag or other external metrics, including down to zero.
+- **HPA behaviour.** Defaults are a 15-second sync period, a 10% tolerance (no change if the ratio is within 0.9 to 1.1), and a 300-second scale-down stabilisation window. The sync period is a cluster-wide controller-manager flag, `--horizontal-pod-autoscaler-sync-period`; per-HPA scaling policies and stabilisation windows are set under `spec.behavior`. KEDA extends the HPA to scale on queue length, Kafka lag or other external metrics, including down to zero.
 - **Google Borg.** Kubernetes' ancestor. The 2015 Borg paper reports clusters of tens of thousands of machines, and introduced ideas Kubernetes kept: declarative jobs, priority and preemption, and packing batch work into the gaps left by services' reservations.
 
 ## Trade-offs
