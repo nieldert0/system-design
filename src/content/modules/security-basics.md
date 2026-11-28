@@ -185,7 +185,7 @@ A consumer app has **10 million users**. An attacker finds an SQL injection bug 
 **Design B: bcrypt, work factor 12, per-user salt.** The same GPU manages roughly **1,500 bcrypt guesses a second** at that cost. The salt means each guess tests one user only.
 
 - The same 8-character space for **one** user: 2.8 × 10¹² / 1,500 ≈ 1.9 × 10⁹ seconds, about **60 years**.
-- Even a 10,000-word list of common passwords, tried against every user, is 10¹⁰ / 1,500 ≈ 77 days of GPU time to catch only the weakest passwords.
+- Even a 10,000-word list of common passwords, tried against every user, is 10¹¹ / 1,500 ≈ 770 days, about two years of GPU time to catch only the weakest passwords.
 
 The difference is about a factor of 10⁷ in attacker cost, from one design decision.
 
