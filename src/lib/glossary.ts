@@ -1778,7 +1778,8 @@ export const glossary: GlossaryEntry[] = [
 		module: 'unique-id-generation',
 		source: { title: 'Flickr, Ticket servers: distributed unique primary keys on the cheap', url: 'https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/', license: 'All rights reserved' }
 	},
-	id: 'geohash',
+	{
+		id: 'geohash',
 	term: 'Geohash',
 	definition: 'A short base32 string that encodes a latitude and longitude by interleaving bits from repeatedly halving each range; strings that share a prefix lie in the same rectangular cell.',
 	module: 'geospatial-indexing',
