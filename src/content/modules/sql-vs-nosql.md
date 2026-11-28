@@ -50,10 +50,10 @@ quiz:
       - Writing queries in several dialects
     correct: 1
     explanation: Orders in Postgres, sessions in Redis and events in Cassandra is polyglot persistence.
-  - prompt: In the worked example, orders peak at 300 writes/s and one PostgreSQL primary handles about 5,000. What is the right call?
+  - prompt: In the worked example, orders peak at 300/s, each writing 4 rows, and one PostgreSQL primary handles about 5,000 writes/s. What is the right call?
     options:
       - Move orders to Cassandra because it scales better
-      - Keep orders in PostgreSQL, which has over 15 times headroom and gives transactions with inventory and payments
+      - Keep orders in PostgreSQL, which runs at about 24% of one node (1,200 writes/s), over 4 times headroom, and gives transactions with inventory and payments
       - Shard orders across 10 databases now
       - Put orders in Redis
     correct: 1
@@ -141,7 +141,7 @@ The line has blurred. PostgreSQL stores and indexes JSON (`jsonb`), so flexible 
 
 An online shop with 2 million daily users. We go through its data one dataset at a time.
 
-**Orders, payments, inventory.** Peak is about **300 orders/s**, each a transaction across 4 tables. One PostgreSQL primary handles around **5,000 writes/s**, so we are using about 6% of a node, more than 15 times headroom. The data is relational, the queries vary (support, finance, refunds), and "order created but stock not reserved" is a real bug. **Decision: PostgreSQL**, with read replicas for reporting. Scale gives no reason to move.
+**Orders, payments, inventory.** Peak is about **300 orders/s**, each a transaction writing one row to each of 4 tables, so about **1,200 writes/s**. One PostgreSQL primary handles around **5,000 writes/s**, so we are using about 24% of a node, more than 4 times headroom. The data is relational, the queries vary (support, finance, refunds), and "order created but stock not reserved" is a real bug. **Decision: PostgreSQL**, with read replicas for reporting. Scale gives no reason to move.
 
 **Product catalogue.** 5 million products; a shoe has sizes and widths, a TV has panel type and refresh rate. That is about 2,000 different attributes overall, most products using 20. Options: a document store, or PostgreSQL with common columns plus a `jsonb` attributes column with a GIN index. Products join to orders and inventory, and the volume is small. **Decision: PostgreSQL with `jsonb`**, avoiding a second database for the core data. Full-text and faceted search go to Elasticsearch, fed from PostgreSQL by **change data capture**, a stream of row changes read from the database's log.
 
@@ -176,7 +176,7 @@ An online shop with 2 million daily users. We go through its data one dataset at
 
 - Start with SQL and switch only for a stated reason: write rate past one node, data size, a key-only access pattern, or a genuinely variable shape.
 - Split by data and say it in one line: "orders in PostgreSQL, sessions in Redis, events in Cassandra".
-- Back the reason with a number. "300 writes/s, so one Postgres primary is plenty" is more convincing than any adjective.
+- Back the reason with a number. "300 orders/s is about 1,200 writes/s, so one Postgres primary is plenty" is more convincing than any adjective.
 - Say how data moves between stores, for example CDC into search, and what lag that implies.
 
 **Common mistakes:**

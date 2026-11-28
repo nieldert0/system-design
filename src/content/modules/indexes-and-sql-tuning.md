@@ -65,7 +65,7 @@ quiz:
   - prompt: After adding the index, the query is fast but EXPLAIN shows it still visits 20 table rows. What makes it skip the table entirely?
     options:
       - Adding another index on created_at
-      - A covering index that also includes the selected columns (status, total), so the index alone answers the query
+      - A covering index that also includes the selected columns (id, status, total), so the index alone answers the query
       - Raising the isolation level
       - Using SELECT *
     correct: 1
@@ -157,7 +157,7 @@ LIMIT 20;
 
 **Step 3, composite index.** A power user with 40,000 orders still takes 300 ms, because the database fetches and sorts all 40,000 to return 20. Replace the index with `(user_id, created_at)`. Now entries for user 42 are already in date order; the database walks to the newest end and reads exactly 20 entries. Time is about **1 ms** for every user, however many orders they have.
 
-**Step 4, covering index.** The query still visits 20 table rows for `status` and `total`. `CREATE INDEX ON orders (user_id, created_at) INCLUDE (status, total)` in PostgreSQL (in MySQL, add them as trailing key columns) gives an index-only scan, about **0.3 ms**. The index is roughly 2.5 GB, which fits in cache alongside the hot part of the table.
+**Step 4, covering index.** The query still visits 20 table rows for `id`, `status` and `total`. `CREATE INDEX ON orders (user_id, created_at) INCLUDE (id, status, total)` in PostgreSQL gives an index-only scan; PostgreSQL indexes do not carry the primary key implicitly, so `id` must be included too. In MySQL InnoDB, every secondary index already stores the primary key, so adding `status` and `total` as trailing key columns is enough, about **0.3 ms**. The index is roughly 2.5 GB, which fits in cache alongside the hot part of the table.
 
 **Step 5, the write bill.** The table takes **3,000 inserts/s** and has accumulated **9 indexes** over the years, so each insert does 1 table write plus 9 index writes. Index usage statistics (`pg_stat_user_indexes.idx_scan = 0`) show 4 indexes have not been used in a month. Dropping them takes each insert from 10 page writes to 6, about **40% less write I/O**, and frees around 6 GB of disk and cache.
 

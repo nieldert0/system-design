@@ -166,7 +166,7 @@ A social app does **18,000 reads/s and 2,000 writes/s** at peak. One database no
 | --- | --- | --- | --- |
 | Async primary-replica | Lowest | Up to the lag window | Up to the lag |
 | Semi-sync (one replica) | + one round trip | None for a single failure | Up to the lag on async replicas |
-| Fully synchronous | + slowest replica | None | None on sync replicas |
+| Fully synchronous | + slowest replica | None | Possible until replay, unless commits wait for remote apply |
 | Multi-primary | Low locally | Depends on mode | Conflicts possible |
 
 - **Replicas scale reads, not writes.** Every replica replays every write, so write capacity stays at one node. <Src id="primer" />
