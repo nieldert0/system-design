@@ -68,7 +68,7 @@ quiz:
       - By restoring a database backup
     correct: 2
     explanation: The old environment stays up until the new one is trusted.
-  - prompt: In the worked example, a bad release fails 2% of requests at 5,000 requests/s and takes 10 minutes to detect. Roughly how many requests fail with a 5% canary instead of an all-at-once release?
+  - prompt: In the worked example, a bad release fails 2% of requests at 5,000 requests/s and takes 10 minutes to detect. Roughly how many requests fail with an all-at-once release, compared with a 5% canary?
     options:
       - About 60,000 against 3,000
       - The same number, just later
@@ -158,7 +158,7 @@ A **<Term id="feature-flag">feature flag</Term>** is a runtime switch in the cod
 
 ### Database changes
 
-During a rolling or canary deploy, old and new code run at the same time against one database. A schema change that the old code cannot handle breaks it mid-rollout, and a rollback to old code breaks again. So schema changes follow **<Term id="expand-contract">expand and contract</Term>**: first *expand* (add the new column or table in a way old code ignores), then deploy code that writes both and reads the new one, backfill old rows, and only in a later release *contract* (drop what is no longer used). Each step is safe with the versions on either side of it.
+During a rolling or canary deploy, old and new code run at the same time against one database. A schema change that the old code cannot handle breaks it mid-rollout, and a rollback to old code breaks again. So schema changes follow **<Term id="expand-contract">expand and contract</Term>**: first *expand* (add the new column or table in a way old code ignores), then deploy code that writes both, backfill old rows, switch reads to the new form, and only in a later release *contract* (drop what is no longer used). Each step is safe with the versions on either side of it.
 
 ## Worked example
 

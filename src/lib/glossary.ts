@@ -1545,5 +1545,69 @@ export const glossary: GlossaryEntry[] = [
 			'How fast an error budget is being spent, as the current error rate divided by the rate the SLO allows; a burn rate of 1 uses the budget exactly over the window.',
 		module: 'observability',
 		source: { title: 'Google, Site Reliability Engineering Workbook, Alerting on SLOs', url: 'https://sre.google/workbook/alerting-on-slos/', license: 'All rights reserved' }
+	},
+	{
+		id: 'virtual-memory',
+		term: 'Virtual memory',
+		definition:
+			'Each process sees its own private address space; the kernel maps those addresses page by page onto physical RAM, or onto disk (swap) for pages nobody is using.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Virtual memory', url: 'https://en.wikipedia.org/wiki/Virtual_memory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'context-switch',
+		term: 'Context switch',
+		definition:
+			'The CPU saving the state of one running thread and loading another\'s. Each switch costs microseconds plus a cold CPU cache, so tens of thousands of busy threads waste real time switching.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Context switch', url: 'https://en.wikipedia.org/wiki/Context_switch', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'page-fault',
+		term: 'Page fault',
+		definition:
+			'What happens when a process touches a memory page that is not mapped into RAM. A minor fault just maps it; a major fault reads it back from disk and costs milliseconds.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Page fault', url: 'https://en.wikipedia.org/wiki/Page_fault', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'oom-killer',
+		term: 'OOM killer',
+		definition:
+			'The Linux kernel\'s last resort when memory runs out: it picks a process, usually the largest, and kills it with SIGKILL (exit code 137). A container hitting its own memory limit triggers it too.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Out of memory', url: 'https://en.wikipedia.org/wiki/Out_of_memory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'copy-on-write',
+		term: 'Copy-on-write',
+		definition:
+			'Sharing memory pages between a parent and a forked child until one of them writes, and only then copying that page. It makes fork() nearly free.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Copy-on-write', url: 'https://en.wikipedia.org/wiki/Copy-on-write', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'event-loop',
+		term: 'Event loop',
+		definition:
+			'One thread that waits for whichever of many sockets is ready (using epoll on Linux) and runs its handler, so thousands of mostly idle connections need no thread each. CPU-heavy work on it stalls everyone.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Event loop', url: 'https://en.wikipedia.org/wiki/Event_loop', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'inode',
+		term: 'Inode',
+		definition:
+			'The on-disk record holding a file\'s metadata (owner, permissions, size, block locations). A file name is just a directory entry pointing to an inode, so one inode can have several names.',
+		module: 'files-permissions-shell',
+		source: { title: 'Wikipedia, Inode', url: 'https://en.wikipedia.org/wiki/Inode', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'umask',
+		term: 'umask',
+		definition:
+			'A per-process mask of permission bits removed from every new file. With the common umask 022, a file requested as 666 is created as 644.',
+		module: 'files-permissions-shell',
+		source: { title: 'Wikipedia, umask', url: 'https://en.wikipedia.org/wiki/Umask', license: 'CC BY-SA 4.0' }
 	}
 ];
