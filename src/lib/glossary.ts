@@ -1681,5 +1681,159 @@ export const glossary: GlossaryEntry[] = [
 			'One or more data centres in a cloud region with independent power, cooling, and networking, close enough to others in the region for fast links, so a failure in one rarely affects the rest.',
 		module: 'scaling-on-aws',
 		source: { title: 'AWS, Regions and Availability Zones', url: 'https://aws.amazon.com/about-aws/global-infrastructure/regions_az/', license: 'All rights reserved' }
-	}
+	},
+	{
+	id: 'geohash',
+	term: 'Geohash',
+	definition: 'A short base32 string that encodes a latitude and longitude by interleaving bits from repeatedly halving each range; strings that share a prefix lie in the same rectangular cell.',
+	module: 'geospatial-indexing',
+	source: { title: 'Wikipedia, Geohash', url: 'https://en.wikipedia.org/wiki/Geohash', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'space-filling-curve',
+	term: 'Space-filling curve',
+	definition: 'A path that visits every cell of a 2D grid once, giving each cell a single number so that nearby cells usually get nearby numbers and can be stored in a one-dimensional index.',
+	module: 'geospatial-indexing',
+	source: { title: 'Wikipedia, Space-filling curve', url: 'https://en.wikipedia.org/wiki/Space-filling_curve', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'quadtree',
+	term: 'Quadtree',
+	definition: 'A tree that splits a square region into four equal quadrants whenever it holds more than a set number of points, so dense areas get small cells and empty areas stay as large ones.',
+	module: 'geospatial-indexing',
+	source: { title: 'Wikipedia, Quadtree', url: 'https://en.wikipedia.org/wiki/Quadtree', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'r-tree',
+	term: 'R-tree',
+	definition: 'A balanced tree for spatial data in which each node stores the bounding rectangle of everything beneath it, so a search descends only into rectangles that overlap the query.',
+	module: 'geospatial-indexing',
+	source: { title: 'Wikipedia, R-tree', url: 'https://en.wikipedia.org/wiki/R-tree', license: 'CC BY-SA 4.0' }
+},
+	{
+	id: 'false-positive',
+	term: 'False positive',
+	definition: 'A result that wrongly says yes, such as a Bloom filter reporting that an item may be in the set when it was never added. Its rate is the share of absent items that get a yes.',
+	module: 'probabilistic-data-structures',
+	source: { title: 'Wikipedia, False positives and false negatives', url: 'https://en.wikipedia.org/wiki/False_positives_and_false_negatives', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'hyperloglog',
+	term: 'HyperLogLog',
+	definition: 'A sketch that estimates how many distinct items a stream contains from the longest runs of leading zeros in item hashes, spread over many registers. Error is about 1.04/√m for m registers; Redis uses 12 KB for 0.81%.',
+	module: 'probabilistic-data-structures',
+	source: { title: 'Wikipedia, HyperLogLog', url: 'https://en.wikipedia.org/wiki/HyperLogLog', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'count-min-sketch',
+	term: 'Count-min sketch',
+	definition: 'A grid of counters with one hash function per row that estimates how often each item occurs in a stream. It takes the minimum of an item\'s counters, so it never undercounts and overcounts by at most a small fraction of the whole stream.',
+	module: 'probabilistic-data-structures',
+	source: { title: 'Wikipedia, Count–min sketch', url: 'https://en.wikipedia.org/wiki/Count%E2%80%93min_sketch', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'cuckoo-filter',
+	term: 'Cuckoo filter',
+	definition: 'A set-membership filter like a Bloom filter that stores short fingerprints in a cuckoo hash table, so it also supports deleting items. Inserts can fail when the table is nearly full.',
+	module: 'probabilistic-data-structures',
+	source: { title: 'Wikipedia, Cuckoo filter', url: 'https://en.wikipedia.org/wiki/Cuckoo_filter', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'heavy-hitters',
+	term: 'Heavy hitters',
+	definition: 'The items that occur most often in a stream, the top k. Found approximately with a count-min sketch plus a heap, or with counter algorithms such as Misra-Gries and Space-Saving.',
+	module: 'probabilistic-data-structures',
+	source: { title: 'Wikipedia, Streaming algorithm (heavy hitters)', url: 'https://en.wikipedia.org/wiki/Streaming_algorithm#Heavy_hitters', license: 'CC BY-SA 4.0' }
+},
+	{
+		id: 'stemming',
+		term: 'Stemming',
+		definition:
+			'Cutting words down to a common root with rules, so "running" and "runs" both become "run" and match each other in search.',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Wikipedia, Stemming', url: 'https://en.wikipedia.org/wiki/Stemming', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'stop-word',
+		term: 'Stop word',
+		definition:
+			'A very common word such as "the" or "of" that a search analyzer may drop because it appears in almost every document and says little about any of them.',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Wikipedia, Stop word', url: 'https://en.wikipedia.org/wiki/Stop_word', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'posting-list',
+		term: 'Posting list',
+		definition:
+			'The sorted list of document ids, with term frequencies and positions, stored for one term in an inverted index.',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Manning, Raghavan and Schütze, Introduction to Information Retrieval', url: 'https://nlp.stanford.edu/IR-book/', license: 'Book, cited' }
+	},
+	{
+		id: 'tf-idf',
+		term: 'TF-IDF',
+		definition:
+			'A relevance score that multiplies how often a term appears in a document (term frequency) by how rare it is across all documents (inverse document frequency).',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Wikipedia, tf-idf', url: 'https://en.wikipedia.org/wiki/Tf%E2%80%93idf', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'bm25',
+		term: 'BM25',
+		definition:
+			'The standard search ranking formula: like TF-IDF, but repeated terms saturate and long documents are normalised by their length. Default in Lucene and Elasticsearch.',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Wikipedia, Okapi BM25', url: 'https://en.wikipedia.org/wiki/Okapi_BM25', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'index-segment',
+		term: 'Index segment',
+		definition:
+			'An immutable, self-contained piece of a Lucene index. New documents go into new segments, and background merges combine small segments into larger ones.',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Elasticsearch Reference, Near real-time search', url: 'https://www.elastic.co/docs/manage-data/data-store/near-real-time-search', license: 'Docs, cited' }
+	},
+	{
+		id: 'near-real-time-search',
+		term: 'Near-real-time search',
+		definition:
+			'Search where a written document becomes visible after a short delay, the next refresh (about one second by default in Elasticsearch), rather than instantly.',
+		module: 'search-and-inverted-indexes',
+		source: { title: 'Elasticsearch Reference, Near real-time search', url: 'https://www.elastic.co/docs/manage-data/data-store/near-real-time-search', license: 'Docs, cited' }
+	},
+	{
+	id: 'memtable',
+	term: 'Memtable',
+	definition: 'The sorted, in-memory buffer where an LSM-tree places new writes before flushing them to disk as an SSTable.',
+	module: 'storage-engines',
+	source: { title: 'Wikipedia, Log-structured merge-tree', url: 'https://en.wikipedia.org/wiki/Log-structured_merge-tree', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'sstable',
+	term: 'SSTable',
+	definition: 'Sorted string table: an immutable file of key-value pairs sorted by key, the on-disk unit of an LSM-tree.',
+	module: 'storage-engines',
+	source: { title: 'RocksDB wiki, A Tutorial of RocksDB SST formats', url: 'https://github.com/facebook/rocksdb/wiki/A-Tutorial-of-RocksDB-SST-formats', license: 'GPLv2 / Apache 2.0' }
+},
+{
+	id: 'compaction',
+	term: 'Compaction',
+	definition: 'Background merging of SSTables into fewer, larger ones, keeping only the newest version of each key and dropping deleted keys.',
+	module: 'storage-engines',
+	source: { title: 'RocksDB wiki, Compaction', url: 'https://github.com/facebook/rocksdb/wiki/Compaction', license: 'GPLv2 / Apache 2.0' }
+},
+{
+	id: 'write-amplification',
+	term: 'Write amplification',
+	definition: 'Bytes physically written to disk divided by bytes the application asked to write.',
+	module: 'storage-engines',
+	source: { title: 'Wikipedia, Write amplification', url: 'https://en.wikipedia.org/wiki/Write_amplification', license: 'CC BY-SA 4.0' }
+},
+{
+	id: 'tombstone',
+	term: 'Tombstone',
+	definition: 'A marker written in place of a deleted key in an append-only store; the key and marker are removed later by compaction.',
+	module: 'storage-engines',
+	source: { title: 'Wikipedia, Tombstone (data store)', url: 'https://en.wikipedia.org/wiki/Tombstone_(data_store)', license: 'CC BY-SA 4.0' }
+}
 ];
