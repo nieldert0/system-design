@@ -2,7 +2,6 @@
 slug: object-storage
 title: Object storage
 section: databases
-upgraded: true
 readFirst:
   - sql-vs-nosql
   - cdn

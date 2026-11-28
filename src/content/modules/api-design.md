@@ -2,7 +2,6 @@
 slug: api-design
 title: 'API design: REST, gRPC and GraphQL'
 section: communication
-upgraded: true
 readFirst:
   - http-https-tls
 sources:
@@ -56,7 +55,7 @@ quiz:
     explanation: 22 sequential round trips × 150 ms ≈ 3.3 s. A single aggregated endpoint or a GraphQL query brings it back to about one round trip.
   - prompt: A feed has 10 million rows and a client asks for page 50,000 with OFFSET pagination at 20 rows per page. Why is that slow, and what fixes it?
     options:
-      - The database must read and discard about a million rows; a cursor (WHERE created_at < last_seen) jumps straight to the right place in the index
+      - The database must read and discard about a million rows; a compound cursor (WHERE (created_at, id) < (:ts, :id)) jumps straight to the right place in the index
       - JSON is slow; switch to protobuf
       - The page is too small; return 1,000 rows
       - OFFSET is fast; the network is the problem
@@ -162,7 +161,7 @@ You are designing the API for a shop's mobile home screen. It shows the user's n
 
 **Step 4, the retry.** The user taps "Pay". The app sends `POST /payments` with `Idempotency-Key: 7f3c...` and the server charges the card, but the response is lost when the phone switches from Wi-Fi to LTE. After a 10 s timeout the app retries with the same key. The server looks up `7f3c...`, finds a completed record, and returns the original `201 Created` with the same payment ID. The customer is charged **once**. Without the key the server would have seen two identical, legitimate-looking POSTs and charged twice.
 
-**Step 5, the deep page.** A support tool lists all 10 million orders, 20 per page, with offset pagination. Page 50,000 means `OFFSET 999980`: the database walks almost a million index entries to return 20. Switching to a cursor (`WHERE created_at < :last_seen ORDER BY created_at DESC LIMIT 20`) makes every page a single index seek, a few milliseconds whatever the depth.
+**Step 5, the deep page.** A support tool lists all 10 million orders, 20 per page, with offset pagination. Page 50,000 means `OFFSET 999980`: the database walks almost a million index entries to return 20. Switching to a cursor makes every page a single index seek, a few milliseconds whatever the depth. The cursor must be unique, though: many orders share a `created_at`, and a timestamp-only cursor skips or repeats them at a page boundary. So encode both the timestamp and the ID of the last row, and query `WHERE (created_at, id) < (:ts, :id) ORDER BY created_at DESC, id DESC LIMIT 20`, backed by an index on `(created_at, id)`.
 
 ## In the real world
 

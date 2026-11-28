@@ -2,7 +2,6 @@
 slug: consistency-patterns
 title: Consistency patterns
 section: availability
-upgraded: true
 readFirst:
   - cap-theorem
 sources:

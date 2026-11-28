@@ -2,7 +2,6 @@
 slug: indexes-and-sql-tuning
 title: Indexes and SQL tuning
 section: databases
-upgraded: true
 readFirst:
   - relational-and-acid
 sources:

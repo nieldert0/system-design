@@ -2,7 +2,6 @@
 slug: nosql-types
 title: NoSQL types
 section: databases
-upgraded: true
 readFirst:
   - relational-and-acid
   - consistency-patterns

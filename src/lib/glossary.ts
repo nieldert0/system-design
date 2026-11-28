@@ -1265,5 +1265,421 @@ export const glossary: GlossaryEntry[] = [
 		definition: 'A DNS record that maps a service name to a host name and port, with priority and weight, so DNS can say where a service listens and not only its IP.',
 		module: 'service-discovery',
 		source: { title: 'Wikipedia, SRV record', url: 'https://en.wikipedia.org/wiki/SRV_record', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'kms',
+		term: 'Key management service (KMS)',
+		definition:
+			'A managed service that creates, stores and uses encryption keys so applications never hold the master keys themselves. Examples are AWS KMS, Google Cloud KMS and HashiCorp Vault.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Key management', url: 'https://en.wikipedia.org/wiki/Key_management', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'envelope-encryption',
+		term: 'Envelope encryption',
+		definition:
+			'Encrypting data with its own data key, then encrypting that data key with a master key held in a KMS. Only the small data key ever goes to the KMS, and rotating the master key does not require re-encrypting the data.',
+		module: 'security-basics',
+		source: { title: 'AWS KMS Developer Guide, AWS KMS keys', url: 'https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html', license: 'AWS documentation' }
+	},
+	{
+		id: 'csp',
+		term: 'Content Security Policy (CSP)',
+		definition:
+			'An HTTP response header that tells the browser which sources of scripts, styles and other content a page may load, so an injected script from elsewhere is refused even if escaping fails.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Content Security Policy', url: 'https://en.wikipedia.org/wiki/Content_Security_Policy', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'salt',
+		term: 'Salt',
+		definition:
+			'A random value generated per user and mixed into a password before hashing, then stored beside the hash. Identical passwords get different hashes, so an attacker must crack each user separately and precomputed tables are useless.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Salt (cryptography)', url: 'https://en.wikipedia.org/wiki/Salt_(cryptography)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'waf',
+		term: 'Web application firewall (WAF)',
+		definition:
+			'A filter in front of a web application that inspects HTTP requests and blocks those matching attack patterns, such as SQL injection or XSS payloads, or exceeding rate rules.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Web application firewall', url: 'https://en.wikipedia.org/wiki/Web_application_firewall', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'csrf',
+		term: 'Cross-site request forgery (CSRF)',
+		definition:
+			"An attack where another site makes the victim's browser send a request to your site, and the browser attaches the victim's cookies automatically. SameSite cookies and anti-CSRF tokens prevent it.",
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Cross-site request forgery', url: 'https://en.wikipedia.org/wiki/Cross-site_request_forgery', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'jwks',
+		term: 'JWKS (JSON Web Key Set)',
+		definition:
+			"A JSON document, usually served at a well-known URL, listing an issuer's public signing keys by key ID (kid). Services fetch and cache it to verify JWT signatures locally.",
+		module: 'authentication-and-authorization',
+		source: { title: 'RFC 7517, JSON Web Key', url: 'https://datatracker.ietf.org/doc/html/rfc7517', license: 'IETF Trust' }
+	},
+	{
+		id: 'refresh-token',
+		term: 'Refresh token',
+		definition:
+			'A long-lived credential the client exchanges at the auth server for a new short-lived access token. Because the server checks it on each exchange, revoking it ends the session within one access-token lifetime.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, OAuth', url: 'https://en.wikipedia.org/wiki/OAuth', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'pkce',
+		term: 'PKCE (Proof Key for Code Exchange)',
+		definition:
+			'An OAuth extension where the app sends a hash of a random secret when it starts login and the secret itself when it redeems the code, so an intercepted authorization code cannot be used by anyone else.',
+		module: 'authentication-and-authorization',
+		source: { title: 'RFC 7636, Proof Key for Code Exchange', url: 'https://datatracker.ietf.org/doc/html/rfc7636', license: 'IETF Trust' }
+	},
+	{
+		id: 'oidc',
+		term: 'OpenID Connect (OIDC)',
+		definition:
+			'An identity layer on top of OAuth 2.0. Besides the access token, the app gets an ID token, a signed JWT saying who the user is, which is what powers "Sign in with ..." and single sign-on.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, OpenID', url: 'https://en.wikipedia.org/wiki/OpenID', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'abac',
+		term: 'Attribute-based access control (ABAC)',
+		definition:
+			'Authorization by rules over attributes of the user, the object and the context, such as "owners can edit their own documents". More expressive than roles alone, but harder to audit.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Attribute-based access control', url: 'https://en.wikipedia.org/wiki/Attribute-based_access_control', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'idor',
+		term: 'Insecure direct object reference (IDOR)',
+		definition:
+			'An access-control bug where an API takes an object ID from the request and returns the object without checking the caller may access it, so changing /invoices/1043 to /invoices/1044 shows someone else\'s data.',
+		module: 'authentication-and-authorization',
+		source: { title: 'OWASP Top 10, Broken Access Control', url: 'https://owasp.org/Top10/', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'linux-namespace',
+		term: 'Namespace (Linux)',
+		definition:
+			'A kernel feature that gives a process its own view of one kind of system resource, such as process IDs, mounts, network interfaces or host name, so it cannot see what other processes see.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Linux namespaces', url: 'https://en.wikipedia.org/wiki/Linux_namespaces', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'cgroup',
+		term: 'cgroup',
+		definition:
+			'A Linux kernel feature (control group) that limits and accounts for how much CPU, memory and I/O a group of processes can use.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Cgroups', url: 'https://en.wikipedia.org/wiki/Cgroups', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'image-layer',
+		term: 'Image layer',
+		definition:
+			'One read-only filesystem change in a container image, produced by one build step and identified by a hash of its content, so it can be cached and shared between images.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Docker (software)', url: 'https://en.wikipedia.org/wiki/Docker_(software)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'multi-stage-build',
+		term: 'Multi-stage build',
+		definition:
+			'A Dockerfile with several stages, where build tools live in an early stage and only the finished output is copied into a small final image.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Docker (software)', url: 'https://en.wikipedia.org/wiki/Docker_(software)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'container-registry',
+		term: 'Container registry',
+		definition:
+			'A server that stores container images by name and tag and serves them to any machine that pulls them, such as Docker Hub or Amazon ECR.',
+		module: 'docker',
+		source: { title: 'Kubernetes Documentation, Images', url: 'https://kubernetes.io/docs/concepts/containers/images/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'image-digest',
+		term: 'Image digest',
+		definition:
+			'A SHA-256 hash of the content of an image that names one exact image; unlike a tag, it can never be moved to point at different bytes.',
+		module: 'docker',
+		source: { title: 'Kubernetes Documentation, Images', url: 'https://kubernetes.io/docs/concepts/containers/images/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'oom-kill',
+		term: 'OOM kill',
+		definition:
+			'The kernel ending a process because it ran out of memory or exceeded its cgroup memory limit; a killed container exits with code 137.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Out of memory', url: 'https://en.wikipedia.org/wiki/Out_of_memory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'control-plane',
+		term: 'Control plane',
+		definition:
+			'The part of a system that makes decisions and stores configuration, such as the Kubernetes API server, etcd, scheduler and controllers, as opposed to the data plane that does the actual work.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Kubernetes Components', url: 'https://kubernetes.io/docs/concepts/overview/components/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'resource-requests-limits',
+		term: 'Resource requests and limits',
+		definition:
+			'Per-container settings in Kubernetes: the request is the CPU and memory the scheduler reserves for it, and the limit is the hard cap enforced at run time.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Resource Management for Pods and Containers', url: 'https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'reconciliation-loop',
+		term: 'Reconciliation loop',
+		definition:
+			'A control loop that repeatedly compares the actual state of a system with the declared desired state and acts to close the gap.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Controllers', url: 'https://kubernetes.io/docs/concepts/architecture/controller/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'liveness-probe',
+		term: 'Liveness probe',
+		definition:
+			'A periodic Kubernetes check of whether a container is still working; after repeated failures the kubelet restarts the container.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Pod Lifecycle', url: 'https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'readiness-probe',
+		term: 'Readiness probe',
+		definition:
+			'A periodic Kubernetes check of whether a pod can serve traffic; a failing pod is removed from the endpoints of its Service but not restarted.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Pod Lifecycle', url: 'https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'pod-disruption-budget',
+		term: 'PodDisruptionBudget',
+		definition:
+			'A Kubernetes object that limits how many pods of an application can be taken down at once by voluntary actions such as node drains.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Disruptions', url: 'https://kubernetes.io/docs/concepts/workloads/pods/disruptions/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'progressive-delivery',
+		term: 'Progressive delivery',
+		definition:
+			'Releasing a new version to a growing share of traffic in steps, with automated metric checks that promote it or roll it back at each step.',
+		module: 'ci-cd-and-deployment',
+		source: { title: "Martin Fowler's bliki, Canary Release (Danilo Sato)", url: 'https://martinfowler.com/bliki/CanaryRelease.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'feature-flag',
+		term: 'Feature flag',
+		definition:
+			'A runtime switch in the code that turns a feature on or off, for everyone or for chosen users, without deploying new code.',
+		module: 'ci-cd-and-deployment',
+		source: { title: 'Wikipedia, Feature toggle', url: 'https://en.wikipedia.org/wiki/Feature_toggle', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'expand-contract',
+		term: 'Expand and contract',
+		definition:
+			'Changing a schema or interface in backward-compatible steps: add the new form, migrate readers and writers to it, and remove the old form only in a later release.',
+		module: 'ci-cd-and-deployment',
+		source: { title: "Martin Fowler's bliki, Parallel Change", url: 'https://martinfowler.com/bliki/ParallelChange.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'metric-cardinality',
+		term: 'Cardinality (metrics)',
+		definition:
+			'The number of distinct time series a metric produces, one per unique combination of label values; unbounded labels such as user ID make it explode.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Signals', url: 'https://opentelemetry.io/docs/concepts/signals/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'span',
+		term: 'Span',
+		definition:
+			'One timed operation inside a trace, such as an HTTP call or a database query, with a start time, duration, parent span and attributes.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Traces', url: 'https://opentelemetry.io/docs/concepts/signals/traces/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'tail-based-sampling',
+		term: 'Tail-based sampling',
+		definition:
+			'Deciding whether to keep a trace after it has finished, so every slow or failed trace can be kept while most normal ones are dropped.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Sampling', url: 'https://opentelemetry.io/docs/concepts/sampling/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'sli',
+		term: 'Service level indicator (SLI)',
+		definition:
+			'A measured number that reflects what users experience, such as the share of requests that succeed within 300 ms.',
+		module: 'observability',
+		source: { title: 'Wikipedia, Service level indicator', url: 'https://en.wikipedia.org/wiki/Service_level_indicator', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'slo',
+		term: 'Service level objective (SLO)',
+		definition:
+			'A target for an SLI over a time window, such as 99.9% of requests succeeding over 30 days.',
+		module: 'observability',
+		source: { title: 'Wikipedia, Service-level objective', url: 'https://en.wikipedia.org/wiki/Service-level_objective', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'error-budget',
+		term: 'Error budget',
+		definition:
+			'The amount of failure an SLO allows over its window, such as 0.1% of requests for a 99.9% target; spending it sets how fast a team can ship.',
+		module: 'observability',
+		source: { title: 'Google, Site Reliability Engineering Workbook, Alerting on SLOs', url: 'https://sre.google/workbook/alerting-on-slos/', license: 'All rights reserved' }
+	},
+	{
+		id: 'burn-rate',
+		term: 'Burn rate',
+		definition:
+			'How fast an error budget is being spent, as the current error rate divided by the rate the SLO allows; a burn rate of 1 uses the budget exactly over the window.',
+		module: 'observability',
+		source: { title: 'Google, Site Reliability Engineering Workbook, Alerting on SLOs', url: 'https://sre.google/workbook/alerting-on-slos/', license: 'All rights reserved' }
+	},
+	{
+		id: 'virtual-memory',
+		term: 'Virtual memory',
+		definition:
+			'Each process sees its own private address space; the kernel maps those addresses page by page onto physical RAM, or onto disk (swap) for pages nobody is using.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Virtual memory', url: 'https://en.wikipedia.org/wiki/Virtual_memory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'context-switch',
+		term: 'Context switch',
+		definition:
+			'The CPU saving the state of one running thread and loading another\'s. Each switch costs microseconds plus a cold CPU cache, so tens of thousands of busy threads waste real time switching.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Context switch', url: 'https://en.wikipedia.org/wiki/Context_switch', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'page-fault',
+		term: 'Page fault',
+		definition:
+			'What happens when a process touches a memory page that is not mapped into RAM. A minor fault just maps it; a major fault reads it back from disk and costs milliseconds.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Page fault', url: 'https://en.wikipedia.org/wiki/Page_fault', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'oom-killer',
+		term: 'OOM killer',
+		definition:
+			'The Linux kernel\'s last resort when memory runs out: it picks a process, usually the largest, and kills it with SIGKILL (exit code 137). A container hitting its own memory limit triggers it too.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Out of memory', url: 'https://en.wikipedia.org/wiki/Out_of_memory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'copy-on-write',
+		term: 'Copy-on-write',
+		definition:
+			'Sharing memory pages between a parent and a forked child until one of them writes, and only then copying that page. It makes fork() nearly free.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Copy-on-write', url: 'https://en.wikipedia.org/wiki/Copy-on-write', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'event-loop',
+		term: 'Event loop',
+		definition:
+			'One thread that waits for whichever of many sockets is ready (using epoll on Linux) and runs its handler, so thousands of mostly idle connections need no thread each. CPU-heavy work on it stalls everyone.',
+		module: 'processes-threads-memory',
+		source: { title: 'Wikipedia, Event loop', url: 'https://en.wikipedia.org/wiki/Event_loop', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'inode',
+		term: 'Inode',
+		definition:
+			'The on-disk record holding a file\'s metadata (owner, permissions, size, block locations). A file name is just a directory entry pointing to an inode, so one inode can have several names.',
+		module: 'files-permissions-shell',
+		source: { title: 'Wikipedia, Inode', url: 'https://en.wikipedia.org/wiki/Inode', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'umask',
+		term: 'umask',
+		definition:
+			'A per-process mask of permission bits removed from every new file. With the common umask 022, a file requested as 666 is created as 644.',
+		module: 'files-permissions-shell',
+		source: { title: 'Wikipedia, umask', url: 'https://en.wikipedia.org/wiki/Umask', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'fail-open',
+		term: 'Fail open',
+		definition:
+			'When a protective component such as a rate limiter cannot make its check, letting the request through rather than rejecting it, so its own outage does not block traffic. Failing closed rejects instead.',
+		module: 'api-rate-limiter',
+		source: { title: 'Wikipedia, Fail-safe', url: 'https://en.wikipedia.org/wiki/Fail-safe', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'fan-out-on-read',
+		term: 'Fan-out on read',
+		definition:
+			'Building a feed at request time by fetching and merging recent posts from every followed account, so posting is one write but each read does the merge.',
+		module: 'twitter-timeline',
+		source: { title: 'System Design Primer, Design the Twitter timeline and search', url: 'https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'inverted-index',
+		term: 'Inverted index',
+		definition:
+			'A map from each word to the list of documents that contain it, so a keyword search looks up a few lists instead of scanning every document.',
+		module: 'twitter-timeline',
+		source: { title: 'Wikipedia, Inverted index', url: 'https://en.wikipedia.org/wiki/Inverted_index', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'snowflake-id',
+		term: 'Snowflake ID',
+		definition:
+			'A 64-bit unique ID made of a millisecond timestamp, a machine id, and a per-millisecond sequence number, so servers generate IDs without coordinating and IDs sort by creation time.',
+		module: 'twitter-timeline',
+		source: { title: 'Wikipedia, Snowflake ID', url: 'https://en.wikipedia.org/wiki/Snowflake_ID', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'crawler-trap',
+		term: 'Crawler trap',
+		definition:
+			'A site structure, such as an endless calendar or session ids in URLs, that generates an unbounded number of distinct URLs and can keep a crawler busy forever.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, Spider trap', url: 'https://en.wikipedia.org/wiki/Spider_trap', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'bloom-filter',
+		term: 'Bloom filter',
+		definition:
+			'A compact bit array that answers "definitely not in the set" or "probably in the set"; it never misses a member but sometimes reports a false positive, in exchange for using a few bits per item.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, Bloom filter', url: 'https://en.wikipedia.org/wiki/Bloom_filter', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'robots-txt',
+		term: 'robots.txt',
+		definition:
+			'A text file at the root of a website that tells crawlers which paths they may and may not fetch; well-behaved crawlers read and obey it before crawling the site.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, robots.txt', url: 'https://en.wikipedia.org/wiki/Robots.txt', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'simhash',
+		term: 'SimHash',
+		definition:
+			'A fingerprint, usually 64 bits, in which similar documents produce values that differ in only a few bits, so near-duplicate pages can be found by comparing fingerprints.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, SimHash', url: 'https://en.wikipedia.org/wiki/SimHash', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'availability-zone',
+		term: 'Availability zone',
+		definition:
+			'One or more data centres in a cloud region with independent power, cooling, and networking, close enough to others in the region for fast links, so a failure in one rarely affects the rest.',
+		module: 'scaling-on-aws',
+		source: { title: 'AWS, Regions and Availability Zones', url: 'https://aws.amazon.com/about-aws/global-infrastructure/regions_az/', license: 'All rights reserved' }
 	}
 ];

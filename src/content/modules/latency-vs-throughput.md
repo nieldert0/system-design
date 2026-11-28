@@ -2,7 +2,6 @@
 slug: latency-vs-throughput
 title: Latency vs throughput
 section: start-here
-upgraded: true
 readFirst:
   - performance-vs-scalability
 sources:

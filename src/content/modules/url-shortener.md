@@ -2,7 +2,6 @@
 slug: url-shortener
 title: Design a URL shortener
 section: case-studies
-upgraded: true
 readFirst:
   - approach-a-design-interview
   - back-of-the-envelope

@@ -2,7 +2,6 @@
 slug: sql-vs-nosql
 title: SQL vs NoSQL
 section: databases
-upgraded: true
 readFirst:
   - relational-and-acid
   - nosql-types

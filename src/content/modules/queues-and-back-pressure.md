@@ -2,7 +2,6 @@
 slug: queues-and-back-pressure
 title: Queues and back pressure
 section: communication
-upgraded: true
 readFirst:
   - api-design
 sources:
