@@ -153,7 +153,7 @@ A reverse proxy runs as a systemd service on a host with the default limit of 1,
 ## In the real world
 
 - **systemd.** Most Linux services run under systemd units. `LimitNOFILE=` sets the descriptor limit (systemd's default soft limit is 1,024 with a much higher hard limit), `User=` and `Group=` drop root, `DynamicUser=yes` invents a throwaway user, and `ProtectSystem=strict` and `AmbientCapabilities=CAP_NET_BIND_SERVICE` lock the service down while still letting it bind port 80.
-- **NGINX.** `worker_rlimit_nofile` raises the descriptor limit for worker processes, and it must be at least `worker_connections` times 2 when proxying. The master process starts as root to bind ports 80 and 443, then workers run as the unprivileged `user` (often `nginx` or `www-data`).
+- **NGINX.** `worker_rlimit_nofile` raises the descriptor limit for worker processes, and it must cover `worker_connections` plus log files and other non-connection descriptors. `worker_connections` already counts both client and upstream connections, so when proxying each worker serves only about half that many clients. The master process starts as root to bind ports 80 and 443, then workers run as the unprivileged `user` (often `nginx` or `www-data`).
 - **PostgreSQL.** The server refuses to start if its data directory is readable by others: it requires mode 0700 (or 0750 with group access). `max_files_per_process` (default 1,000) caps how many files each backend keeps open.
 - **logrotate.** Rotates logs daily or by size, then uses `postrotate` to signal the app (for NGINX, `kill -USR1`) to reopen its files, or `copytruncate` for apps that cannot reopen, which avoids exactly the deleted-but-open trap above.
 

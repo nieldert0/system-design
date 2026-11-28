@@ -62,7 +62,7 @@ quiz:
       - Unlimited, because stacks are virtual
     correct: 1
     explanation: With about 12 GB left for stacks at 1 MB each you get roughly 12,000 threads. An event loop holding a few KB per connection fits hundreds of thousands.
-  - prompt: A Node.js API serves 5,000 requests per second fine, then one endpoint starts hashing passwords with bcrypt for 100 ms each. What happens to the other endpoints?
+  - prompt: A Node.js API serves 5,000 requests per second fine, then one endpoint starts hashing passwords synchronously with bcrypt.hashSync() for 100 ms each. What happens to the other endpoints?
     options:
       - Nothing, Node runs each request on its own thread
       - Their latency jumps, because the CPU work blocks the single event-loop thread
