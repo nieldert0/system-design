@@ -1265,5 +1265,101 @@ export const glossary: GlossaryEntry[] = [
 		definition: 'A DNS record that maps a service name to a host name and port, with priority and weight, so DNS can say where a service listens and not only its IP.',
 		module: 'service-discovery',
 		source: { title: 'Wikipedia, SRV record', url: 'https://en.wikipedia.org/wiki/SRV_record', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'kms',
+		term: 'Key management service (KMS)',
+		definition:
+			'A managed service that creates, stores and uses encryption keys so applications never hold the master keys themselves. Examples are AWS KMS, Google Cloud KMS and HashiCorp Vault.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Key management', url: 'https://en.wikipedia.org/wiki/Key_management', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'envelope-encryption',
+		term: 'Envelope encryption',
+		definition:
+			'Encrypting data with its own data key, then encrypting that data key with a master key held in a KMS. Only the small data key ever goes to the KMS, and rotating the master key does not require re-encrypting the data.',
+		module: 'security-basics',
+		source: { title: 'AWS KMS Developer Guide, AWS KMS keys', url: 'https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html', license: 'AWS documentation' }
+	},
+	{
+		id: 'csp',
+		term: 'Content Security Policy (CSP)',
+		definition:
+			'An HTTP response header that tells the browser which sources of scripts, styles and other content a page may load, so an injected script from elsewhere is refused even if escaping fails.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Content Security Policy', url: 'https://en.wikipedia.org/wiki/Content_Security_Policy', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'salt',
+		term: 'Salt',
+		definition:
+			'A random value generated per user and mixed into a password before hashing, then stored beside the hash. Identical passwords get different hashes, so an attacker must crack each user separately and precomputed tables are useless.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Salt (cryptography)', url: 'https://en.wikipedia.org/wiki/Salt_(cryptography)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'waf',
+		term: 'Web application firewall (WAF)',
+		definition:
+			'A filter in front of a web application that inspects HTTP requests and blocks those matching attack patterns, such as SQL injection or XSS payloads, or exceeding rate rules.',
+		module: 'security-basics',
+		source: { title: 'Wikipedia, Web application firewall', url: 'https://en.wikipedia.org/wiki/Web_application_firewall', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'csrf',
+		term: 'Cross-site request forgery (CSRF)',
+		definition:
+			"An attack where another site makes the victim's browser send a request to your site, and the browser attaches the victim's cookies automatically. SameSite cookies and anti-CSRF tokens prevent it.",
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Cross-site request forgery', url: 'https://en.wikipedia.org/wiki/Cross-site_request_forgery', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'jwks',
+		term: 'JWKS (JSON Web Key Set)',
+		definition:
+			"A JSON document, usually served at a well-known URL, listing an issuer's public signing keys by key ID (kid). Services fetch and cache it to verify JWT signatures locally.",
+		module: 'authentication-and-authorization',
+		source: { title: 'RFC 7517, JSON Web Key', url: 'https://datatracker.ietf.org/doc/html/rfc7517', license: 'IETF Trust' }
+	},
+	{
+		id: 'refresh-token',
+		term: 'Refresh token',
+		definition:
+			'A long-lived credential the client exchanges at the auth server for a new short-lived access token. Because the server checks it on each exchange, revoking it ends the session within one access-token lifetime.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, OAuth', url: 'https://en.wikipedia.org/wiki/OAuth', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'pkce',
+		term: 'PKCE (Proof Key for Code Exchange)',
+		definition:
+			'An OAuth extension where the app sends a hash of a random secret when it starts login and the secret itself when it redeems the code, so an intercepted authorization code cannot be used by anyone else.',
+		module: 'authentication-and-authorization',
+		source: { title: 'RFC 7636, Proof Key for Code Exchange', url: 'https://datatracker.ietf.org/doc/html/rfc7636', license: 'IETF Trust' }
+	},
+	{
+		id: 'oidc',
+		term: 'OpenID Connect (OIDC)',
+		definition:
+			'An identity layer on top of OAuth 2.0. Besides the access token, the app gets an ID token, a signed JWT saying who the user is, which is what powers "Sign in with ..." and single sign-on.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, OpenID', url: 'https://en.wikipedia.org/wiki/OpenID', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'abac',
+		term: 'Attribute-based access control (ABAC)',
+		definition:
+			'Authorization by rules over attributes of the user, the object and the context, such as "owners can edit their own documents". More expressive than roles alone, but harder to audit.',
+		module: 'authentication-and-authorization',
+		source: { title: 'Wikipedia, Attribute-based access control', url: 'https://en.wikipedia.org/wiki/Attribute-based_access_control', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'idor',
+		term: 'Insecure direct object reference (IDOR)',
+		definition:
+			'An access-control bug where an API takes an object ID from the request and returns the object without checking the caller may access it, so changing /invoices/1043 to /invoices/1044 shows someone else\'s data.',
+		module: 'authentication-and-authorization',
+		source: { title: 'OWASP Top 10, Broken Access Control', url: 'https://owasp.org/Top10/', license: 'CC BY-SA 4.0' }
 	}
 ];
