@@ -850,5 +850,77 @@ export const glossary: GlossaryEntry[] = [
 			'The HTTP header that tells browsers and shared caches such as CDNs whether a response may be stored and for how long, for example max-age=86400 or private.',
 		module: 'cdn',
 		source: { title: 'MDN, Cache-Control', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control', license: 'CC BY-SA 2.5' }
+	},
+	{
+		id: 'network-partition',
+		term: 'Network partition',
+		definition:
+			'A failure in which the network splits nodes into groups that cannot reach each other, even though every node is still running. Each group has to decide whether to keep answering.',
+		module: 'cap-theorem',
+		source: { title: 'Wikipedia, Network partition', url: 'https://en.wikipedia.org/wiki/Network_partition', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'linearizability',
+		term: 'Linearizability',
+		definition:
+			'The strongest single-object consistency model: the system behaves as if there were one copy of the data, so once any client sees a value, no later read returns an older one.',
+		module: 'consistency-patterns',
+		source: { title: 'Wikipedia, Linearizability', url: 'https://en.wikipedia.org/wiki/Linearizability', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'quorum',
+		term: 'Quorum',
+		definition:
+			'The minimum number of replicas that must take part in a read or write for it to count, usually a majority. If write and read quorums add up to more than the replica count, every read overlaps the latest write.',
+		module: 'cap-theorem',
+		source: { title: 'Wikipedia, Quorum (distributed computing)', url: 'https://en.wikipedia.org/wiki/Quorum_(distributed_computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'last-write-wins',
+		term: 'Last-write-wins (LWW)',
+		definition:
+			'A conflict rule for replicated data: when two versions of the same item collide, keep the one with the later timestamp and discard the other. Simple, but it silently loses writes.',
+		module: 'cap-theorem',
+		source: { title: 'Wikipedia, Eventual consistency', url: 'https://en.wikipedia.org/wiki/Eventual_consistency', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'replication-lag',
+		term: 'Replication lag',
+		definition:
+			'How far a replica is behind the primary it copies from, measured in time or log position. Reads from a lagging replica return older data.',
+		module: 'consistency-patterns',
+		source: { title: 'Wikipedia, Replication (computing)', url: 'https://en.wikipedia.org/wiki/Replication_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'read-your-writes',
+		term: 'Read-your-writes',
+		definition:
+			'A session guarantee that a user always sees their own earlier writes, even when other users may still see older data. Usually done by routing that user to the primary or an up-to-date replica.',
+		module: 'consistency-patterns',
+		source: { title: 'Wikipedia, Consistency model', url: 'https://en.wikipedia.org/wiki/Consistency_model', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'heartbeat',
+		term: 'Heartbeat',
+		definition:
+			'A small periodic "I am alive" message between nodes. When several in a row go missing, the receiver assumes the sender has failed and may start a fail-over.',
+		module: 'availability-patterns',
+		source: { title: 'Wikipedia, Heartbeat (computing)', url: 'https://en.wikipedia.org/wiki/Heartbeat_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'split-brain',
+		term: 'Split-brain',
+		definition:
+			'A failure where two nodes both believe they are the primary, usually because the link between them broke, and both accept writes that then conflict.',
+		module: 'availability-patterns',
+		source: { title: 'Wikipedia, Split-brain (computing)', url: 'https://en.wikipedia.org/wiki/Split-brain_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'fencing',
+		term: 'Fencing',
+		definition:
+			'Stopping a node that has lost its role from doing further damage, for example by cutting its power, revoking its storage access, or rejecting writes that carry an old term number.',
+		module: 'availability-patterns',
+		source: { title: 'Wikipedia, Fencing (computing)', url: 'https://en.wikipedia.org/wiki/Fencing_(computing)', license: 'CC BY-SA 4.0' }
 	}
 ];
