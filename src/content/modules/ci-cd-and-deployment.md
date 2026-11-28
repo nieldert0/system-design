@@ -2,7 +2,6 @@
 slug: ci-cd-and-deployment
 title: CI/CD and deployment strategies
 section: devops
-upgraded: true
 readFirst:
   - docker
   - kubernetes

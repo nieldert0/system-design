@@ -2,7 +2,6 @@
 slug: federation-sharding-denormalization
 title: Federation, sharding and denormalization
 section: databases
-upgraded: true
 readFirst:
   - replication
 sources:

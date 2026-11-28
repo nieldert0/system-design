@@ -2,7 +2,6 @@
 slug: dns
 title: DNS
 section: networking
-upgraded: true
 readFirst:
   - how-the-internet-works
 sources:

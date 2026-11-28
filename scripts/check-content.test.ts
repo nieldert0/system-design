@@ -3,7 +3,16 @@ import assert from 'node:assert/strict';
 import { checkGlossary, checkModule, checkStudyPlan, CASE_STUDY_SECTIONS, DEPTH_SECTIONS } from './check-content.ts';
 
 const outline = [{ slug: 's', title: 'S', modules: [{ slug: 'a', title: 'A' }, { slug: 'b', title: 'B' }] }];
-const good = () => ({
+const words = (n: number) => Array(n).fill('word').join(' ');
+const deep = (headings: string[], { links = 2, questions = 3, length = 1600 } = {}) =>
+	headings
+		.map((h) => {
+			if (h === 'Go deeper') return `## ${h}\n${Array(links).fill('- [Doc](https://x): adds y').join('\n')}\n`;
+			if (h === 'Common follow-up questions') return `## ${h}\n${Array(questions).fill('### Why?\nBecause.').join('\n')}\n`;
+			return `## ${h}\n`;
+		})
+		.join('') + words(length);
+const bare = () => ({
 	file: 'a.md',
 	slug: 'a',
 	metadata: {
@@ -13,6 +22,7 @@ const good = () => ({
 	} as Record<string, any>,
 	body: '## What it is\nx <Src id="p" />\n## How it works\n## Trade-offs\n## Interview tips\n'
 });
+const good = () => { const mod = bare(); mod.body += deep(DEPTH_SECTIONS); return mod; };
 const errs = (mod = good()) => checkModule(mod, outline);
 
 test('a valid module passes', () => assert.deepEqual(errs(), []));
@@ -110,32 +120,22 @@ test('a module marked diagram fails without a diagram component', () => {
 });
 test('a module marked none needs no visual', () => assert.equal(visualErrs('none'), ''));
 
-const words = (n: number) => Array(n).fill('word').join(' ');
-const deep = (headings: string[], { links = 2, questions = 3, length = 1600 } = {}) =>
-	headings
-		.map((h) => {
-			if (h === 'Go deeper') return `## ${h}\n${Array(links).fill('- [Doc](https://x): adds y').join('\n')}\n`;
-			if (h === 'Common follow-up questions') return `## ${h}\n${Array(questions).fill('### Why?\nBecause.').join('\n')}\n`;
-			return `## ${h}\n`;
-		})
-		.join('') + words(length);
-const upgraded = (extra: string) => { const mod = good(); mod.metadata.upgraded = true; mod.body += extra; return errs(mod).join(); };
+const depth = (extra: string) => { const mod = bare(); mod.body += extra; return errs(mod).join(); };
 
-test('the depth standard is skipped for modules not yet upgraded', () => assert.deepEqual(errs(), []));
-test('an upgraded concept module meeting the standard passes', () => assert.equal(upgraded(deep(DEPTH_SECTIONS)), ''));
-test('an upgraded module missing a depth section fails', () =>
-	assert.match(upgraded(deep(DEPTH_SECTIONS.filter((h) => h !== 'Worked example'))), /Worked example/));
+test('a concept module meeting the standard passes', () => assert.equal(depth(deep(DEPTH_SECTIONS)), ''));
+test('a module missing a depth section fails', () =>
+	assert.match(depth(deep(DEPTH_SECTIONS.filter((h) => h !== 'Worked example'))), /Worked example/));
 test('"Go deeper" needs two links and follow-ups need three questions', () => {
-	assert.match(upgraded(deep(DEPTH_SECTIONS, { links: 1 })), /Go deeper.*2 links/);
-	assert.match(upgraded(deep(DEPTH_SECTIONS, { questions: 2 })), /3 questions/);
+	assert.match(depth(deep(DEPTH_SECTIONS, { links: 1 })), /Go deeper.*2 links/);
+	assert.match(depth(deep(DEPTH_SECTIONS, { questions: 2 })), /3 questions/);
 });
-test('an upgraded module below the word floor fails', () =>
-	assert.match(upgraded(deep(DEPTH_SECTIONS, { length: 100 })), /word floor/));
-test('an upgraded case study uses its own sections and a higher floor', () => {
+test('a module below the word floor fails', () =>
+	assert.match(depth(deep(DEPTH_SECTIONS, { length: 100 })), /word floor/));
+test('a case study uses its own sections and a higher floor', () => {
 	const caseOutline = [{ slug: 'case-studies', title: 'C', modules: [{ slug: 'a', title: 'A' }, { slug: 'b', title: 'B' }] }];
-	const mod = good(); mod.metadata.section = 'case-studies'; mod.metadata.upgraded = true;
+	const mod = bare(); mod.metadata.section = 'case-studies';
 	mod.body += deep(CASE_STUDY_SECTIONS, { length: 2100 });
 	assert.deepEqual(checkModule(mod, caseOutline), []);
-	mod.body = good().body + deep(CASE_STUDY_SECTIONS, { length: 1600 });
+	mod.body = bare().body + deep(CASE_STUDY_SECTIONS, { length: 1600 });
 	assert.match(checkModule(mod, caseOutline).join(), /2000-word floor/);
 });

@@ -2,7 +2,6 @@
 slug: processes-threads-memory
 title: Processes, threads and memory
 section: linux
-upgraded: true
 readFirst:
   - performance-vs-scalability
 sources:

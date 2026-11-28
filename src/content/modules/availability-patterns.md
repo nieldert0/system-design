@@ -2,7 +2,6 @@
 slug: availability-patterns
 title: Availability patterns
 section: availability
-upgraded: true
 readFirst:
   - consistency-patterns
   - load-balancers

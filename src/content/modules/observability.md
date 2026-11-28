@@ -2,7 +2,6 @@
 slug: observability
 title: Observability
 section: devops
-upgraded: true
 readFirst:
   - monolith-vs-microservices
   - availability-patterns

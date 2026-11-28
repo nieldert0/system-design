@@ -2,7 +2,6 @@
 slug: kubernetes
 title: Kubernetes
 section: devops
-upgraded: true
 readFirst:
   - docker
   - service-discovery

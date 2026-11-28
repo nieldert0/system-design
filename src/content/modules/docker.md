@@ -2,7 +2,6 @@
 slug: docker
 title: Docker
 section: devops
-upgraded: true
 readFirst:
   - processes-threads-memory
   - files-permissions-shell

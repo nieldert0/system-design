@@ -2,7 +2,6 @@
 slug: security-basics
 title: Security basics
 section: security
-upgraded: true
 readFirst:
   - http-https-tls
   - api-design

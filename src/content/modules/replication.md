@@ -2,7 +2,6 @@
 slug: replication
 title: Replication
 section: databases
-upgraded: true
 readFirst:
   - relational-and-acid
   - availability-patterns

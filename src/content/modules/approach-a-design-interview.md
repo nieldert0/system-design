@@ -2,7 +2,6 @@
 slug: approach-a-design-interview
 title: How to approach a design interview
 section: start-here
-upgraded: true
 readFirst: []
 sources:
   - id: primer

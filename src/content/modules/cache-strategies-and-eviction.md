@@ -2,7 +2,6 @@
 slug: cache-strategies-and-eviction
 title: Cache strategies and eviction
 section: caching
-upgraded: true
 readFirst:
   - where-to-cache
 sources:

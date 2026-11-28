@@ -2,7 +2,6 @@
 slug: api-rate-limiter
 title: Design an API rate limiter
 section: case-studies
-upgraded: true
 readFirst:
   - rate-limiting
   - reverse-proxies-api-gateways

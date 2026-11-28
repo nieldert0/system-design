@@ -2,7 +2,6 @@
 slug: where-to-cache
 title: Where to cache
 section: caching
-upgraded: true
 readFirst:
   - cdn
   - consistency-patterns

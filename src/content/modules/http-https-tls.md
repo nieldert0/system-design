@@ -2,7 +2,6 @@
 slug: http-https-tls
 title: HTTP, HTTPS and TLS
 section: networking
-upgraded: true
 readFirst:
   - tcp-and-udp
   - dns

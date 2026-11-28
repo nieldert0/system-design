@@ -2,7 +2,6 @@
 slug: files-permissions-shell
 title: Files, permissions and the shell
 section: linux
-upgraded: true
 readFirst:
   - processes-threads-memory
 sources:

@@ -2,7 +2,6 @@
 slug: service-discovery
 title: Service discovery
 section: architecture
-upgraded: true
 readFirst:
   - monolith-vs-microservices
   - load-balancers

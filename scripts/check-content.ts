@@ -7,7 +7,6 @@ import { studyPlan as siteStudyPlan } from '../src/lib/study-plan.ts';
 
 export const REQUIRED_SECTIONS = ['What it is', 'How it works', 'Trade-offs', 'Interview tips'];
 const USES = ['copied', 'reworded', 'quoted'];
-// The depth standard, enforced only on modules marked `upgraded: true` until the backfill lands.
 export const DEPTH_SECTIONS = ['Worked example', 'In the real world', 'Common follow-up questions', 'Go deeper'];
 export const CASE_STUDY_SECTIONS = [
 	'Requirements',
@@ -61,18 +60,16 @@ export function checkModule(
 	}
 	for (const h of REQUIRED_SECTIONS)
 		if (!new RegExp(`^## ${h}\\s*$`, 'm').test(body)) err(`missing section "## ${h}"`);
-	if (md.upgraded === true) {
-		const caseStudy = section?.slug === 'case-studies';
-		for (const h of caseStudy ? CASE_STUDY_SECTIONS : DEPTH_SECTIONS)
-			if (!new RegExp(`^## ${h}\\s*$`, 'm').test(body)) err(`missing section "## ${h}"`);
-		const links = sectionBody(body, 'Go deeper').match(/\]\(https?:\/\//g) ?? [];
-		if (links.length < 2) err('"Go deeper" needs at least 2 links');
-		const questions = sectionBody(body, 'Common follow-up questions').match(/^### /gm) ?? [];
-		if (questions.length < 3) err('"Common follow-up questions" needs at least 3 questions (### headings)');
-		const min = caseStudy ? MIN_WORDS.caseStudy : MIN_WORDS.concept;
-		const words = wordCount(body);
-		if (words < min) err(`body has ${words} words, below the ${min}-word floor`);
-	}
+	const caseStudy = section?.slug === 'case-studies';
+	for (const h of caseStudy ? CASE_STUDY_SECTIONS : DEPTH_SECTIONS)
+		if (!new RegExp(`^## ${h}\\s*$`, 'm').test(body)) err(`missing section "## ${h}"`);
+	const links = sectionBody(body, 'Go deeper').match(/\]\(https?:\/\//g) ?? [];
+	if (links.length < 2) err('"Go deeper" needs at least 2 links');
+	const questions = sectionBody(body, 'Common follow-up questions').match(/^### /gm) ?? [];
+	if (questions.length < 3) err('"Common follow-up questions" needs at least 3 questions (### headings)');
+	const min = caseStudy ? MIN_WORDS.caseStudy : MIN_WORDS.concept;
+	const words = wordCount(body);
+	if (words < min) err(`body has ${words} words, below the ${min}-word floor`);
 	for (const ref of md.readFirst ?? []) if (!slugs.has(ref)) err(`readFirst "${ref}" is an unknown slug`);
 
 	const sources: any[] = Array.isArray(md.sources) ? md.sources : [];

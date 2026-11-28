@@ -2,7 +2,6 @@
 slug: tcp-and-udp
 title: TCP and UDP
 section: networking
-upgraded: true
 readFirst:
   - how-the-internet-works
 sources:

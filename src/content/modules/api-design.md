@@ -2,7 +2,6 @@
 slug: api-design
 title: 'API design: REST, gRPC and GraphQL'
 section: communication
-upgraded: true
 readFirst:
   - http-https-tls
 sources:

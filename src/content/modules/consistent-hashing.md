@@ -2,7 +2,6 @@
 slug: consistent-hashing
 title: Consistent hashing
 section: databases
-upgraded: true
 readFirst:
   - federation-sharding-denormalization
 sources:
