@@ -2,7 +2,6 @@
 slug: twitter-timeline
 title: Design the Twitter timeline and search
 section: case-studies
-upgraded: true
 readFirst:
   - approach-a-design-interview
   - where-to-cache
@@ -129,7 +128,7 @@ The primer's assumptions, with the arithmetic shown. <Src id="primer-twitter" />
 - **Timeline reads.** 250 billion read requests a month ÷ 2.6 million seconds ≈ **100,000 reads a second**.
 - **Search.** 10 billion searches a month ≈ **4,000 searches a second**.
 - **Tweet storage.** An id (8 bytes), author id (8 bytes), text (280 bytes), and media metadata; media itself goes to [object storage](/modules/object-storage). Including media, the primer's average is about 10 KB a tweet: 15 billion tweets a month × 10 KB ≈ **150 TB a month**, about **5.4 PB** over three years. The tweet store must be sharded.
-- **Timeline cache.** Keep 800 tweet IDs per active user at 8 bytes each, plus list overhead, call it 10 KB a user. 100 million × 10 KB = **1 TB** of memory, spread across a cluster of cache nodes.
+- **Timeline cache.** Keep 800 tweet IDs per active user at 8 bytes each, plus sorted-set overhead, call it 10 KB a user. 100 million × 10 KB = **1 TB** of memory, spread across a cluster of cache nodes.
 
 Reads outnumber posts about 16 to 1, and 1 TB of timelines fits in RAM across a few dozen machines. Both point at precomputing timelines in memory.
 
@@ -196,10 +195,10 @@ CREATE TABLE follows (
 );
 ```
 
-**Home timelines** live in a Redis cluster, one list per user holding tweet IDs only:
+**Home timelines** live in a Redis cluster, one sorted set per user holding tweet IDs only, each scored by its own ID so the set is always in time order:
 
 ```
-timeline:home:{user_id}  → [1793012345678901248, 1793012300000000000, ...]   (capped at 800)
+timeline:home:{user_id}  → sorted set: member = tweet ID, score = tweet ID   (capped at 800)
 ```
 
 The tweet IDs are **<Term id="snowflake-id">Snowflake IDs</Term>**: 64-bit numbers whose high bits are a millisecond timestamp, followed by a machine id and a sequence number. Sorting by ID therefore sorts by time, which makes merging and paging trivial. Storing IDs instead of whole tweets keeps each timeline small; the tweet itself is fetched once per read from a tweet cache. <Src id="primer-twitter" />
@@ -215,13 +214,13 @@ The post path:
 1. The client calls `POST /api/v1/tweets`.
 2. The write API assigns a Snowflake ID, stores the tweet in the tweets table and the tweet cache, and appends it to the author's user timeline.
 3. It publishes a "tweet created" event to a [queue](/modules/queues-and-back-pressure) and returns 201. Posting takes tens of milliseconds regardless of follower count.
-4. Fan-out workers consume the event, page through the author's followers, and `LPUSH` the tweet ID onto each follower's home timeline, trimming each list to 800.
+4. Fan-out workers consume the event, page through the author's followers, and `ZADD` the tweet ID into each follower's home timeline, then trim it to the newest 800 with `ZREMRANGEBYRANK`. Workers run in parallel, so tweets arrive out of order; ordering by score rather than arrival keeps the timeline sorted anyway.
 5. The search indexer consumes the same event and adds the tweet to the search index.
 
 The read path:
 
 1. The client calls `GET /api/v1/timelines/home`.
-2. The read API fetches the user's timeline list from Redis (one call, the first 50 IDs).
+2. The read API fetches the 50 highest IDs below the cursor from Redis in one call (`ZREVRANGEBYSCORE timeline:home:42 (cursor -inf LIMIT 0 50`). Selecting by ID, not by position, is what makes the cursor safe: a late-arriving tweet with a higher ID than the cursor was never skipped, it simply shows up at the top on the next refresh.
 3. It fetches the 50 tweets from the tweet cache in one batch (`MGET`), and author profiles from a user cache.
 4. It returns the hydrated tweets. Two or three cache round trips, well under 50 ms.
 
@@ -245,13 +244,13 @@ The fix is a **hybrid**:
 - Accounts above it do not fan out. Their tweets go only to their own user timeline.
 - At read time, the read API takes the user's precomputed list, then fetches the recent tweets of each celebrity they follow (usually a handful) from those celebrities' user timelines, and merges by tweet ID.
 
-**Worked example.** Alice follows 300 accounts, 4 of them above the threshold. Her read is: one `LRANGE` for her 800-ID home list, four `LRANGE` calls for the newest 50 IDs of each celebrity's user timeline (cached, because millions of people read them), then an in-memory merge of about 1,000 IDs by value. Because Snowflake IDs sort by time, the merge is a sort of integers; it takes microseconds. Five small cache reads replace 30 million writes per celebrity tweet. <Src id="primer-twitter" />
+**Worked example.** Alice follows 300 accounts, 4 of them above the threshold. Her read is: one `ZREVRANGEBYSCORE` for the newest 50 IDs of her home timeline, four more for the newest 50 IDs of each celebrity's user timeline (cached, because millions of people read them), then an in-memory merge of about 1,000 IDs by value. Because Snowflake IDs sort by time, the merge is a sort of integers; it takes microseconds. Five small cache reads replace 30 million writes per celebrity tweet. <Src id="primer-twitter" />
 
 ### 2. Keeping the timeline cache affordable
 
 1 TB of RAM is fine; 10 TB because of inactive users is not. Three rules keep it bounded:
 
-- **Cap each list** at 800 IDs. Almost nobody scrolls further; older pages fall back to a slower path that reads followed users' user timelines.
+- **Cap each timeline** at 800 IDs. Almost nobody scrolls further; older pages fall back to a slower path that reads followed users' user timelines.
 - **Skip inactive users.** Fan-out only writes to timelines of users who logged in within, say, the last 30 days. Most registered users are inactive, so this cuts fan-out work and memory sharply.
 - **Rebuild on demand.** When an inactive user returns, their timeline is missing. The read API builds it once by fan-out on read (merge the recent tweets of everyone they follow), stores it, and from then on it is maintained by push again. The first read after a long absence is slower, which is acceptable.
 

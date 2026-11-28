@@ -2,7 +2,6 @@
 slug: web-crawler
 title: Design a web crawler
 section: case-studies
-upgraded: true
 readFirst:
   - approach-a-design-interview
   - queues-and-back-pressure
@@ -67,19 +66,19 @@ quiz:
   - prompt: The crawler must fetch about 1,600 pages a second, and politeness allows one request per host per second. What does that imply?
     options:
       - One very fast worker is enough
-      - At least 1,600 different hosts must be in flight at any moment, so the frontier must interleave many hosts
+      - At least 1,600 distinct hosts must be available each second, so the frontier must interleave many hosts
       - Each host must be fetched 1,600 times a second
       - Politeness makes the target impossible
     correct: 1
-    explanation: Throughput comes from breadth across hosts, never from depth on one host. That is why the frontier keeps one back queue per host.
+    explanation: Throughput comes from breadth across hosts, never from depth on one host, which is why the frontier keeps one back queue per host. How many requests are in flight at once is a separate figure, fetch rate × fetch latency.
   - prompt: The seen-URL set holds 10 billion URLs. Why use a Bloom filter in front of it rather than only a database lookup?
     options:
       - A Bloom filter never makes mistakes
-      - It answers "definitely new" from about 12 GB of memory, so most lookups skip the database, at the cost of occasionally skipping a new URL
+      - It answers "definitely new" from about 12 GB of memory, so new URLs skip the database lookup; only "probably seen" answers are confirmed against the table
       - Databases cannot store URLs
       - It sorts URLs by priority
     correct: 1
-    explanation: At about 10 bits per URL for a 1% false positive rate, 10 billion URLs fit in roughly 12 GB; a false positive means a URL is wrongly treated as seen and skipped, which a crawler can tolerate.
+    explanation: At about 10 bits per URL for a 1% false positive rate, 10 billion URLs fit in roughly 12 GB. The filter never says "new" for a seen URL, so that answer is safe to trust; a "seen" answer can be wrong, so it is checked against the urls table before the link is dropped.
   - prompt: A site serves /calendar?month=2026-12, which links to the next month, forever. What stops the crawler?
     options:
       - Nothing; it will crawl forever
@@ -133,7 +132,7 @@ The primer's assumptions, with the arithmetic shown. <Src id="primer-crawler" />
 - **Bandwidth.** At an average 500 KB a page, 1,600 × 500 KB = **800 MB/s**, about 6.4 Gbit/s of inbound traffic. Compression on the wire roughly halves that, but plan for the raw figure.
 - **Storage.** 4 billion × 500 KB = **2 PB a month** of raw pages. Keep only the latest copy plus a compressed history, and store it in [object storage](/modules/object-storage), not a database.
 - **Seen URLs.** The crawler will know of far more URLs than it fetches, say 10 billion. A 64-bit fingerprint (a hash of the normalized URL) each is 10 billion × 8 B = **80 GB**. A <Term id="bloom-filter">Bloom filter</Term> in front of it at a 1% false positive rate needs about 10 bits a URL, about **12 GB**, which fits in memory across a few machines.
-- **Politeness math.** At one request a second per host, 1,600 pages a second means at least **1,600 hosts in flight at once**. Throughput comes from breadth, not depth.
+- **Politeness math.** At one request a second per host, 1,600 pages a second means at least **1,600 distinct hosts must be ready to fetch each second**. Throughput comes from breadth, not depth. Concurrency is a separate number: at about 350 ms a fetch, 1,600 a second × 0.35 s ≈ **560 requests in flight** ([Little's law](/modules/latency-vs-throughput)).
 - **DNS.** 1,600 fetches a second would be 1,600 [DNS](/modules/dns) lookups a second without caching; most hosts are fetched many times, so a local cache cuts that by orders of magnitude.
 
 The hard parts are the frontier (what to fetch next, politely) and deduplication, not raw compute.
@@ -243,7 +242,7 @@ With tens of thousands of back queues active, the 1,600-pages-a-second target is
 
 ### 2. Deduplication: URLs and content
 
-**URL dedupe** stops the loop from refetching. Normalize first, then check the fingerprint. A Bloom filter answers "definitely new" or "probably seen" from memory. A "probably seen" answer is wrong about 1% of the time, which means a genuinely new URL is skipped; a crawler tolerates that, because important pages are linked from many places and get another chance. Anything the filter says is new is inserted into the `urls` table, which is the source of truth.
+**URL dedupe** stops the loop from refetching. Normalize first, then check the fingerprint. A Bloom filter answers "definitely new" or "probably seen" from memory. "Definitely new" is always right, so those URLs are inserted into the `urls` table without a lookup. "Probably seen" can be wrong: about 1% of genuinely new URLs get it. Dropping them outright would lose those pages permanently, because the filter only ever gains bits and every rediscovery of the same URL hits the same positions. So a "probably seen" answer is confirmed against the `urls` table, which is the source of truth, before the link is discarded.
 
 **Content dedupe** catches mirrors, printer-friendly copies, and session-id variants. An exact hash (SHA-256 of the body) catches byte-identical pages. For near-duplicates, compute a **<Term id="simhash">SimHash</Term>**: a 64-bit fingerprint in which similar documents differ in only a few bits. Two pages whose SimHashes differ by 3 bits or fewer are treated as duplicates. Finding near-matches among billions uses a few tables keyed by different blocks of the fingerprint, so only pages sharing a block are compared.
 
@@ -272,13 +271,13 @@ Recrawling every page weekly wastes capacity on pages that never change and is t
 - **Freshness vs coverage**: recrawling popular pages often uses capacity that could fetch new ones; crawlers prioritise by how often a page changes and how important it is. <Src id="wiki-crawler" />
 - **Politeness vs speed**: per-host limits slow the crawl but keep sites from blocking it. <Src id="wiki-crawler" />
 - **Exact vs near-duplicate detection**: exact hashes are cheap; near-duplicate signatures catch more but cost more. <Src id="primer-crawler" />
-- **Bloom filter vs exact set**: memory and speed against occasionally skipping a new URL.
+- **Bloom filter vs exact set**: the filter saves lookups only for new URLs; trusting its "seen" answers without a check would save the rest too, at the cost of permanently skipping about 1% of new URLs.
 - **Breadth-first vs priority order**: breadth-first is simple and finds important pages early by accident; an explicit priority finds them on purpose but needs a scoring signal.
 
 ## Interview tips
 
 - Draw the loop first: frontier → fetch → parse → dedupe → frontier.
-- Do the politeness arithmetic: 1,600 pages a second at one request per host per second means 1,600 hosts in flight.
+- Do the politeness arithmetic: 1,600 pages a second at one request per host per second means at least 1,600 distinct hosts ready each second; concurrency is fetch rate × latency.
 - Say "robots.txt and per-host rate limits" before the interviewer asks, and explain front and back queues.
 - Explain how you partition the frontier and the seen-set across machines (by host and by URL hash).
 - Mention crawler traps and how budgets per host stop them.
