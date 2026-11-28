@@ -128,9 +128,9 @@ The primer's assumptions, with the arithmetic shown. <Src id="primer-twitter" />
 - **Timeline reads.** 250 billion read requests a month ÷ 2.6 million seconds ≈ **100,000 reads a second**.
 - **Search.** 10 billion searches a month ≈ **4,000 searches a second**.
 - **Tweet storage.** An id (8 bytes), author id (8 bytes), text (280 bytes), and media metadata; media itself goes to [object storage](/modules/object-storage). Including media, the primer's average is about 10 KB a tweet: 15 billion tweets a month × 10 KB ≈ **150 TB a month**, about **5.4 PB** over three years. The tweet store must be sharded.
-- **Timeline cache.** Keep 800 tweet IDs per active user at 8 bytes each, plus sorted-set overhead, call it 10 KB a user. 100 million × 10 KB = **1 TB** of memory, spread across a cluster of cache nodes.
+- **Timeline cache.** Keep 800 tweet IDs per active user. Each is a 19-byte string member, and a Redis sorted set this size adds roughly 60 bytes of skiplist and hash overhead per entry, so call it 80 bytes an entry and 64 KB a user. 100 million × 64 KB ≈ **6.4 TB** of memory, spread across a cluster of cache nodes.
 
-Reads outnumber posts about 16 to 1, and 1 TB of timelines fits in RAM across a few dozen machines. Both point at precomputing timelines in memory.
+Reads outnumber posts about 16 to 1, and about 6 TB of timelines fits in RAM across a hundred or so 64 GB cache nodes. Both point at precomputing timelines in memory.
 
 ## API
 
@@ -248,7 +248,7 @@ The fix is a **hybrid**:
 
 ### 2. Keeping the timeline cache affordable
 
-1 TB of RAM is fine; 10 TB because of inactive users is not. Three rules keep it bounded:
+About 6 TB of RAM for active users is fine; several times that because of inactive users is not. Three rules keep it bounded:
 
 - **Cap each timeline** at 800 IDs. Almost nobody scrolls further; older pages fall back to a slower path that reads followed users' user timelines.
 - **Skip inactive users.** Fan-out only writes to timelines of users who logged in within, say, the last 30 days. Most registered users are inactive, so this cuts fan-out work and memory sharply.
