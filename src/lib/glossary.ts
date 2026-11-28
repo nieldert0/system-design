@@ -1202,5 +1202,68 @@ export const glossary: GlossaryEntry[] = [
 			"A rate-limiting algorithm that estimates requests in the last window as the previous window's count weighted by its remaining overlap, plus the current window's count. Removes most of the fixed window's edge burst using two counters per key.",
 		module: 'rate-limiting',
 		source: { title: 'Wikipedia, Rate limiting', url: 'https://en.wikipedia.org/wiki/Rate_limiting', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'modular-monolith',
+		term: 'Modular monolith',
+		definition:
+			'One deployable application split internally into modules with strict boundaries, so teams own parts of it and a module can later become a service without a rewrite.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Monolithic application', url: 'https://en.wikipedia.org/wiki/Monolithic_application', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'saga',
+		term: 'Saga',
+		definition:
+			'A business operation spanning several services, run as a sequence of local transactions where each step has a compensating action that undoes it if a later step fails.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Long-running transaction', url: 'https://en.wikipedia.org/wiki/Long-running_transaction', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'cold-start',
+		term: 'Cold start',
+		definition:
+			'The extra latency of a serverless call when no warm execution environment exists, so the provider must start one and load your code before running it.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Serverless computing', url: 'https://en.wikipedia.org/wiki/Serverless_computing', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'strangler-fig',
+		term: 'Strangler fig pattern',
+		definition:
+			'Migrating away from an old system piece by piece by routing one feature at a time to new code behind a proxy, until the old system can be removed.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Strangler fig pattern', url: 'https://en.wikipedia.org/wiki/Strangler_fig_pattern', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'distributed-monolith',
+		term: 'Distributed monolith',
+		definition:
+			'Services that are deployed separately but still have to change and deploy together, often because they share a database, so they pay the costs of both styles.',
+		module: 'monolith-vs-microservices',
+		source: { title: 'Wikipedia, Microservices', url: 'https://en.wikipedia.org/wiki/Microservices', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'service-mesh',
+		term: 'Service mesh',
+		definition:
+			'An infrastructure layer of proxies, one beside each service instance, that handles discovery, load balancing, retries and encryption for service-to-service calls, configured by a central control plane.',
+		module: 'service-discovery',
+		source: { title: 'Wikipedia, Service mesh', url: 'https://en.wikipedia.org/wiki/Service_mesh', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'sidecar',
+		term: 'Sidecar',
+		definition:
+			'A helper process or container deployed next to each instance of a service, such as a proxy, that adds behaviour without changing the service code.',
+		module: 'service-discovery',
+		source: { title: 'Wikipedia, Service mesh', url: 'https://en.wikipedia.org/wiki/Service_mesh', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'srv-record',
+		term: 'SRV record',
+		definition: 'A DNS record that maps a service name to a host name and port, with priority and weight, so DNS can say where a service listens and not only its IP.',
+		module: 'service-discovery',
+		source: { title: 'Wikipedia, SRV record', url: 'https://en.wikipedia.org/wiki/SRV_record', license: 'CC BY-SA 4.0' }
 	}
 ];
