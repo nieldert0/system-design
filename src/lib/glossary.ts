@@ -1683,7 +1683,103 @@ export const glossary: GlossaryEntry[] = [
 		source: { title: 'AWS, Regions and Availability Zones', url: 'https://aws.amazon.com/about-aws/global-infrastructure/regions_az/', license: 'All rights reserved' }
 	},
 	{
-	id: 'geohash',
+		id: 'jitter',
+		term: 'Jitter',
+		definition:
+			'Randomness added to a retry delay so that many clients that failed at the same moment do not all retry at the same moment.',
+		module: 'handling-failure',
+		source: { title: 'AWS Builders\' Library, Timeouts, retries, and backoff with jitter', url: 'https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/', license: 'All rights reserved' }
+	},
+	{
+		id: 'retry-storm',
+		term: 'Retry storm',
+		definition:
+			'A spike of load caused by clients retrying failed calls: each layer multiplies the attempts of the layer above, so a slow dependency receives several times its normal traffic and cannot recover.',
+		module: 'handling-failure',
+		source: { title: 'Google SRE book, Addressing cascading failures', url: 'https://sre.google/sre-book/addressing-cascading-failures/', license: 'CC BY-NC-ND 4.0' }
+	},
+	{
+		id: 'deadline-propagation',
+		term: 'Deadline propagation',
+		definition:
+			'Passing the time a request must finish by along with every downstream call, so a service stops working on a request the caller has already given up on.',
+		module: 'handling-failure',
+		source: { title: 'gRPC, Deadlines', url: 'https://grpc.io/docs/guides/deadlines/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'consensus',
+		term: 'Consensus',
+		definition:
+			'Getting a group of machines to agree on one value, or one ordered log of values, even when some of them crash or messages are delayed.',
+		module: 'consensus-and-leader-election',
+		source: { title: 'Wikipedia, Consensus (computer science)', url: 'https://en.wikipedia.org/wiki/Consensus_(computer_science)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'raft',
+		term: 'Raft',
+		definition:
+			'A consensus algorithm built around one elected leader per numbered term, which appends entries to its log and commits each one once a majority of nodes has stored it.',
+		module: 'consensus-and-leader-election',
+		source: { title: 'The Raft consensus algorithm', url: 'https://raft.github.io/', license: 'CC BY 3.0' }
+	},
+	{
+		id: 'leader-election',
+		term: 'Leader election',
+		definition:
+			'Choosing exactly one node in a group to act as coordinator, and choosing a new one when it fails, so that only one node makes decisions at a time.',
+		module: 'consensus-and-leader-election',
+		source: { title: 'Wikipedia, Leader election', url: 'https://en.wikipedia.org/wiki/Leader_election', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'lease',
+		term: 'Lease',
+		definition:
+			'A lock that expires on its own after a set time unless its holder renews it, so a crashed holder cannot block everyone else forever.',
+		module: 'consensus-and-leader-election',
+		source: { title: 'Wikipedia, Lease (computer science)', url: 'https://en.wikipedia.org/wiki/Lease_(computer_science)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'two-phase-commit',
+		term: 'Two-phase commit (2PC)',
+		definition:
+			'A protocol where a coordinator first asks every participant to prepare and promise it can commit, then tells all of them to commit only if every one said yes.',
+		module: 'distributed-transactions',
+		source: { title: 'Wikipedia, Two-phase commit protocol', url: 'https://en.wikipedia.org/wiki/Two-phase_commit_protocol', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'compensating-transaction',
+		term: 'Compensating transaction',
+		definition:
+			'An action that semantically undoes an earlier committed step, such as a refund for a charge, used because the original commit cannot be rolled back.',
+		module: 'distributed-transactions',
+		source: { title: 'Microsoft, Compensating Transaction pattern', url: 'https://learn.microsoft.com/en-us/azure/architecture/patterns/compensating-transaction', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'uuid',
+		term: 'UUID',
+		definition:
+			'A 128-bit identifier written as 32 hex digits. Version 4 is almost entirely random; version 7 puts a millisecond timestamp in the first 48 bits so IDs sort by creation time.',
+		module: 'unique-id-generation',
+		source: { title: 'RFC 9562, Universally Unique IDentifiers', url: 'https://www.rfc-editor.org/rfc/rfc9562', license: 'IETF Trust' }
+	},
+	{
+		id: 'clock-skew',
+		term: 'Clock skew',
+		definition:
+			'The difference between the clocks of two machines at the same instant. NTP keeps it to milliseconds, but it is never zero, and a clock can even jump backwards.',
+		module: 'unique-id-generation',
+		source: { title: 'Wikipedia, Clock skew', url: 'https://en.wikipedia.org/wiki/Clock_skew', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'ticket-server',
+		term: 'Ticket server',
+		definition:
+			'A small database whose only job is to hand out the next number from an auto-increment counter, giving globally unique, increasing IDs from one place.',
+		module: 'unique-id-generation',
+		source: { title: 'Flickr, Ticket servers: distributed unique primary keys on the cheap', url: 'https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/', license: 'All rights reserved' }
+	},
+	{
+		id: 'geohash',
 	term: 'Geohash',
 	definition: 'A short base32 string that encodes a latitude and longitude by interleaving bits from repeatedly halving each range; strings that share a prefix lie in the same rectangular cell.',
 	module: 'geospatial-indexing',
