@@ -1361,5 +1361,189 @@ export const glossary: GlossaryEntry[] = [
 			'An access-control bug where an API takes an object ID from the request and returns the object without checking the caller may access it, so changing /invoices/1043 to /invoices/1044 shows someone else\'s data.',
 		module: 'authentication-and-authorization',
 		source: { title: 'OWASP Top 10, Broken Access Control', url: 'https://owasp.org/Top10/', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'linux-namespace',
+		term: 'Namespace (Linux)',
+		definition:
+			'A kernel feature that gives a process its own view of one kind of system resource, such as process IDs, mounts, network interfaces or host name, so it cannot see what other processes see.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Linux namespaces', url: 'https://en.wikipedia.org/wiki/Linux_namespaces', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'cgroup',
+		term: 'cgroup',
+		definition:
+			'A Linux kernel feature (control group) that limits and accounts for how much CPU, memory and I/O a group of processes can use.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Cgroups', url: 'https://en.wikipedia.org/wiki/Cgroups', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'image-layer',
+		term: 'Image layer',
+		definition:
+			'One read-only filesystem change in a container image, produced by one build step and identified by a hash of its content, so it can be cached and shared between images.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Docker (software)', url: 'https://en.wikipedia.org/wiki/Docker_(software)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'multi-stage-build',
+		term: 'Multi-stage build',
+		definition:
+			'A Dockerfile with several stages, where build tools live in an early stage and only the finished output is copied into a small final image.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Docker (software)', url: 'https://en.wikipedia.org/wiki/Docker_(software)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'container-registry',
+		term: 'Container registry',
+		definition:
+			'A server that stores container images by name and tag and serves them to any machine that pulls them, such as Docker Hub or Amazon ECR.',
+		module: 'docker',
+		source: { title: 'Kubernetes Documentation, Images', url: 'https://kubernetes.io/docs/concepts/containers/images/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'image-digest',
+		term: 'Image digest',
+		definition:
+			'A SHA-256 hash of the content of an image that names one exact image; unlike a tag, it can never be moved to point at different bytes.',
+		module: 'docker',
+		source: { title: 'Kubernetes Documentation, Images', url: 'https://kubernetes.io/docs/concepts/containers/images/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'oom-kill',
+		term: 'OOM kill',
+		definition:
+			'The kernel ending a process because it ran out of memory or exceeded its cgroup memory limit; a killed container exits with code 137.',
+		module: 'docker',
+		source: { title: 'Wikipedia, Out of memory', url: 'https://en.wikipedia.org/wiki/Out_of_memory', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'control-plane',
+		term: 'Control plane',
+		definition:
+			'The part of a system that makes decisions and stores configuration, such as the Kubernetes API server, etcd, scheduler and controllers, as opposed to the data plane that does the actual work.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Kubernetes Components', url: 'https://kubernetes.io/docs/concepts/overview/components/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'resource-requests-limits',
+		term: 'Resource requests and limits',
+		definition:
+			'Per-container settings in Kubernetes: the request is the CPU and memory the scheduler reserves for it, and the limit is the hard cap enforced at run time.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Resource Management for Pods and Containers', url: 'https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'reconciliation-loop',
+		term: 'Reconciliation loop',
+		definition:
+			'A control loop that repeatedly compares the actual state of a system with the declared desired state and acts to close the gap.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Controllers', url: 'https://kubernetes.io/docs/concepts/architecture/controller/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'liveness-probe',
+		term: 'Liveness probe',
+		definition:
+			'A periodic Kubernetes check of whether a container is still working; after repeated failures the kubelet restarts the container.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Pod Lifecycle', url: 'https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'readiness-probe',
+		term: 'Readiness probe',
+		definition:
+			'A periodic Kubernetes check of whether a pod can serve traffic; a failing pod is removed from the endpoints of its Service but not restarted.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Pod Lifecycle', url: 'https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'pod-disruption-budget',
+		term: 'PodDisruptionBudget',
+		definition:
+			'A Kubernetes object that limits how many pods of an application can be taken down at once by voluntary actions such as node drains.',
+		module: 'kubernetes',
+		source: { title: 'Kubernetes Documentation, Disruptions', url: 'https://kubernetes.io/docs/concepts/workloads/pods/disruptions/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'progressive-delivery',
+		term: 'Progressive delivery',
+		definition:
+			'Releasing a new version to a growing share of traffic in steps, with automated metric checks that promote it or roll it back at each step.',
+		module: 'ci-cd-and-deployment',
+		source: { title: "Martin Fowler's bliki, Canary Release (Danilo Sato)", url: 'https://martinfowler.com/bliki/CanaryRelease.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'feature-flag',
+		term: 'Feature flag',
+		definition:
+			'A runtime switch in the code that turns a feature on or off, for everyone or for chosen users, without deploying new code.',
+		module: 'ci-cd-and-deployment',
+		source: { title: 'Wikipedia, Feature toggle', url: 'https://en.wikipedia.org/wiki/Feature_toggle', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'expand-contract',
+		term: 'Expand and contract',
+		definition:
+			'Changing a schema or interface in backward-compatible steps: add the new form, migrate readers and writers to it, and remove the old form only in a later release.',
+		module: 'ci-cd-and-deployment',
+		source: { title: "Martin Fowler's bliki, Parallel Change", url: 'https://martinfowler.com/bliki/ParallelChange.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'metric-cardinality',
+		term: 'Cardinality (metrics)',
+		definition:
+			'The number of distinct time series a metric produces, one per unique combination of label values; unbounded labels such as user ID make it explode.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Signals', url: 'https://opentelemetry.io/docs/concepts/signals/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'span',
+		term: 'Span',
+		definition:
+			'One timed operation inside a trace, such as an HTTP call or a database query, with a start time, duration, parent span and attributes.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Traces', url: 'https://opentelemetry.io/docs/concepts/signals/traces/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'tail-based-sampling',
+		term: 'Tail-based sampling',
+		definition:
+			'Deciding whether to keep a trace after it has finished, so every slow or failed trace can be kept while most normal ones are dropped.',
+		module: 'observability',
+		source: { title: 'OpenTelemetry Documentation, Sampling', url: 'https://opentelemetry.io/docs/concepts/sampling/', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'sli',
+		term: 'Service level indicator (SLI)',
+		definition:
+			'A measured number that reflects what users experience, such as the share of requests that succeed within 300 ms.',
+		module: 'observability',
+		source: { title: 'Wikipedia, Service level indicator', url: 'https://en.wikipedia.org/wiki/Service_level_indicator', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'slo',
+		term: 'Service level objective (SLO)',
+		definition:
+			'A target for an SLI over a time window, such as 99.9% of requests succeeding over 30 days.',
+		module: 'observability',
+		source: { title: 'Wikipedia, Service-level objective', url: 'https://en.wikipedia.org/wiki/Service-level_objective', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'error-budget',
+		term: 'Error budget',
+		definition:
+			'The amount of failure an SLO allows over its window, such as 0.1% of requests for a 99.9% target; spending it sets how fast a team can ship.',
+		module: 'observability',
+		source: { title: 'Google, Site Reliability Engineering Workbook, Alerting on SLOs', url: 'https://sre.google/workbook/alerting-on-slos/', license: 'All rights reserved' }
+	},
+	{
+		id: 'burn-rate',
+		term: 'Burn rate',
+		definition:
+			'How fast an error budget is being spent, as the current error rate divided by the rate the SLO allows; a burn rate of 1 uses the budget exactly over the window.',
+		module: 'observability',
+		source: { title: 'Google, Site Reliability Engineering Workbook, Alerting on SLOs', url: 'https://sre.google/workbook/alerting-on-slos/', license: 'All rights reserved' }
 	}
 ];
