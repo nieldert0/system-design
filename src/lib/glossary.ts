@@ -922,5 +922,149 @@ export const glossary: GlossaryEntry[] = [
 			'Stopping a node that has lost its role from doing further damage, for example by cutting its power, revoking its storage access, or rejecting writes that carry an old term number.',
 		module: 'availability-patterns',
 		source: { title: 'Wikipedia, Fencing (computing)', url: 'https://en.wikipedia.org/wiki/Fencing_(computing)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'write-ahead-log',
+		term: 'Write-ahead log (WAL)',
+		definition:
+			'An append-only file where a database records every change before applying it to data pages. A commit is durable once its log record is flushed, and after a crash the log is replayed to redo committed work and undo the rest.',
+		module: 'relational-and-acid',
+		source: { title: 'Wikipedia, Write-ahead logging', url: 'https://en.wikipedia.org/wiki/Write-ahead_logging', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'isolation-level',
+		term: 'Isolation level',
+		definition:
+			'How strictly a database keeps concurrent transactions from seeing each other\'s effects, from read uncommitted to serializable. Weaker levels are faster but allow anomalies such as non-repeatable reads and lost updates.',
+		module: 'relational-and-acid',
+		source: { title: 'Wikipedia, Isolation (database systems)', url: 'https://en.wikipedia.org/wiki/Isolation_(database_systems)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'mvcc',
+		term: 'MVCC (multi-version concurrency control)',
+		definition:
+			'A concurrency technique where writes create new row versions instead of overwriting, and each transaction reads a consistent snapshot of committed versions, so readers and writers do not block each other.',
+		module: 'relational-and-acid',
+		source: { title: 'Wikipedia, Multiversion concurrency control', url: 'https://en.wikipedia.org/wiki/Multiversion_concurrency_control', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'virtual-node',
+		term: 'Virtual node (vnode)',
+		definition:
+			'One of many positions a single physical server takes on a consistent-hashing ring, so its share of keys evens out and its keys spread across many servers if it fails.',
+		module: 'consistent-hashing',
+		source: { title: 'Wikipedia, Consistent hashing', url: 'https://en.wikipedia.org/wiki/Consistent_hashing', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'shard-key',
+		term: 'Shard key',
+		definition:
+			'The column or field, such as user_id or tenant_id, that decides which shard a row lives on. A good one has many distinct values, spreads traffic evenly, and appears in most queries.',
+		module: 'federation-sharding-denormalization',
+		source: { title: 'Wikipedia, Shard (database architecture)', url: 'https://en.wikipedia.org/wiki/Shard_(database_architecture)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'scatter-gather',
+		term: 'Scatter-gather',
+		definition:
+			'Sending one query to every shard or node in parallel and merging the results. Its latency is set by the slowest responder.',
+		module: 'federation-sharding-denormalization',
+		source: { title: 'Wikipedia, Shard (database architecture)', url: 'https://en.wikipedia.org/wiki/Shard_(database_architecture)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'b-tree',
+		term: 'B-tree',
+		definition:
+			'A balanced tree whose nodes are disk pages holding hundreds of sorted keys, so lookups, inserts and range scans take only a few page reads even for billions of rows. The default index structure in relational databases.',
+		module: 'indexes-and-sql-tuning',
+		source: { title: 'Wikipedia, B-tree', url: 'https://en.wikipedia.org/wiki/B-tree', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'composite-index',
+		term: 'Composite index',
+		definition:
+			'An index on several columns, sorted by the first column and then by each next one. It helps queries that filter on its leading columns, but not on later columns alone.',
+		module: 'indexes-and-sql-tuning',
+		source: { title: 'Wikipedia, Database index', url: 'https://en.wikipedia.org/wiki/Database_index', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'covering-index',
+		term: 'Covering index',
+		definition:
+			'An index that contains every column a query needs, so the database can answer from the index alone without reading the table.',
+		module: 'indexes-and-sql-tuning',
+		source: { title: 'Wikipedia, Database index', url: 'https://en.wikipedia.org/wiki/Database_index', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'query-planner',
+		term: 'Query planner',
+		definition:
+			'The part of a database that chooses how to run a query, such as which index to use and in what order to join tables, based on table statistics. EXPLAIN shows its choice.',
+		module: 'indexes-and-sql-tuning',
+		source: { title: 'Wikipedia, Query plan', url: 'https://en.wikipedia.org/wiki/Query_plan', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'partition-key',
+		term: 'Partition key',
+		definition:
+			'The part of a record\'s key that a distributed database hashes to decide which nodes store it. All rows with the same partition key live together, so it sets both data locality and the risk of hotspots.',
+		module: 'nosql-types',
+		source: { title: 'Wikipedia, Partition (database)', url: 'https://en.wikipedia.org/wiki/Partition_(database)', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'lsm-tree',
+		term: 'LSM tree (log-structured merge-tree)',
+		definition:
+			'A storage structure that buffers writes in memory, flushes them to immutable sorted files, and merges those files in the background. Writes are sequential and fast; reads may check several files.',
+		module: 'nosql-types',
+		source: { title: 'Wikipedia, Log-structured merge-tree', url: 'https://en.wikipedia.org/wiki/Log-structured_merge-tree', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'schema-on-read',
+		term: 'Schema-on-read',
+		definition:
+			'Storing records without enforcing a fixed structure, so the application decides how to interpret fields when it reads them. The opposite, schema-on-write, is how relational tables reject rows that do not match their declared columns.',
+		module: 'sql-vs-nosql',
+		source: { title: 'Wikipedia, Database schema', url: 'https://en.wikipedia.org/wiki/Database_schema', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'polyglot-persistence',
+		term: 'Polyglot persistence',
+		definition:
+			'Using several kinds of database in one system, each chosen for the data and access pattern it fits best, such as PostgreSQL for orders and Redis for sessions.',
+		module: 'sql-vs-nosql',
+		source: { title: 'Martin Fowler, Polyglot Persistence', url: 'https://martinfowler.com/bliki/PolyglotPersistence.html', license: 'All rights reserved, cited' }
+	},
+	{
+		id: 'multipart-upload',
+		term: 'Multipart upload',
+		definition:
+			'Uploading one large object as many parts in parallel, retrying only failed parts, then asking the storage service to combine them into a single object.',
+		module: 'object-storage',
+		source: { title: 'Wikipedia, Object storage', url: 'https://en.wikipedia.org/wiki/Object_storage', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'erasure-coding',
+		term: 'Erasure coding',
+		definition:
+			'Splitting data into fragments plus extra parity fragments, so the original can be rebuilt from any large enough subset. It survives several failed disks using much less space than full copies.',
+		module: 'object-storage',
+		source: { title: 'Wikipedia, Erasure code', url: 'https://en.wikipedia.org/wiki/Erasure_code', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'presigned-url',
+		term: 'Pre-signed URL',
+		definition:
+			'A URL carrying a signature that grants one specific operation, such as uploading to one key, until a short expiry, so a client can talk to object storage directly without your credentials.',
+		module: 'object-storage',
+		source: { title: 'Wikipedia, Object storage', url: 'https://en.wikipedia.org/wiki/Object_storage', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'storage-class',
+		term: 'Storage class',
+		definition:
+			'A price tier of an object store, such as S3 Standard, Standard-IA or Glacier, trading cheaper storage per GB for slower or more expensive retrieval.',
+		module: 'object-storage',
+		source: { title: 'Wikipedia, Object storage', url: 'https://en.wikipedia.org/wiki/Object_storage', license: 'CC BY-SA 4.0' }
 	}
 ];
