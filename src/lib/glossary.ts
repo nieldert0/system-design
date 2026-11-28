@@ -1066,5 +1066,21 @@ export const glossary: GlossaryEntry[] = [
 			'A price tier of an object store, such as S3 Standard, Standard-IA or Glacier, trading cheaper storage per GB for slower or more expensive retrieval.',
 		module: 'object-storage',
 		source: { title: 'Wikipedia, Object storage', url: 'https://en.wikipedia.org/wiki/Object_storage', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'buffer-pool',
+		term: 'Buffer pool',
+		definition:
+			"The database's own in-memory cache of table and index pages. Reads served from it skip the disk; its size (shared_buffers in PostgreSQL, innodb_buffer_pool_size in MySQL) is one of the most important settings to tune.",
+		module: 'where-to-cache',
+		source: { title: 'PostgreSQL docs, Resource Consumption', url: 'https://www.postgresql.org/docs/current/runtime-config-resource.html', license: 'PostgreSQL License' }
+	},
+	{
+		id: 'cache-invalidation',
+		term: 'Cache invalidation',
+		definition:
+			'Removing or replacing a cached copy when the data behind it changes, so readers stop seeing the old value. Usually done by deleting the key on write, purging a URL, or letting a TTL expire.',
+		module: 'where-to-cache',
+		source: { title: 'Wikipedia, Cache invalidation', url: 'https://en.wikipedia.org/wiki/Cache_invalidation', license: 'CC BY-SA 4.0' }
 	}
 ];
