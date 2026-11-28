@@ -195,10 +195,10 @@ CREATE TABLE follows (
 );
 ```
 
-**Home timelines** live in a Redis cluster, one sorted set per user holding tweet IDs only, each scored by its own ID so the set is always in time order:
+**Home timelines** live in a Redis cluster, one sorted set per user holding tweet IDs only. Snowflake IDs are 64-bit, but Redis scores are doubles that are exact only up to 2⁵³, so using the ID as the score would round neighbouring IDs together. Instead every member gets score 0 and the ID is stored as a fixed-width 19-digit string; with equal scores Redis orders members lexicographically, and for fixed-width digits that is exactly numeric, so the set is always in time order:
 
 ```
-timeline:home:{user_id}  → sorted set: member = tweet ID, score = tweet ID   (capped at 800)
+timeline:home:{user_id}  → sorted set: member = tweet ID as a zero-padded 19-digit string, score = 0   (capped at 800)
 ```
 
 The tweet IDs are **<Term id="snowflake-id">Snowflake IDs</Term>**: 64-bit numbers whose high bits are a millisecond timestamp, followed by a machine id and a sequence number. Sorting by ID therefore sorts by time, which makes merging and paging trivial. Storing IDs instead of whole tweets keeps each timeline small; the tweet itself is fetched once per read from a tweet cache. <Src id="primer-twitter" />
@@ -214,13 +214,13 @@ The post path:
 1. The client calls `POST /api/v1/tweets`.
 2. The write API assigns a Snowflake ID, stores the tweet in the tweets table and the tweet cache, and appends it to the author's user timeline.
 3. It publishes a "tweet created" event to a [queue](/modules/queues-and-back-pressure) and returns 201. Posting takes tens of milliseconds regardless of follower count.
-4. Fan-out workers consume the event, page through the author's followers, and `ZADD` the tweet ID into each follower's home timeline, then trim it to the newest 800 with `ZREMRANGEBYRANK`. Workers run in parallel, so tweets arrive out of order; ordering by score rather than arrival keeps the timeline sorted anyway.
+4. Fan-out workers consume the event, page through the author's followers, and `ZADD` the tweet ID into each follower's home timeline, then trim it to the newest 800 with `ZREMRANGEBYRANK`. Workers run in parallel, so tweets arrive out of order; ordering by member value rather than arrival keeps the timeline sorted anyway.
 5. The search indexer consumes the same event and adds the tweet to the search index.
 
 The read path:
 
 1. The client calls `GET /api/v1/timelines/home`.
-2. The read API fetches the 50 highest IDs below the cursor from Redis in one call (`ZREVRANGEBYSCORE timeline:home:42 (cursor -inf LIMIT 0 50`). Selecting by ID, not by position, is what makes the cursor safe: a late-arriving tweet with a higher ID than the cursor was never skipped, it simply shows up at the top on the next refresh.
+2. The read API fetches the 50 highest IDs below the cursor from Redis in one call (`ZREVRANGEBYLEX timeline:home:42 (<cursor> - LIMIT 0 50`, with the cursor zero-padded the same way). Selecting by the exact ID, not by position, is what makes the cursor safe: a late-arriving tweet with a higher ID than the cursor was never skipped, it simply shows up at the top on the next refresh.
 3. It fetches the 50 tweets from the tweet cache in one batch (`MGET`), and author profiles from a user cache.
 4. It returns the hydrated tweets. Two or three cache round trips, well under 50 ms.
 
@@ -244,7 +244,7 @@ The fix is a **hybrid**:
 - Accounts above it do not fan out. Their tweets go only to their own user timeline.
 - At read time, the read API takes the user's precomputed list, then fetches the recent tweets of each celebrity they follow (usually a handful) from those celebrities' user timelines, and merges by tweet ID.
 
-**Worked example.** Alice follows 300 accounts, 4 of them above the threshold. Her read is: one `ZREVRANGEBYSCORE` for the newest 50 IDs of her home timeline, four more for the newest 50 IDs of each celebrity's user timeline (cached, because millions of people read them), then an in-memory merge of about 1,000 IDs by value. Because Snowflake IDs sort by time, the merge is a sort of integers; it takes microseconds. Five small cache reads replace 30 million writes per celebrity tweet. <Src id="primer-twitter" />
+**Worked example.** Alice follows 300 accounts, 4 of them above the threshold. Her read is: one `ZREVRANGEBYLEX` for the newest 50 IDs of her home timeline, four more for the newest 50 IDs of each celebrity's user timeline (cached, because millions of people read them), then an in-memory merge of about 1,000 IDs by value. Because Snowflake IDs sort by time, the merge is a sort of integers; it takes microseconds. Five small cache reads replace 30 million writes per celebrity tweet. <Src id="primer-twitter" />
 
 ### 2. Keeping the timeline cache affordable
 
