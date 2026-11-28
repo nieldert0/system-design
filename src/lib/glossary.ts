@@ -1609,5 +1609,77 @@ export const glossary: GlossaryEntry[] = [
 			'A per-process mask of permission bits removed from every new file. With the common umask 022, a file requested as 666 is created as 644.',
 		module: 'files-permissions-shell',
 		source: { title: 'Wikipedia, umask', url: 'https://en.wikipedia.org/wiki/Umask', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'fail-open',
+		term: 'Fail open',
+		definition:
+			'When a protective component such as a rate limiter cannot make its check, letting the request through rather than rejecting it, so its own outage does not block traffic. Failing closed rejects instead.',
+		module: 'api-rate-limiter',
+		source: { title: 'Wikipedia, Fail-safe', url: 'https://en.wikipedia.org/wiki/Fail-safe', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'fan-out-on-read',
+		term: 'Fan-out on read',
+		definition:
+			'Building a feed at request time by fetching and merging recent posts from every followed account, so posting is one write but each read does the merge.',
+		module: 'twitter-timeline',
+		source: { title: 'System Design Primer, Design the Twitter timeline and search', url: 'https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'inverted-index',
+		term: 'Inverted index',
+		definition:
+			'A map from each word to the list of documents that contain it, so a keyword search looks up a few lists instead of scanning every document.',
+		module: 'twitter-timeline',
+		source: { title: 'Wikipedia, Inverted index', url: 'https://en.wikipedia.org/wiki/Inverted_index', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'snowflake-id',
+		term: 'Snowflake ID',
+		definition:
+			'A 64-bit unique ID made of a millisecond timestamp, a machine id, and a per-millisecond sequence number, so servers generate IDs without coordinating and IDs sort by creation time.',
+		module: 'twitter-timeline',
+		source: { title: 'Wikipedia, Snowflake ID', url: 'https://en.wikipedia.org/wiki/Snowflake_ID', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'crawler-trap',
+		term: 'Crawler trap',
+		definition:
+			'A site structure, such as an endless calendar or session ids in URLs, that generates an unbounded number of distinct URLs and can keep a crawler busy forever.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, Spider trap', url: 'https://en.wikipedia.org/wiki/Spider_trap', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'bloom-filter',
+		term: 'Bloom filter',
+		definition:
+			'A compact bit array that answers "definitely not in the set" or "probably in the set"; it never misses a member but sometimes reports a false positive, in exchange for using a few bits per item.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, Bloom filter', url: 'https://en.wikipedia.org/wiki/Bloom_filter', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'robots-txt',
+		term: 'robots.txt',
+		definition:
+			'A text file at the root of a website that tells crawlers which paths they may and may not fetch; well-behaved crawlers read and obey it before crawling the site.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, robots.txt', url: 'https://en.wikipedia.org/wiki/Robots.txt', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'simhash',
+		term: 'SimHash',
+		definition:
+			'A fingerprint, usually 64 bits, in which similar documents produce values that differ in only a few bits, so near-duplicate pages can be found by comparing fingerprints.',
+		module: 'web-crawler',
+		source: { title: 'Wikipedia, SimHash', url: 'https://en.wikipedia.org/wiki/SimHash', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'availability-zone',
+		term: 'Availability zone',
+		definition:
+			'One or more data centres in a cloud region with independent power, cooling, and networking, close enough to others in the region for fast links, so a failure in one rarely affects the rest.',
+		module: 'scaling-on-aws',
+		source: { title: 'AWS, Regions and Availability Zones', url: 'https://aws.amazon.com/about-aws/global-infrastructure/regions_az/', license: 'All rights reserved' }
 	}
 ];
