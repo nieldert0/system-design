@@ -91,7 +91,7 @@ This module is about placement. How data gets into a cache and what gets thrown 
 
 ## How it works
 
-A request walks down the layers until one of them has the answer. Each layer only sees what the layer above it missed, so the hit ratio of each layer multiplies.
+A request walks down the layers until one of them has the answer. Each layer only sees what the layer above it missed, so the fraction of requests reaching the database is the product of each layer's miss ratio. Two layers that each hit 90% let only 10% × 10% = 1% through.
 
 <CacheLayersFlow />
 
@@ -134,7 +134,7 @@ An online shop serves **20,000 product-page requests a second** at peak. A full 
 
 **Step 4, the latency budget.** A CDN hit returns in about 20 ms from a nearby city. An origin request with a Redis hit costs about 1 ms of cache plus 20 ms rendering. A full miss costs 1 + 40 + 20 ms plus the trip to the origin. Most users see the first number.
 
-**Step 5, the in-process trap.** The team notices Redis taking 2,000 reads/s for the same ten home-page products and adds a 30-second in-process cache on each of the 20 web servers. Redis load for those keys drops to about 20 × 10 / 30 ≈ 7 reads/s. But now a price change deletes the Redis key and purges the CDN, and **20 separate in-process copies** still hold the old price for up to 30 seconds, each expiring at a different moment. One refresh shows the new price, the next shows the old one. That is acceptable only because the business said "within a minute". If it had said "immediately", you would either skip the in-process layer for prices or broadcast invalidations to every server (for example over Redis <Term id="pub-sub">pub/sub</Term>).
+**Step 5, the in-process trap.** The team notices Redis taking 2,000 reads/s for the same ten home-page products and adds a 30-second in-process cache on each of the 20 web servers. Redis load for those keys drops to about 20 × 10 / 30 ≈ 7 reads/s. But now a price change deletes the Redis key and purges the CDN, and **20 separate in-process copies** still hold the old price for up to 30 seconds, each expiring at a different moment. One refresh shows the new price, the next shows the old one. Worse, the staleness stacks: a CDN miss just after the purge can render a page from a 29-second-old in-process copy, and the CDN then keeps that page for its full 60 seconds, so the old price can be served for nearly **90 seconds**. That breaks the one-minute budget. The fixes are to keep the sum of the TTLs within the budget (for example a 30-second CDN TTL plus a 30-second in-process TTL), to leave prices out of the in-process layer, or to broadcast invalidations to every server (for example over Redis <Term id="pub-sub">pub/sub</Term>) before the CDN purge so refills read fresh data.
 
 The lesson: every layer you add multiplies the load savings and also multiplies the number of copies you must keep honest.
 
