@@ -1835,5 +1835,77 @@ export const glossary: GlossaryEntry[] = [
 	definition: 'A marker written in place of a deleted key in an append-only store; the key and marker are removed later by compaction.',
 	module: 'storage-engines',
 	source: { title: 'Wikipedia, Tombstone (data store)', url: 'https://en.wikipedia.org/wiki/Tombstone_(data_store)', license: 'CC BY-SA 4.0' }
-}
+},
+	{
+		id: 'event-time',
+		term: 'Event time',
+		definition:
+			'The time an event actually happened, stamped where it was created, as opposed to processing time, when a system happens to see it.',
+		module: 'batch-and-stream-processing',
+		source: { title: 'Apache Flink, Timely stream processing', url: 'https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/time/', license: 'Apache 2.0' }
+	},
+	{
+		id: 'watermark',
+		term: 'Watermark',
+		definition:
+			'A stream job\'s running estimate that it has seen all events up to some event time, used to decide when a time window is complete enough to emit.',
+		module: 'batch-and-stream-processing',
+		source: { title: 'Apache Flink, Timely stream processing', url: 'https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/time/', license: 'Apache 2.0' }
+	},
+	{
+		id: 'exactly-once-processing',
+		term: 'Exactly-once processing',
+		definition:
+			'A guarantee that each input event affects the results once, even after crashes and retries, built from replayable input, checkpointed state, and a transactional or idempotent output.',
+		module: 'batch-and-stream-processing',
+		source: { title: 'Apache Flink, Stateful stream processing', url: 'https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/stateful-stream-processing/', license: 'Apache 2.0' }
+	},
+	{
+		id: 'event-sourcing',
+		term: 'Event sourcing',
+		definition:
+			'Storing every change to an entity as an append-only sequence of events and computing current state by replaying them, instead of storing only the latest state.',
+		module: 'event-driven-architecture',
+		source: { title: 'Martin Fowler, Event Sourcing', url: 'https://martinfowler.com/eaaDev/EventSourcing.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'cqrs',
+		term: 'CQRS',
+		definition:
+			'Command Query Responsibility Segregation: using one model to handle writes and separate models, often fed by events, to serve reads.',
+		module: 'event-driven-architecture',
+		source: { title: 'Martin Fowler, CQRS', url: 'https://martinfowler.com/bliki/CQRS.html', license: 'All rights reserved' }
+	},
+	{
+		id: 'choreography',
+		term: 'Choreography',
+		definition:
+			'Coordinating a multi-service flow with no central controller: each service reacts to events from the others and publishes its own.',
+		module: 'event-driven-architecture',
+		source: { title: 'Microsoft, Saga pattern', url: 'https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'orchestration',
+		term: 'Orchestration',
+		definition:
+			'Coordinating a multi-service flow with a central coordinator that tracks each instance\'s state and tells each service what to do next.',
+		module: 'event-driven-architecture',
+		source: { title: 'Microsoft, Saga pattern', url: 'https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga', license: 'CC BY 4.0' }
+	},
+	{
+		id: 'rpo',
+		term: 'RPO',
+		definition:
+			'Recovery point objective: the most recent data, measured in time, that a system can afford to lose in a disaster.',
+		module: 'multi-region-and-disaster-recovery',
+		source: { title: 'Wikipedia, Disaster recovery', url: 'https://en.wikipedia.org/wiki/Disaster_recovery', license: 'CC BY-SA 4.0' }
+	},
+	{
+		id: 'rto',
+		term: 'RTO',
+		definition:
+			'Recovery time objective: the longest a system may stay down after a disaster before service must be restored.',
+		module: 'multi-region-and-disaster-recovery',
+		source: { title: 'Wikipedia, Disaster recovery', url: 'https://en.wikipedia.org/wiki/Disaster_recovery', license: 'CC BY-SA 4.0' }
+	}
 ];
